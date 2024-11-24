@@ -10,6 +10,7 @@ In this lesson, we'll cover the following topics:
 - Arrays
 - Heap Memory Management
 - Heap-Allocated Arrays
+- Smart Pointers
 
 # Memory Model
 
@@ -311,6 +312,47 @@ int main() {
 - The syntax after the `new` operator is incorrect for an array.
 - The access to `p[3]` is out of bounds.
 - The `delete` operator should be `delete[]` (correct)
+
+# Smart Pointers
+
+Before we wrap things up, I should take a moment to explain smart pointers. Smart pointers are wrappers around raw pointers that provide automatic memory management. They are defined in the `<memory>` header and are part of the C++11 standard.
+
+C++ offers two main types of smart pointers: `std::shared_ptr` and `std::unique_ptr`.
+
+A `std::shared_ptr` can be initialized using the pointer's constructor or using the `std::make_shared` function (which accepts the arguments needed to construct the allocated object).
+```cpp
+std::shared_ptr<int> p1(new int(5));
+std::shared_ptr<int> p2 = std::make_shared<int>(5);
+```
+
+Shared pointers use a memory management strategy called **reference counting**.
+They keep track of how many shared pointers are pointing to a particular object. When the last shared pointer pointing to an object is destroyed, the object is deallocated.
+
+![Animation of shared pointers being copied, then deleted.](images-ppt.gif)
+
+One way to think about this is to imagine a group of people watching TV together. The first person to enter the room turns on the TV. Each person that enters the room has access to the TV remote. Then, when the last person leaves the room, they turn off the TV.
+
+People who first learn about shared pointers might be tempted to use them for everything to avoid leaking memory. However, ***it is still possible to create memory leaks with shared pointers***. If you have a cycle of shared pointers, the reference count will never reach zero and the memory will never be deallocated.
+
+![Animation of heap objects referencing each other with shared pointers.](images-ppt-2.gif)
+
+One way to think about this is to imagine two people watching TV, and each person will only leave the room if the other person leaves first. In this setup, neither person will leave the room first, so the TV will never be turned off.
+
+This can easily happen with cyclic graphs, doubly-linked lists, or any other data structure that has pointers pointing to each other.
+
+To get around this, C++ offers `std::weak_ptr`, a pointer that does not increment the reference count. You can read more about weak pointers [here](https://en.cppreference.com/w/cpp/memory/weak_ptr).
+
+An `std::unique_ptr` is similar to an `std::shared_ptr`, but with one crucial difference: *it cannot be copied*. This also means that there is no need for reference counting since there can only ever be one `std::unique_ptr` pointing to an object. When the `std::unique_ptr` is destroyed, the object is deallocated.
+```cpp
+std::unique_ptr<int> p1(new int(5));
+std::unique_ptr<int> p2 = std::make_unique<int>(5);
+```
+
+Since `std::unique_ptr` cannot be copied, you cannot easily pass it to a function that takes a pointer by value. The only way to keep the pointer around is to pass it by reference, or to use `std::move` to transfer ownership of the pointer. You can also release the pointer from the `std::unique_ptr`, though this negates the purpose of using a smart pointer in the first place.
+
+Rust developers may find these concepts familiar as it uses a similar system of ownership and borrowing for its pointers.
+
+For this course, you will not be expected to use smart pointers, and the projects that require memory management are fairly easy to manage manually. However, it's good to know about smart pointers for when you work on larger projects.
 
 # Conclusion
 

@@ -293,6 +293,19 @@ double add(double a, double b) {
 }
 ```
 
+When you pass an argument to a function, the default behavior is to *copy* the argument. If the object is defined by a class or struct, the copy constructor is called. For example, if you pass a `std::vector` to a function, the entire vector is copied.
+```cpp
+void foo(std::vector<int> vec) {...}
+```
+
+This can be expensive for large objects. If you don't need a copy of the object, you can instead pass it by reference or `const` reference.
+```cpp
+void foo(std::vector<int>& vec) {...}
+void foo(const std::vector<int>& vec) {...}
+```
+
+Using `const` is like making a promise to callers that you won't modify the object. This can help prevent bugs and make your code easier to understand.
+
 # Function Declarations and Header Files
 
 This next part is ***important***, especially for C++ beginners, so pay attention!
