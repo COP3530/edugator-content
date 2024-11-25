@@ -208,7 +208,7 @@ player.is_alive(); // OK
 
 It is good practice to mark member functions as `const` if they do not modify the object's state.
 
-On rare occassions, you will want to create a member function that returns a reference to a member variable for the caller to access and possibly modify. In these cases, you may need both a `const` and non-`const` version of the function. This is the case for many STL containers, like `std::vector`.
+On rare occasions, you will want to create a member function that returns a reference to a member variable for the caller to access and possibly modify. In these cases, you may need both a `const` and non-`const` version of the function. This is the case for many STL containers, like `std::vector`.
 
 # Copy Constructors and Copy Assignment Operators
 
