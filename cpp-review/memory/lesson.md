@@ -315,7 +315,9 @@ int main() {
 
 # Smart Pointers
 
-Before we wrap things up, I should take a moment to explain smart pointers. Smart pointers are wrappers around raw pointers that provide automatic memory management. They are defined in the `<memory>` header and are part of the C++11 standard.
+This next part is *completely optional*. However, since we're on the topic of memory management and best practices, I felt it was worth discussing smart pointers.
+
+Smart pointers are wrappers around raw pointers that provide automatic memory management. They are defined in the `<memory>` header and are part of the C++11 standard.
 
 C++ offers two main types of smart pointers: `std::shared_ptr` and `std::unique_ptr`.
 

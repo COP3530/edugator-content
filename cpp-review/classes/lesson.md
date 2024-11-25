@@ -11,6 +11,7 @@ In this lesson, we will cover:
 - Member functions
 - Copy constructors and copy assignment operators
 - Destructors
+- Static members
 - Inheritance
 - Abstract classes
 
@@ -135,6 +136,12 @@ public:
 ```
 
 However, if you do not also have a default constructor, C++ will NOT provide one for you.
+
+To instantiate a `Character` with this constructor, you would use one of these methods:
+```cpp
+Character player_1 = Character(100, 10);
+Character player_2(100, 10); // More concise
+```
 
 # Member Functions
 
@@ -282,6 +289,35 @@ A common rule of thumb is that for the copy constructor, copy assignment operato
 
 If you don't define a destructor, C++ will provide a default implementation for you. This implementation will not delete any resources that the object has acquired, which can lead to memory leaks.
 
+# Static Members
+
+A **static member** is a member of a class that belongs to the class itself, not any particular instance of the class. Static members are shared among all instances of the class. They are declared with the `static` keyword.
+```cpp
+class Character {
+    static int num_characters; // A static member variable
+public:
+    // A static member function
+    static int get_num_characters() {
+        return num_characters;
+    }
+    /* Constructor, destructor, etc. */
+};
+```
+
+Please note that this use of the keyword `static` is different from the use of `static` in a global context (how C users might be familiar with it).
+
+A static member variable cannot be initialized inside the class definition unless it is a `const` integral type. Instead, you must initialize it outside the class definition. You can do this in the source (`.cpp`) file.
+```cpp
+int Character::num_characters = 0;
+```
+
+To access a static member, you use the scope resolution operator `::`, or use an instance of the class.
+```cpp
+Character::num_characters++;
+Character::get_num_characters();
+player.get_num_characters(); // Also valid, but less obvious
+```
+
 # Inheritance
 
 Let's say you want to create a new class that is similar to an existing class, but with some additional features. You can use **inheritance** to achieve this.
@@ -317,7 +353,7 @@ class Player : public Character {
     int score;
 public:
     Player(int h, int p, int s) : Character(h, p), score(s) {}
-    void take_damage(int damage) override {
+    void take_damage(int damage) {
         health -= damage / 2;
     }
 };
@@ -345,9 +381,19 @@ Second, if we try to call `take_damage` on `player`, it will call the `Character
 ```cpp
 class Character {
 public:
-    virtual void take_damage(int damage);
+    virtual void take_damage(int damage); // Add the virtual keyword
 };
 ```
+
+When you make a function `virtual`, you are telling the compiler that this function can be overridden by derived classes. While we're at it, we should also mark the overriding function with the `override` keyword:
+```cpp
+class Player : public Character {
+public:
+    void take_damage(int damage) override; // Add the override keyword
+};
+```
+
+The `override` keyword is not strictly necessary, but it ensures that the function is overriding the correct function in the base class.
 
 Now, when we call `take_damage` on a `Character*`, it will call the correct version of the function.
 ```cpp
@@ -373,4 +419,45 @@ for (Character* character : characters) {
 }
 ```
 
+It is possible for a class to inherit from multiple classes. The derived class will inherit all the members and member functions of the base classes. This is known as **multiple inheritance**. We will not go too in-depth on this topic. However, multiple inheritance can lead to a potential problem called the **diamond problem**.
+
+![Diagram of multiple base classes inheriting from a common base class.](image.png)
+
+Simply put, you cannot instantiate a derived class properly if it has two base classes that both inherit from the same class. To fix this, you can use **virtual inheritance**. You can read more about the diamond problem [here](https://www.geeksforgeeks.org/diamond-problem-in-cpp/).
+
 # Abstract Classes
+
+Earlier, we explained how the `virtual` keyword allows a function in a base class to be overridden by a derived class. In addition to the `virtual` keyword, we can add the pure specifier `= 0` to a function to make it a **pure virtual function**.
+```cpp
+class Entity {
+public:
+    virtual void update() = 0;
+    virtual ~Entity() {}
+};
+```
+
+By using the pure specifier, we indicate that this function has *no implementation* in this class. You cannot write a body for a pure virtual function.
+
+When a class has at least one pure virtual function, it becomes an **abstract class**. Abstract classes cannot be instantiated. They are used as a base class for other classes that will provide implementations for the pure virtual functions.
+```cpp
+class Character : public Entity {
+public:
+    void update() override {
+        // Update character
+    }
+};
+```
+
+If we choose not to override `update`, then `Character` will also be an abstract class. To make a concrete class, we must override all pure virtual functions.
+
+You can still create pointers of an abstract class type, so the rules of polymorphism still apply.
+
+Abstract classes are useful in a variety of situations:
+- It may not always make sense to give every base class function an implementation. The class is too abstract.
+- You might want to prevent a base class from being instantiated. The user must use a derived class.
+- You need to enforce a derived class to implement a certain function with certain inputs and outputs. In this way, you create an interface for outside users to follow and a *contract* that derived classes must adhere to.
+  - This is the basis of how interfaces work in other languages.
+
+# Conclusion
+
+That's it for this lesson! We've covered nearly everything you need to know about C++'s syntax and object-oriented programming in C++. We hope you've enjoyed these lessons and feel more comfortable with C++.
