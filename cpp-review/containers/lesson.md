@@ -211,11 +211,11 @@ C++ provides two classes that implement linked lists: `std::forward_list` and `s
 
 `std::list` is similar to an `std::vector`, but with the following differences:
 
-- `list::insert()` and `list::erase()` have constant time complexity.
+- `insert()` and `erase()` have constant time complexity.
   - This is because the pointers in the nodes are updated, rather than shifting elements over.
   - However, you still need the iterator to the element you want to insert or erase, and arriving at that element can still take linear time.
 - `list` provides some additional functions for adding elements:
-  - `list::push_front()` and `list::pop_front()` add and remove elements from the front of the list.
+  - `push_front()` and `pop_front()` add and remove elements from the front of the list.
   - These functions have constant time complexity.
 - `list` only provides a bidirectional iterator, so you can't use the `+`, `-`, `+=`, and `-=` operators to move to any element in the list.
 - `list` does not have `operator[]` or `at()` to access elements by index.

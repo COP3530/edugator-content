@@ -14,7 +14,7 @@ In this lesson, we'll cover the following topics:
 
 # Memory Model
 
-The memory used by a process is often organized into segments:
+The memory used by a process is often conceptually organized into segments:
 - **Text Memory**: Contains the executable code.
 - **Data Memory**: Contains global and static variables.
 - **Stack Memory**: Contains local variables and function call information.
@@ -26,7 +26,7 @@ The C++ standard does not use the words "stack memory" and "heap memory" and ins
 
 To avoid confusion, we'll use the terms "stack memory" and "heap memory" in this lesson and future lessons. This is also to avoid confusion between the terms "dynamic array" and "dynamically-allocated array", which are two different things.
 
-In practice, the memory used by a process is often shuffled around by the operating system. This is primarily to avoid users from accessing memory that they shouldn't be accessing, such as text memory. However, it is useful to think of memory in this segmented manner.
+In practice, the memory used by a process is managed by the operating system. Techniques such as virtual memory and address space layout randomization (ASLR) are used to protect memory and prevent unauthorized access. While the conceptual segments (text, data, stack, heap) are useful for understanding, the actual memory layout can vary and is managed to ensure security and efficiency.
 
 Whenever you create a local variable in a function, it is stored in the stack memory. 
 ```cpp
@@ -353,6 +353,12 @@ They keep track of how many shared pointers are pointing to a particular object.
 ![Animation of shared pointers being copied, then deleted.](images-ppt.gif)
 
 One way to think about this is to imagine a group of people watching TV together. The first person to enter the room turns on the TV. Each person that enters the room has access to the TV remote. Then, when the last person leaves the room, they turn off the TV.
+
+Once initialized, smart pointers can be used almost like raw pointers. You can dereference them and pass them to functions that take pointers.
+```cpp
+auto p = std::make_shared<std::pair<int, int>>(1, 2);
+std::cout << p->first << std::endl;
+```
 
 People who first learn about shared pointers might be tempted to use them for everything to avoid leaking memory. However, ***it is still possible to create memory leaks with shared pointers***. If you have a cycle of shared pointers, the reference count will never reach zero and the memory will never be deallocated.
 

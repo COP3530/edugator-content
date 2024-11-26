@@ -100,7 +100,7 @@ The `#ifndef` directive is particularly useful for creating an **include guard**
 
 You can choose any name for the macro, but it should be unique to the file. Google's style guide recommends the format `<PROJECT>_<PATH>_<FILE>_H_`. For smaller projects, simply naming the macro after the file is sufficient (as shown above).
 
-These are most of the directives you will encounter in C++. There is, however, one more: the `#pragma` directive. This directive is used to give instructions to the compiler. However, the exact behavior of `#pragma` is compiler-dependent, so it is best to avoid using it.
+These are most of the directives you will encounter in C++. There is, however, one more: the `#pragma` directive. This directive is used to give instructions to the compiler. However, the exact behavior of `#pragma` is compiler-dependent.
 
 One common use of `#pragma` is to act as a simpler include guard. 
 ```cpp
@@ -374,7 +374,7 @@ void ping(int n) {...}
 void pong(int n) {...}
 ```
 
-This is the ***recommended way*** to structure your C++ code. An exception to this rule is when you are using templates. Template function must be defined in the same header file they are declared in. This is mainly a quirk of how templates work in C++.
+This is the ***recommended way*** to structure your C++ code. An exception to this rule is when you are using templates. Template functions must be defined in the same header file they are declared in. This is mainly a quirk of how templates work in C++.
 
 We can then include the header file in the source file where we write the function definitions.
 ```cpp

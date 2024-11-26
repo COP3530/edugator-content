@@ -67,7 +67,7 @@ public:
 };
 class Character {
 public:
-    Point position;
+    Vector2D position;
     int health;
     int power;
 };
@@ -269,7 +269,11 @@ There is another special set of member functions called **move constructors** an
 
 # Destructors
 
-A **destructor** is a special member function that is called when an object goes out of scope (if allocated on the stack) or is explicitly deleted (if allocated on the heap). It is used to clean up resources that the object has acquired during its lifetime. Like the constructor, it has no return type. It also does not take any arguments.
+A **destructor** is another special member function. It is used to clean up resources that the object has acquired during its lifetime. It is automatically called under the following circumstances:
+- If the object is allocated on the stack, the destructor is called when the object goes out of scope.
+- If the object is allocated on the heap, the destructor is called when `delete` is called on the object.
+
+Like the constructor, it has no return type. It also does not take any arguments.
 ```cpp
 class Character {
     char* name;
@@ -622,4 +626,4 @@ That's it for this lesson! We've covered nearly everything you need to know abou
 # References
 
 - [C++ Reference](https://en.cppreference.com/w/cpp)
-
+- [GeeksForGeeks](https://www.geeksforgeeks.org/c-plus-plus/)
