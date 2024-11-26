@@ -458,6 +458,130 @@ Abstract classes are useful in a variety of situations:
 - You need to enforce a derived class to implement a certain function with certain inputs and outputs. In this way, you create an interface for outside users to follow and a *contract* that derived classes must adhere to.
   - This is the basis of how interfaces work in other languages.
 
+# Practice
+
+Let's go through a few practice problems to check your understanding of classes in C++.
+
+Consider the following code:
+```cpp
+class MyClass {
+    int x;
+};
+```
+Which of the following statements are true?
+- `x` is a public member variable
+- `MyClass` does not have a constructor
+- When constructed, `x` will be uninitialized (correct)
+- `MyClass` is not copyable
+- None of these are true
+
+---
+
+Consider the following code:
+```cpp
+int main() {
+    MyClass obj;
+    MyClass* obj_ptr = new MyClass();
+    return 0;
+}
+```
+Which of these objects will have their destructor called when `main` returns?
+- Neither of them
+- `obj` only (correct)
+- `obj_ptr` only
+- Both `obj` and `obj_ptr`
+
+---
+
+Consider the following code:
+```cpp
+class MyClass {
+    int x;
+public:
+    MyClass(int x) : x(x) {}
+};
+```
+Which of the following statements NOT true?
+- `MyClass` is default-constructible (correct)
+- `MyClass` is copy-constructible
+- `MyClass` is copy-assignable
+- All of these are true
+
+---
+
+Consider the following code:
+```cpp
+int MyClass::get_x() const {
+    return x;
+}
+```
+What does the `const` keyword do in this context?
+- The integer returned by `get_x` must be captured by a `const` variable
+- The `get_x` function cannot be called on a `const` object
+- The implementation of `get_x` cannot be changed
+- The `get_x` function cannot modify the object's state (correct)
+- It does nothing since the function does not return a reference
+  
+---
+
+Consider the following code:
+```cpp
+class MyClass {
+    std::vector<int> data = {1, 2, 3};
+public:
+    int& at(int i) {
+        return data.at(i);
+    }
+};
+int main() {
+    const int& x = MyClass().at(0);
+    return 0;
+}
+```
+What is the issue with this code?
+- `data` cannot be initialized in the class definition
+- `at` is not a `const` member function (correct)
+- `MyClass` is not instantiated correctly
+- `data` is not cleaned up when after `main` returns
+
+---
+
+Consider the following code:
+```cpp
+MyClass obj;
+MyClass obj2 = obj;
+```
+Which function was called as a result of the second line?
+- The default constructor
+- The copy constructor (correct)
+- The copy assignment operator
+- The destructor
+
+---
+
+What is the output of this code?
+```cpp
+struct Dog {
+    virtual void bark() {std::cout << "Woof!" << std::endl;}
+};
+struct BigDog : Dog {
+    void bark() override {std::cout << "WOOF!" << std::endl;}
+};
+int main() {
+    Dog* dog_ptr = new BigDog();
+    dog_ptr->bark();
+    delete dog_ptr;
+    return 0;
+}
+```
+- `Woof!`
+- `WOOF!` (correct)
+- `Woof!WOOF!`
+- (compiler error)
+- (runtime error due to ambiguity)
+
+
+
 # Conclusion
 
 That's it for this lesson! We've covered nearly everything you need to know about C++'s syntax and object-oriented programming in C++. We hope you've enjoyed these lessons and feel more comfortable with C++.

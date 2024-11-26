@@ -374,7 +374,7 @@ void ping(int n) {...}
 void pong(int n) {...}
 ```
 
-This is the ***recommended way*** to structure your C++ code. An exception to this rule is when you are using templates, which we will cover in a later lesson.
+This is the ***recommended way*** to structure your C++ code. An exception to this rule is when you are using templates. Template function must be defined in the same header file they are declared in. This is mainly a quirk of how templates work in C++.
 
 We can then include the header file in the source file where we write the function definitions.
 ```cpp
