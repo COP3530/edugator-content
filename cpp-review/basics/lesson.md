@@ -500,11 +500,16 @@ int main() {
     return 0;
 }
 ```
-- 0 (correct)
+- 0
 - 0.5
 - 1
 - (produces a compile error)
 - (result is undefined)
+
+<details>
+<summary>Answer</summary>
+0
+</details>
 
 ---
 
@@ -521,9 +526,15 @@ int main() {
 ```
 - 11
 - 12
-- 22 (correct)
+- 22
 - 21
 - (produces a compile error)
+
+<details>
+<summary>Answer</summary>
+22
+</details>
+
 
 ---
 
@@ -540,10 +551,15 @@ int main() {
 }
 ```
 - 421
-- 4210 (correct)
+- 4210
 - 8421
 - (produces a compile error)
 - (program does not terminate)
+
+<details>
+<summary>Answer</summary>
+4210
+</details>
 
 ---
 
@@ -558,9 +574,14 @@ int main() {
 ```
 - 011
 - 012
-- 013 (correct)
+- 013
 - 123
 - 124
+
+<details>
+<summary>Answer</summary>
+013
+</details>
 
 ---
 
@@ -578,9 +599,14 @@ int main() {
 ```
 - 12345
 - 135
-- 13 (correct)
+- 13
 - 1
 - (nothing is printed)
+
+<details>
+<summary>Answer</summary>
+13
+</details>
 
 ---
 
@@ -600,12 +626,22 @@ int main() {
     return 0;
 }
 ```
-- 11 (correct)
+- 11
 - 12
 - 21
 - 22
 - (produces a compile error)
 
+<details>
+<summary>Answer</summary>
+11
+</details>
+
 # Conclusion
 
 That's it for this lesson! We've covered a lot of ground, but this is just the beginning! In the next lesson, we'll cover arrays and memory management.
+
+# References
+
+- [C++ Reference](https://en.cppreference.com/w/cpp)
+- [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html)

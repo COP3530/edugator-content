@@ -11,9 +11,9 @@ There are quite a few containers available in C++. Many of them use similar inte
 In this lesson, we will cover the following topics:
 - Vectors
 - Iterators
-- Linked Lists
-- Stacks, Queues, and Double-Ended Queues
-- Priority Queues
+- Linked lists
+- Stacks, queues, and double-ended queues
+- Priority queues
 - Sets
 - Maps
 
@@ -552,6 +552,22 @@ The rest of the functions provided by maps are similar to those provided by sets
 - `empty()` returns `true` if the map is empty and `false` otherwise.
 - `size()` returns the number of elements in the map.
 
+```cpp
+std::map<int, std::string> map = {{1, "one"}, {2, "two"}, {3, "three"}};
+map.erase(1);
+if (map.find(2) != map.end()) {
+    std::cout << "Found" << std::endl;
+} else {
+    std::cout << "Not found" << std::endl;
+}
+map.empty(); // false
+map.size(); // 2
+```
+
 # Conclusion
 
 And that's it for this lesson on C++ containers! In this lesson, we've only covered how to use these containers. We haven't discussed how they are implemented or the theory behind them. We'll discuss these topics in later lessons.
+
+# References
+
+- [C++ Reference](https://en.cppreference.com/w/cpp)

@@ -5,12 +5,12 @@
 In this lesson, we'll continue where we left off in our C++ review. 
 
 In this lesson, we'll cover the following topics:
-- Memory Model
+- Memory model
 - Pointers
 - Arrays
-- Heap Memory Management
-- Heap-Allocated Arrays
-- Smart Pointers
+- Heap memory management
+- Heap-allocated arrays
+- Smart pointers
 
 # Memory Model
 
@@ -257,9 +257,14 @@ int* p = &i;
 Which of the following does NOT evaluate to 7?
 - `i`
 - `*p`
-- `p` (correct)
+- `p`
 - `*(&i)`
 - (all of these evaluate to 7)
+
+<details>
+<summary>Answer</summary>
+`p`
+</details>
 
 ---
 
@@ -276,9 +281,14 @@ int main() {
 ```
 - 12345
 - 1234
-- 234 (correct)
+- 234
 - 2345
 - (results in undefined behavior/segmentation fault)
+
+<details>
+<summary>Answer</summary>
+234
+</details>
 
 ---
 
@@ -294,7 +304,12 @@ int main() {
 - 0
 - 5
 - 6
-- (results in undefined behavior/segmentation fault) (correct)
+- (results in undefined behavior/segmentation fault)
+
+<details>
+<summary>Answer</summary>
+(results in undefined behavior/segmentation fault)
+</details>
 
 ---
 
@@ -311,7 +326,12 @@ int main() {
 - `p` should have the type `int[]`, not `int*`.
 - The syntax after the `new` operator is incorrect for an array.
 - The access to `p[3]` is out of bounds.
-- The `delete` operator should be `delete[]` (correct)
+- The `delete` operator should be `delete[]`
+
+<details>
+<summary>Answer</summary>
+The `delete` operator should be `delete[]`
+</details>
 
 # Smart Pointers
 
@@ -359,3 +379,8 @@ For this course, you will not be expected to use smart pointers, and the project
 # Conclusion
 
 That's all for this lesson. We've covered the memory model, pointers, arrays, and heap memory management. In the next lesson, we'll discuss classes and object-oriented programming.
+
+# References
+
+- [C++ Reference](https://en.cppreference.com/w/cpp)
+- [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html)

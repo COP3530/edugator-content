@@ -471,9 +471,14 @@ class MyClass {
 Which of the following statements are true?
 - `x` is a public member variable
 - `MyClass` does not have a constructor
-- When constructed, `x` will be uninitialized (correct)
+- When constructed, `x` will be uninitialized
 - `MyClass` is not copyable
 - None of these are true
+
+<details>
+<summary>Answer</summary>
+When constructed, `x` will be uninitialized
+</details>
 
 ---
 
@@ -487,9 +492,14 @@ int main() {
 ```
 Which of these objects will have their destructor called when `main` returns?
 - Neither of them
-- `obj` only (correct)
+- `obj` only
 - `obj_ptr` only
 - Both `obj` and `obj_ptr`
+
+<details>
+<summary>Answer</summary>
+`obj` only
+</details>
 
 ---
 
@@ -502,10 +512,15 @@ public:
 };
 ```
 Which of the following statements NOT true?
-- `MyClass` is default-constructible (correct)
+- `MyClass` is default-constructible
 - `MyClass` is copy-constructible
 - `MyClass` is copy-assignable
 - All of these are true
+
+<details>
+<summary>Answer</summary>
+`MyClass` is default-constructible
+</details>
 
 ---
 
@@ -519,9 +534,14 @@ What does the `const` keyword do in this context?
 - The integer returned by `get_x` must be captured by a `const` variable
 - The `get_x` function cannot be called on a `const` object
 - The implementation of `get_x` cannot be changed
-- The `get_x` function cannot modify the object's state (correct)
+- The `get_x` function cannot modify the object's state
 - It does nothing since the function does not return a reference
-  
+
+<details>
+<summary>Answer</summary>
+The `get_x` function cannot modify the object's state
+</details>
+
 ---
 
 Consider the following code:
@@ -540,9 +560,14 @@ int main() {
 ```
 What is the issue with this code?
 - `data` cannot be initialized in the class definition
-- `at` is not a `const` member function (correct)
+- `at` is not a `const` member function
 - `MyClass` is not instantiated correctly
 - `data` is not cleaned up when after `main` returns
+
+<details>
+<summary>Answer</summary>
+`at` is not a `const` member function
+</details>
 
 ---
 
@@ -553,9 +578,14 @@ MyClass obj2 = obj;
 ```
 Which function was called as a result of the second line?
 - The default constructor
-- The copy constructor (correct)
+- The copy constructor
 - The copy assignment operator
 - The destructor
+
+<details>
+<summary>Answer</summary>
+The copy constructor
+</details>
 
 ---
 
@@ -575,13 +605,21 @@ int main() {
 }
 ```
 - `Woof!`
-- `WOOF!` (correct)
+- `WOOF!`
 - `Woof!WOOF!`
 - (compiler error)
 - (runtime error due to ambiguity)
 
-
+<details>
+<summary>Answer</summary>
+`WOOF!`
+</details>
 
 # Conclusion
 
 That's it for this lesson! We've covered nearly everything you need to know about C++'s syntax and object-oriented programming in C++. We hope you've enjoyed these lessons and feel more comfortable with C++.
+
+# References
+
+- [C++ Reference](https://en.cppreference.com/w/cpp)
+
