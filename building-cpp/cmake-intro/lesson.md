@@ -120,3 +120,5 @@ In my opinion, CMake can still be a little tedious to use, but not only does it 
 
 We've mentioned earlier that, if you're clever, you can design a Makefile that tracks dependencies and only recompiles the files that need to be recompiled.
 CMake does this for you. You can think of it as a Makefile that generates Makefiles. Additionally, CMake can also generate build files for other build systems, like Visual Studio, Xcode, and Ninja. This allows the same project to be built on different platforms.
+
+(This lesson is not finished)
