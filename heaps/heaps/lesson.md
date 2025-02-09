@@ -4,6 +4,18 @@
 
 In this lesson, we'll discuss heaps, a data structure useful for implementing priority queues and heapsort, an "n log n" sorting algorithm.
 
+We will be covering the following:
+- Priority Queues
+- Implementing a Priority Queue
+- Introduction to Binary Heaps
+- Heap Insertion and Heapify Up
+- Heap Removal and Heapify Down
+- Converting a List to a Heap
+- Heap Sort
+- C++ Heap Functions
+- C++ Priority Queue
+- D-Ary Heaps
+
 # Priority Queues
 
 A **priority queue** is a data structure that allows us to store elements with associated priorities. Elements with a higher priority are dequeued before those with a lower priority. This is different from a regular queue where elements are dequeued in the order they were enqueued.
