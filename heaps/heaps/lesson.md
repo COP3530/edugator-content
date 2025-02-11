@@ -497,3 +497,5 @@ Finally, we covered the C++ functions and classes available for working with hea
 Graphics by Brian Magnuson.
 
 Lesson content written with AI assistance.
+
+Find a mistake? Open an issue on [GitHub](https://github.com/COP3530/edugator-content/issues)!
