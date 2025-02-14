@@ -2,7 +2,7 @@
 
 ## Definition
 
-A __trie__ (pronounced "try") is an N-ary tree used for string storing and retrieval. Unlike binary search trees where the node's key dictates its position, in a trie, the position of the node dictates its key. Additionally, connections between nodes are defined by individual characters rather than the key.
+A __trie__ (pronounced "try") is an N-ary tree used for string storage and retrieval. Unlike binary search trees where the node's key dictates its position, in a trie, the position of the node dictates its key. Additionally, connections between nodes are defined by individual characters rather than the key.
 
 ![image](../n-ary-trees/tries/ex1.png)
 
@@ -49,6 +49,14 @@ Tries relieve the shortcomings of hash tables and BSTs for string storage and re
 
 Additionally, tries are __simple__ to implement. Hash tables generally require a good hashing algorithm, container resizing, and a collision resolultion protocol. A BST is also simple but runs the risk of being unbalanced, so a self-balancing BST is more commonly used which are more complex to implement (remember the AVL tree?).
 
+Below are the time complexities of the basic operations for tries where `n` is the length of the target string and `l` is the length of the longest string in the trie.
+
+| Operation | Best Case | Worst Case |
+| --- | --- | --- |
+| Insertion | `O(n)` | `O(n)` |
+| Search | `O(min(n,l)`| `O(min(n,l))` |
+| Deletion | `O(n)`| `O(n)` |
+
 In summary, the main benefits of tries are:
 
 1. Efficient storage and retrieval
@@ -69,8 +77,72 @@ In summary, the main drawbacks of tries are:
 1. Not as space efficient as hash tables or BSTs for small data sets
 2. May incur lookup overhead due to scattered data
 
+## Structure
+
+A basic trie node node contains a container (often a hash map or an array) mapping a character to a child node and a boolean indicating whether a node markse the end of a word. For simplicity, we will only consider lowercase alphabetic characters for this lesson, but note that the trie can be extended to any character set.
+
+```cpp
+struct TrieNode {
+    array<TrieNode*, 26> children; // 26 letters a-z
+    bool isWord;
+};
+```
+
 ## Insertion
+
+To insert a string into a trie, we start at the root node and traverse down the tree, creating new nodes as needed. Each character in the string corresponds to a child node in the trie. If a child node does not exist for a character, we create a new node and continue traversing down the tree. Once we reach the end of the string, we mark the last node as a word by setting the `isWord` boolean to `true`. This indicates that the string is a valid word in the trie.
+
+The insertion algorithm is as follows:
+```cpp
+void TrieNode::insert(const string& target) {
+    TrieNode* current = this;
+    for (char c : target) {
+        if (current->children[c - 'a'] == nullptr) {
+            current->children[c - 'a'] = new TrieNode();
+        }
+        current = current->children[c - 'a'];
+    }
+    current->isWord = true;
+}
+```
+
+<insert_animation>
+
+### Time complexity
+
+The time complexity for insertion is `O(n)` where `n` is the length of the target string because we must traverse each character in the string and create a new node if it does not exist. We do several operations in the loop:
+1. Check if the child node exists - This is `O(1)` because we are accessing an array.
+2. Create a new node if the child node does not exist - This is `O(1)` because we are creating a new node.
+3. Set the current node to the child node - This is `O(1)` because we are setting a pointer.
+
+Therefore, we do `n` `O(1)` operations in the loop, resulting in a total time complexity of `O(n)`.
 
 ## Search
 
+Search in a trie is similar to insertion. We begin at the root and traverse down the tree, following the child nodes corresponding to each character in the string. If we reach a node that does not exist, we return `false` because the string is not in the trie. If we reach the end of the string and the last node is marked as a word, we return `true`. Otherwise, we return `false`.
+
+```cpp
+bool TrieNode::search(const string& target) {
+    TrieNode* current = this;
+    for (char c : target) {
+        if (current->children[c - 'a'] == nullptr) {
+            return false;
+        }
+        current = current->children[c - 'a'];
+    }
+    return current->isWord;
+}
+```
+
+**Note**: Even if a word appears in the trie, it may only be a prefix of another word. For example, if we insert the words `flower` and `float`, searching for `flo` will return `false` because it is not a complete word in the trie.
+
+<search_animation>
+
+### Time complexity
+
+The time complexity for search is `O(min(n,l))` where `n` is the length of the target string and `l` is the length of the longest string in the trie. We must traverse each character in the string and check if the child node exists. If the string is not in the trie, we will stop traversing as soon as we reach a node that does not exist. If the string is in the trie, we will traverse all `n` characters otherwise we traverse at _most_ `l` characters.
+
+
 ## Conclusion
+
+The trie is a simple but powerful data structure which allows for efficient string storage and retrieval. It is a great choice for applications that require fast prefix search, auto-completion, and other string operations. The trie is also simple to implement and can be extended to any character set. However, it is not as space efficient as hash tables or BSTs for small data sets and may incur lookup overhead due to scattered data.
