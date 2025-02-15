@@ -2,11 +2,13 @@
 
 ## Definition
 
-A __trie__ (pronounced "try") is an N-ary tree used for string storage and retrieval. Unlike binary search trees where the node's key dictates its position, in a trie, the position of the node dictates its key. Additionally, connections between nodes are defined by individual characters rather than the key.
+A __trie__ (pronounced "try") is an N-ary tree primarily used for string storage and retrieval. Unlike binary search trees where the node's key dictates its position, in a trie, the position of the node dictates its key. Additionally, connections between nodes are defined by individual characters rather than the key.
 
-![image](../n-ary-trees/tries/ex1.png)
+![image](./images/ex1.png)
 
-Consider they key `bu` in the trie above. If we trace the path from the root to the node, we see that the characters along the edges are `b` and `u` -- which, when concatenated, form the key of the node. This is true for all nodes in the trie and demonstrates how the position of the node dictates its key. Note how the keys `by`, `bu`, and `bun` share the same prefix `b`. This is a key features of tries that allows for efficient string storage and retrieval which we'll discuss more in-depth in the next section.
+Consider they key `bu` in the trie above. Tracing the path from the root to the node, the characters along the edges are `b` and `u` -- which form `bu` when concatenated. This is true for all nodes in the trie and demonstrates how the position of the node dictates its key.
+
+Further, note how the keys `by`, `bu`, and `bun` share the same prefix `b`. This is a key features of tries that allows for efficient string storage and retrieval which we'll discuss more in-depth in the next section.
 
 __Fun Fact__: The name trie is derived from the word retrieval and was originally pronounced tree. However, try became the common pronunciation to distinguish it from the word tree.
 
@@ -93,6 +95,7 @@ struct TrieNode {
 To insert a string into a trie, we start at the root node and traverse down the tree, creating new nodes as needed. Each character in the string corresponds to a child node in the trie. If a child node does not exist for a character, we create a new node and continue traversing down the tree. Once we reach the end of the string, we mark the last node as a word by setting the `isWord` boolean to `true`. This indicates that the string is a valid word in the trie.
 
 The insertion algorithm is as follows:
+
 ```cpp
 void TrieNode::insert(const string& target) {
     TrieNode* current = this;
@@ -111,6 +114,7 @@ void TrieNode::insert(const string& target) {
 ### Time complexity
 
 The time complexity for insertion is `O(n)` where `n` is the length of the target string because we must traverse each character in the string and create a new node if it does not exist. We do several operations in the loop:
+
 1. Check if the child node exists - This is `O(1)` because we are accessing an array.
 2. Create a new node if the child node does not exist - This is `O(1)` because we are creating a new node.
 3. Set the current node to the child node - This is `O(1)` because we are setting a pointer.
@@ -134,14 +138,13 @@ bool TrieNode::search(const string& target) {
 }
 ```
 
-**Note**: Even if a word appears in the trie, it may only be a prefix of another word. For example, if we insert the words `flower` and `float`, searching for `flo` will return `false` because it is not a complete word in the trie.
+__Note__: Even if a word appears in the trie, it may only be a prefix of another word. For example, if we insert the words `flower` and `float`, searching for `flo` will return `false` because it is not a complete word in the trie.
 
 <search_animation>
 
 ### Time complexity
 
 The time complexity for search is `O(min(n,l))` where `n` is the length of the target string and `l` is the length of the longest string in the trie. We must traverse each character in the string and check if the child node exists. If the string is not in the trie, we will stop traversing as soon as we reach a node that does not exist. If the string is in the trie, we will traverse all `n` characters otherwise we traverse at _most_ `l` characters.
-
 
 ## Conclusion
 
