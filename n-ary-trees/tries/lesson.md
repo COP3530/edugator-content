@@ -88,10 +88,26 @@ In summary, the main drawbacks of tries are:
 
 A basic trie node node contains a container (often a hash map or an array) mapping a character to a child node and a boolean indicating whether a key is a word. For simplicity, we will only consider lowercase alphabetic characters for this lesson, but note that the trie can be extended to any character set.
 
+The trie we will construct in this lesson will be very basic and will contain a pointer to the root and 2 methods for inserting and searching for words.
+
 ```cpp
 struct TrieNode {
     array<TrieNode*, 26> children; // 26 letters a-z
     bool isWord;
+
+    TrieNode(): isWord(false) {
+        children.fill(nullptr);
+    }
+};
+
+class Trie {
+    TrieNode* root;
+
+public:
+    Trie(): root(new TrieNode()) {}
+
+    void insert(const string& target);
+    bool search(const string& target);
 };
 ```
 
@@ -102,13 +118,14 @@ To insert a string into a trie, we begin at the root and traverse down the tree,
 The insertion algorithm is as follows:
 
 ```cpp
-void TrieNode::insert(const string& target) {
-    TrieNode* current = this;
+void Trie::insert(const string& target) {
+    TrieNode* current = this->root;
     for (char c : target) {
-        if (current->children[c - 'a'] == nullptr) {
-            current->children[c - 'a'] = new TrieNode();
+        int index = c - 'a';
+        if (current->children[index] == nullptr) {
+            current->children[index] = new TrieNode();
         }
-        current = current->children[c - 'a'];
+        current = current->children[index];
     }
     current->isWord = true;
 }
@@ -131,13 +148,14 @@ Therefore, we do `n` `O(1)` operations in the loop, resulting in a total time co
 Search in a trie is similar to insertion. We begin at the root and traverse down the tree, following the child nodes corresponding to each character in the string. If we reach a node that does not exist, we return `false` because the string is not in the trie. If we reach the end of the string and the last node is marked as a word, we return `true`. Otherwise, we return `false`.
 
 ```cpp
-bool TrieNode::search(const string& target) {
-    TrieNode* current = this;
+bool Trie::search(const string& target) {
+    TrieNode* current = this->root;
     for (char c : target) {
-        if (current->children[c - 'a'] == nullptr) {
+        int index = c - 'a';
+        if (current->children[index] == nullptr) {
             return false;
         }
-        current = current->children[c - 'a'];
+        current = current->children[index];
     }
     return current->isWord;
 }
