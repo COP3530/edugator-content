@@ -6,11 +6,13 @@ A __trie__ (pronounced "try") is an N-ary tree primarily used for string storage
 
 ![image](./images/ex1.png)
 
-Consider they key `bu` in the trie above. Tracing the path from the root to the node, the characters along the edges are `b` and `u` -- which form `bu` when concatenated. This is true for all nodes in the trie and demonstrates how the position of the node dictates its key.
+Consider the trie above. We previously stated that the position of a node dictates its key. Consider the key `bu` and trace the path from the root to the node. The edges contain the letters `b` and `u` — concatenated they form `bu`, the node's key. This is true for all nodes in the trie.
 
-Further, note how the keys `by`, `bu`, and `bun` share the same prefix `b`. This is a key features of tries that allows for efficient string storage and retrieval which we'll discuss more in-depth in the next section.
+Each key is a prefix of an _inserted_ word or an _inserted_ word (or both!). We emphasize _inserted_ because although a key may form a valid word such as `bun`, since we did not explicitly insert it into the trie, it is only considered a prefix. Further, consider the keys `hi` and `by` — both are inserted words _and_ prefixes to the words `hint` and `bye`, respectively.
 
-__Fun Fact__: The name trie is derived from the word retrieval and was originally pronounced tree. However, try became the common pronunciation to distinguish it from the word tree.
+Lastly, note that the words `bunt`, `bye`, and `by` all share the prefix `b` and that the prefix only appears _once_ in the trie. This is one of the trie's largest benefits, the ability to reduce space used by exploiting redundancies.
+
+__Fun Fact__: The name trie is derived from the word "retrieval" and was originally pronounced tree. However, "try" became the common pronunciation to distinguish it from the word tree.
 
 ## Motivation
 
