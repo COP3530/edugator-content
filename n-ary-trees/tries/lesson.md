@@ -22,7 +22,7 @@ In the 1960s, various data structures for string storage and retrieval existed s
 
 Analyzing the time complexity for insertion and search, a hash table has `O(n)` average time complexity because the entire string needs to be hashed where `n` is the size of the target string.
 
-A BST has `O(n · log m)` average time complexity where `n` is the length of the shortest string in the tree and `m` is the number of strings in the tree. The tree must be traversed to find the string for search and insertion, a BST typically has a height of `log m`. Additionally, the target string msut be compared to each node to determine the next node to traverse to which is `O(n)`. Note that if the BST is unbalanced, the worst case time complexity is `O(n*m)`.
+A BST has `O(n · log m)` average time complexity where `n` is length of target string and `m` is the number of strings in the tree. The tree must be traversed to find the placement for search and insertion, a BST typically has a height of `log m`. Additionally, the target string __must__ be compared to each node to determine the path to take which is `O(n)`. Note that if the BST is unbalanced, the worst case time complexity is `O(n*m)`.
 
 | __Insertion__ | Best Case | Worst Case |
 | --- | --- | --- |
@@ -36,7 +36,7 @@ A BST has `O(n · log m)` average time complexity where `n` is the length of the
 
 ### Space Complexity of Hash Tables and BSTs
 
-Both hash tables and BSTs have best and worst `O(n·s)` space complexity where `n` is the length of the longest string and `s` is the number of strings in the table. Each string must be stored in the table.
+Both hash tables and BSTs have a best and worst case space complexity of `O(n·s)` where `n` is the length of the longest string and `s` is the number of strings in the table because each string must be stored in the table.
 
 | __Space__ | Best Case | Worst Case |
 | --- | --- | --- |
@@ -45,20 +45,22 @@ Both hash tables and BSTs have best and worst `O(n·s)` space complexity where `
 
 ### Shortcoming of Hash Tables and BSTs
 
-The time complexities for insertion and search for a BST are much slower than a hash table. Additionally, the space complexity for both data structures is the same and does not take advantage of redundancies in the data. For example, the strings `flower` and `float` have the same prefix `flo` but both prefixes would be stored twice.
+The time complexities for insertion and search for a BST are much slower than a hash table. Additionally, the space complexity for both data structures is the same and does not take advantage of redundancies in the data. Storing each string individually becomes noticeable in larger datasets where the set of characters is much smaller than the number of strings. For example, the strings `flower` and `float` have the same prefix `flo` but both prefixes would be stored twice in a BST and hash table.
 
 ### Benefits of Tries
 
-Tries relieve the shortcomings of hash tables and BSTs for string storage and retrieval. The time complexity for insertion and search in a trie is `O(n)` where `n` is the length of the target string. The space complexity is `O(n·s)` in where `n` is the length of the longest string and `s` is the number of strings in the trie. However, tries take advantage of redundancies so the strings `flower` and `float` would only have their prefix stored once in the trie -- allowing for more efficient space usage. Additionally, tries allow for efficient string operations such as prefix search and auto-completion -- operations that would be inefficient in a hash table or BST.
+Tries relieve the shortcomings of hash tables and BSTs for string storage and retrieval. The time complexities for insertion and search in a trie is `O(n)` where `n` is the length of the target string. The space complexity is `O(n·s)` in where `n` is the length of the longest string and `s` is the number of strings in the trie. However, tries take advantage of redundancies so the strings `flower` and `float` would only have their prefix stored once in the trie  allowing for more efficient space usage.
 
-Additionally, tries are __simple__ to implement. Hash tables generally require a good hashing algorithm, container resizing, and a collision resolultion protocol. A BST is also simple but runs the risk of being unbalanced, so a self-balancing BST is more commonly used which are more complex to implement (remember the AVL tree?).
+Tries also allow for efficient string operations such as prefix search and auto-completion — operations that would be inefficient in a hash table or BST.
 
-Below are the time complexities of the basic operations for tries where `n` is the length of the target string and `l` is the length of the longest string in the trie.
+Additionally, tries are __simple__ to implement. Good hash table implementations require a good hashing algorithm and collision resolultion protocol. A BST is simple but runs the risk of being unbalanced, so a self-balancing BST is preferred. Self-balancing BSTs are more complex to implement (remember the AVL tree?).
+
+Below are the time complexities of the basic operations for tries where `n` is the length of the target string.
 
 | Operation | Best Case | Worst Case |
 | --- | --- | --- |
 | Insertion | `O(n)` | `O(n)` |
-| Search | `O(min(n,l)`| `O(min(n,l))` |
+| Search | `O(n)`| `O(n)` |
 | Deletion | `O(n)`| `O(n)` |
 
 In summary, the main benefits of tries are:
@@ -73,17 +75,18 @@ __Note__: If you are _only_ concerned about speed, a hash table may be the bette
 
 ### Drawbacks of Tries
 
-Tries are not without their drawbacks. One drawback is that tries are not as space efficient as hash tables or BSTs because they store each character of the string in a node, whereas hash tables and BSTs only store the string once. The overhead of a node's memory may decreases as the number of strings increases because the trie takes advantage of redundancies.
+Tries are not without their drawbacks. One drawback is that tries may not be as space efficient as hash tables or BSTs for small datasets because they store each character of the string in a node, causing additional memory overhead. The overhead may decrease as the number of strings increases because the trie takes advantage of redundancies.
 
-Another drawback is that tries may incur some lookup overhead because the data is not contiguous like an array and may be scattered across memory. If a node has not been accessed recently, it may cause a cache miss and must be fetched from main memory -- slowing down the lookup time.
+Another drawback is that tries may incur lookup overhead because the data is not contiguous like an array and may be scattered across memory. If a node has not been accessed recently, it may cause a cache miss and must be fetched from main memory — slowing down the lookup time, causing the insert and search to slow down in execution time.
 
 In summary, the main drawbacks of tries are:
+
 1. Not as space efficient as hash tables or BSTs for small data sets
 2. May incur lookup overhead due to scattered data
 
 ## Structure
 
-A basic trie node node contains a container (often a hash map or an array) mapping a character to a child node and a boolean indicating whether a node markse the end of a word. For simplicity, we will only consider lowercase alphabetic characters for this lesson, but note that the trie can be extended to any character set.
+A basic trie node node contains a container (often a hash map or an array) mapping a character to a child node and a boolean indicating whether a key is a word. For simplicity, we will only consider lowercase alphabetic characters for this lesson, but note that the trie can be extended to any character set.
 
 ```cpp
 struct TrieNode {
@@ -94,7 +97,7 @@ struct TrieNode {
 
 ## Insertion
 
-To insert a string into a trie, we start at the root node and traverse down the tree, creating new nodes as needed. Each character in the string corresponds to a child node in the trie. If a child node does not exist for a character, we create a new node and continue traversing down the tree. Once we reach the end of the string, we mark the last node as a word by setting the `isWord` boolean to `true`. This indicates that the string is a valid word in the trie.
+To insert a string into a trie, we begin at the root and traverse down the tree, creating new nodes as needed. Each character in the string corresponds to a child node in the trie. If a child node does not exist for a character, we create a new node and continue traversing down the tree. Once we reach the end of the string, we mark the last node as a word by setting `isWord` to `true`.
 
 The insertion algorithm is as follows:
 
@@ -117,7 +120,7 @@ void TrieNode::insert(const string& target) {
 
 The time complexity for insertion is `O(n)` where `n` is the length of the target string because we must traverse each character in the string and create a new node if it does not exist. We do several operations in the loop:
 
-1. Check if the child node exists - This is `O(1)` because we are accessing an array.
+1. Check if the child node exists - This is `O(1)` because we are accessing an element in an array.
 2. Create a new node if the child node does not exist - This is `O(1)` because we are creating a new node.
 3. Set the current node to the child node - This is `O(1)` because we are setting a pointer.
 
@@ -140,13 +143,17 @@ bool TrieNode::search(const string& target) {
 }
 ```
 
-__Note__: Even if a word appears in the trie, it may only be a prefix of another word. For example, if we insert the words `flower` and `float`, searching for `flo` will return `false` because it is not a complete word in the trie.
+__Note__: We previously stated that even if a key forms a valid word, we do not consider it to be a word unless it was explicitly inserted. Remember the example of the key `bun` in the trie example in the definition section. It forms a valid word but was not inserted, so it is only considered a prefix.
 
 <search_animation>
 
 ### Time complexity
 
-The time complexity for search is `O(min(n,l))` where `n` is the length of the target string and `l` is the length of the longest string in the trie. We must traverse each character in the string and check if the child node exists. If the string is not in the trie, we will stop traversing as soon as we reach a node that does not exist. If the string is in the trie, we will traverse all `n` characters otherwise we traverse at _most_ `l` characters.
+The time complexity for search is `O(n)` where `n` is the length of the target string. We must traverse each character in the string and check if the child node exists. If the string is not in the trie, we will stop traversing as soon as we reach a node that does not exist. If the string is in the trie, we will traverse all `n` characters.
+
+## Deletion
+
+Trie deletion is not a common operation so we will not cover it in this lesson and is instead left as an exercise for the reader. However, delete is also an efficient operation with `O(n)` time complexity where `n` is the length of the target string.
 
 ## Conclusion
 
