@@ -86,7 +86,7 @@ In summary, the main drawbacks of tries are:
 
 ## Structure
 
-A basic trie node node contains a container (often a hash map or an array) mapping a character to a child node and a boolean indicating whether a key is a word. For simplicity, we will only consider lowercase alphabetic characters for this lesson, but note that the trie can be extended to any character set.
+A basic trie node contains a container (often a hash map or an array) mapping a character to a child node and a boolean indicating whether a key is a word. For simplicity, we will only consider lowercase alphabetic characters for this lesson, but note that the trie can be extended to any character set.
 
 The trie we will construct in this lesson will be very basic and will contain a pointer to the root and 2 methods for inserting and searching for words.
 
