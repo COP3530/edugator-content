@@ -131,7 +131,7 @@ void Trie::insert(const string& target) {
 }
 ```
 
-[trie-insertion](./images/trie-insertion.gif)
+![trie-insertion](./images/trie-insertion.gif)
 
 ### Time complexity
 
