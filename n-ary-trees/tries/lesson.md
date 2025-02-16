@@ -163,7 +163,7 @@ bool Trie::search(const string& target) {
 
 __Note__: We previously stated that even if a key forms a valid word, we do not consider it to be a word unless it was explicitly inserted. Remember the example of the key `bun` in the trie example in the definition section. It forms a valid word but was not inserted, so it is only considered a prefix.
 
-<search_animation>
+![trie-search](./images/trie-search.gif)
 
 ### Time complexity
 
