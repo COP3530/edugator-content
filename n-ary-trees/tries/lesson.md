@@ -16,7 +16,7 @@ __Fun Fact__: The name trie is derived from the word "retrieval" and was origina
 
 ## Motivation
 
-In the 1960s, various data structures for string storage and retrieval existed such as hash tables and binary search trees which translate to `unordered_set` and `set` in C++.
+In the 1960s, various data structures for string storage and retrieval existed such as hash tables and binary search trees which translate to `unordered_set` and `set` in C++. A hash table is a data structure that implements an associative array — an abstract data type that maps keys to values. We will discuss hash tables more in-depth in a future module, and you can skim the [Wikipedia article](https://en.wikipedia.org/wiki/Hash_table) if you would like to learn more.
 
 ### Time Complexity of Hash Tables and BSTs
 
