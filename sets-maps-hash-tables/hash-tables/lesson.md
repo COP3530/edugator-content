@@ -10,6 +10,8 @@ We will be covering the following:
 - Reducing hash codes to array indices
 - Collision resolution
 - Load factor and resizing
+- Computational complexity
+- An example of a hash function
 
 # Introduction to Key Storing
 
@@ -19,11 +21,11 @@ Throughout this course, you've learned a few data structures that can be used to
 
 You could store these items in an array. Inserting new items would be fast, but retrieving items would be slow. You would have to search through the entire array to find the item you're looking for.
 
-![List containing a series of keys.](notanimage.png)
+![List containing a series of keys.](image.png)
 
 You could instead store these items in a balanced binary search tree. Although the tree would take up more space, insertion, search, and deletion operations would be very fast.
 
-![Balanced binary search tree containing a series of keys.](notanimage.png)
+![Balanced binary search tree containing a series of keys.](image-1.png)
 
 For a balanced BST like an AVL tree, insertion, search, and deletion operations are O(log n) where n is the number of items in the tree. This is already very fast. For a tree of 8 billion items, you would only need 33 comparisons at maximum to find the item you're looking for. Thus, balanced BSTs are used to implement sorted maps and sets.
 
@@ -37,7 +39,7 @@ This is where hash tables come in. Hash tables not only take up less memory than
 
 Let's start by revisiting arrays. Arrays are a data structure that stores a collection of items in contiguous memory locations. Each item in the array is accessed by an index. Array random access is O(1). That is, if you know the index, you can access the item in the array in constant time.
 
-![Array random access.](notanimage.png)
+![Array random access.](image-2.png)
 
 Earlier, we mentioned that searching for items in an array is slow. This is because we don't know the index of the item we're looking for. We have to search through the entire array to find the item.
 
@@ -52,7 +54,7 @@ Under this rule, the string "apple" would be stored at index 5. Then, when we la
 
 Under this rule, we would store "banana" at index 6, "pear" at index 4, and so on.
 
-![Array of length 8 with "pear" at index 4, "apple" at index 5, and "banana" at index 6.](notanimage.png)
+![Array of length 8 with "pear" at index 4, "apple" at index 5, and "banana" at index 6.](image-3.png)
 
 This is the essense of hash functions. 
 
@@ -108,6 +110,8 @@ In our previous example, we used a hash function that returns the length of a st
 The solution is simple: we can *reduce* the hash code to a valid index. One common technique is to use the modulo operator:
 - `index = hash_code % array_size`
 
+!["Pineapple" being inserted into the hash table.](image-4.png)
+
 This ensures that the index is always within the bounds of the array. This works for basic hash table implementations.
 
 However, there are more advanced techniques for reducing hash codes to valid indices. One way is to ensure that the array size is some power of 2. This allows us to use the bitwise AND operator instead of the modulo operator:
@@ -143,9 +147,11 @@ There are two common techniques for resolving collisions:
 
 Separate chaining essentially allows multiple items to be stored at the same index. Each bucket in the hash table is a linked list. When a collision occurs, the new key-value pair is added to the linked list at that bucket.
 
-![Separate chaining collision resolution.](notanimage.png)
+![Separate chaining collision resolution.](image-5.png)
 
 Now, whenever we need to find a key, we first hash the key to find the bucket. Then, we linearly search the linked list at that bucket for the key.
+
+![Searching animation in a hash table using separate chaining.](images-ppt.gif)
 
 As mentioned previously, a good hash function should minimize collisions. If there are many collisions, the linked lists will become longer, resulting in slower performance.
 
@@ -157,9 +163,11 @@ Open addressing, in short, means that when a collision occurs, we place the item
 
 When we say "next available slot", you may think of literally checking the next index in the array. This is specifically called **linear probing**.
 
-![Linear probing collision resolution.](notanimage.png)
+![Linear probing collision resolution.](image-6.png)
 
 Now, when we want to find a key, we hash the key to find the bucket. If the key is not at that bucket, we check the next index in the array. We continue checking the next index until we find the key or an empty slot. If we find an empty slot, then the key is not in the hash table.
+
+![Search for "Peach" fails when an empty slot is reached.](image-7.png)
 
 Linear probing works for simple hash tables. However, it has a major drawback: clustering. **Clustering** occurs when items are placed close together in the array. Clustering increases the likelihood of more collisions, which in turn increases the likelihood of even more clustering. This can result in slower performance.
 
@@ -171,7 +179,7 @@ An alternative to linear probing is **quadratic probing**. Instead of checking s
 
 This means that after checking the first index `i`, we check the index at `(i + 1) % size`, then `(i + 4) % size`, then 9, then 16, then 25, and so on.
 
-![Quadratic probing collision resolution.](notanimage.png)
+![Quadratic probing collision resolution.](image-8.png)
 
 Quadratic probing helps to reduce clustering by spreading out the items in the array.
 
@@ -189,7 +197,7 @@ If we use linear probing, the items will be placed in the array as follows:
 2. "banana" is placed at index 6.
 3. "grape" is placed at index 7 (the next available slot after index 5).
 
-![Hash table with "apple" at index 5, "banana" at index 6, "grape" at index 7](notanimage.png)
+![Hash table with "apple" at index 5, "banana" at index 6, "grape" at index 7.](image-9.png)
 
 Consider what would happen when we set "banana" to `null`. If we then search for "grape":
 1. We hash "grape" to find that it should be at index 5.
@@ -198,11 +206,11 @@ Consider what would happen when we set "banana" to `null`. If we then search for
 
 Even though "grape" is in the hash table, the empty slot at index 6 caused us to stop searching prematurely.
 
-![Hash table with "apple" at index 5, "grape" at index 7, and an empty slot at index 6.](notanimage.png)
+![Search for "grape" fails because there is an empty slot at index 6.](image-10.png)
 
 To solve this problem, we need a way to differentiate between a deleted item and a slot that has never been used. One common technique is to use a special value, such as `null`, to indicate that the slot has been deleted. Another way is to store a boolean flag with each item to indicate whether the item has been deleted.
 
-![Hash table with boolean flags to indicate deleted items.](notanimage.png)
+![Hash table with boolean flags to indicate deleted items.](images-ppt-2.gif)
 
 # Load Factor and Resizing
 
@@ -213,7 +221,7 @@ To keep our hash table efficient, we keep track of how full the hash table is. T
 
 We also define a threshold load factor, or "maximum load factor", which determines when the array is "too full". When the load factor *reaches* the threshold load factor, we resize the array.
 
-![Hash table being resized.](notanimage.png)
+![Animation showing hash table being resized.](images-ppt-3.gif)
 
 Resizing the array involves creating a new array with a larger size and *rehashing* all the items in the old array to the new array. This is necessary because our reduction function depends on the size of the array. If we change the size of the array, we need to rehash all the items to ensure they are placed in the correct buckets.
 
@@ -237,6 +245,61 @@ int main() {
 
 The exact value for the maximum load factor may be implementation-specific.
 
+# Computational Complexity
+
+Hash tables generally take no additional space beyond the space required to store the items themselves. The space complexity of a hash table is O(n), where n is the number of items in the hash table.
+
+For insertion, search, and deletion operations, the best-case and average-case time complexity is O(1). This is because the hash function allows us to immediately find the bucket where the item should be stored or retrieved. However, the worst-case time complexity is O(n) if the hash function produces many collisions or the operation triggers a resize. 
+
+You can claim that the worst-case time complexity is O(1) if you assume that:
+- The hash function evenly distributes the keys across the hash table
+- The load factor of the hash table is maintained such that collisions are negligible
+- Resizing does not occur
+
+Worst-case time complexity can make hash tables appear slower than they actually perform in practice. Thus, it is sometimes more useful to consider the **amortized time complexity**, which is the average time taken per operation over a sequence of operations.
+
+Assuming a good hash function and well-chosen maximum load factor (which may be implicitly assumed in some cases), the amortized time complexity of insertion, search, and deletion operations is O(1).
+
+In summary:
+- Space complexity: O(n)
+- Time complexity:
+  - Best-case: O(1)
+  - Average-case: O(1)
+  - Worst-case: O(n)
+  - Amortized: O(1)
+
+# An Example of a Hash Function
+
+This section is optional, but you might find it interesting.
+In this section, we'll go over a well-known hash function called FNV-1a.
+
+FNV-1a is part of a a series of non-cryptographic hash functions created by Glenn Fowler, Landon Curt Noll, and Phong Vo (hence the name FNV). This function is very simple and fast.
+```cpp
+#define FNV_OFFSET_BASIS 14695981039346656037
+#define FNV_PRIME 1099511628211
+
+uint64_t fnv1a(const std::string& key) {
+  uint64_t hash = FNV_OFFSET_BASIS;
+  for (char c : key) {
+    hash ^= c;
+    hash *= FNV_PRIME;
+  }
+  return hash;
+}
+```
+
+`FNV_OFFSET_BASIS` and `FNV_PRIME` are chosen based on the size of the hash code. You can read more about this function [here](https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function).
+
+You'll notice two things about this function:
+- It uses a combination of bitwise XOR and multiplication to generate the hash code.
+  - These operations are fast and efficient.
+- Its time complexity is dependent on the length of the key.
+  - This is because the function iterates over each character in the key.
+
+Many hash functions work by "hashing" every byte of the input. For a string of length t, the time complexity of the hash function is O(t).
+
+You can read more about non-cryptographic hash functions [here](https://en.wikipedia.org/wiki/List_of_hash_functions).
+
 # Conclusion
 
 Hash tables are a powerful data structure that allow for fast insertion, deletion, and lookup operations. They are particularly useful when we need to store key-value pairs and when we need to quickly find items in a large collection.
@@ -245,6 +308,8 @@ Hash tables are a powerful data structure that allow for fast insertion, deletio
 
 - [Cppreference](https://en.cppreference.com/)
 - [COP 3530 Instructional Content](https://github.com/COP3530/Instructional-Content)
+- [Wikipedia: Fowler-Noll-Vo hash function](https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function)
+- [Wikipedia: List of hash functions](https://en.wikipedia.org/wiki/List_of_hash_functions)
 
 Graphics by Brian Magnuson.
 
