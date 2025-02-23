@@ -245,6 +245,81 @@ int main() {
 
 The exact value for the maximum load factor may be implementation-specific.
 
+------
+
+Which of the following is NOT a property of a good hash function?
+- The function gives the same output for the same input.
+- The function runs in exponential time.
+- The function evenly distributes keys across the hash table.
+- The function minimizes collisions.
+
+<details>
+<summary>Answer:</summary>
+The function runs in exponential time.
+</details>
+
+------
+
+Suppose a hash table has 25 buckets and 20 items. What is the load factor of the hash table?
+- 20
+- 25
+- 0.8
+- 1.25
+- 0.2
+
+<details>
+<summary>Answer:</summary>
+0.8
+</details>
+
+------
+
+Suppose a hash table has 25 buckets has a maximum load factor of 0.8. At what point should the hash table be resized?
+- When the 19th item is inserted
+- When the 20th item is inserted
+- When the 21st item is inserted
+- When the 25th item is inserted
+
+<details>
+<summary>Answer:</summary>
+When the 20th item is inserted
+</details>
+
+------
+
+```
+func f(x) { return x[0] % Date.now(); }
+func g(x) { return 42; }
+func h(x) { return rand(); }
+func j(x) { int sum = 0; for (char c : x) sum += c; return sum; }
+```
+
+Consider the above functions. Which would make the best hash function for a hash table?
+- Function f
+- Function g
+- Function h
+- Function j
+
+<details>
+<summary>Answer:</summary>
+Function j
+</details>
+
+------
+
+Which of the following is NOT an effect of increasing the max load factor of a hash table?
+- The hash table will be resized more frequently.
+- Collisions are more likely to occur as more items are inserted.
+- The hash table can hold more items relative to its capacity at a time.
+- Performance may improve or degrade depending on the use case of the hash table.
+
+<details>
+<summary>Answer:</summary>
+The hash table will be resized more frequently.
+</details>
+
+------
+
 # Computational Complexity
 
 Hash tables generally take no additional space beyond the space required to store the items themselves. The space complexity of a hash table is O(n), where n is the number of items in the hash table.
