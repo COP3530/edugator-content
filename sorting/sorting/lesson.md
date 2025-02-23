@@ -528,6 +528,8 @@ In this lesson, we covered sorting in C++.
 We then covered seven different sorting algorithms: selection sort, bubble sort, insertion sort, shell sort, merge sort, quick sort, and heap sort.
 We also discussed the pseudocode for each algorithm and the time and space complexities of each algorithm.
 
+# References
+
 - [Cppreference](https://en.cppreference.com/)
 - [COP 3530 Instructional Content](https://github.com/COP3530/Instructional-Content)
 - [Wikipedia: Median of medians](https://en.wikipedia.org/wiki/Median_of_medians)
