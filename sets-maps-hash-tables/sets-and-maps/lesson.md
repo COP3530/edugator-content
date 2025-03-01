@@ -527,7 +527,7 @@ Finally, we briefly discussed sets and maps in other programming languages.
 
 - [Cppreference: Containers library](https://en.cppreference.com/w/cpp/container)
 - [Java SE 11 & SDK 11: java.util](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/package-summary.html)
-- [Microsoft Docs: System.Collections.Generic Namespace](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic?view=net-9.0)
+- [Microsoft .NET Docs: System.Collections.Generic Namespace](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic?view=net-9.0)
 - [Python Documentation: Data Structures](https://docs.python.org/3/tutorial/datastructures.html)
 
 Lesson content written with AI assistance.
