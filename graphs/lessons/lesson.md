@@ -2,8 +2,8 @@
 ## Table of Contents
 
 1. [Introduction](#introduction)
-2. [Types of Graphs](#types-of-graphs)
-3. [Terminology](#terminology)
+2. [Terminology](#terminology)
+3. [Types of Graphs](#types-of-graphs)
 4. [Implementation](#implementation)
 5. [Traversals](#traversals)
 6. [Conclusion](#conclusion)
@@ -17,7 +17,7 @@ We've already seen a few examples of graphs in previous lessons. For example, tr
 
 ### Definition
 
-A **graph** $`G`$ is a set of vertices (also called nodes) $`V`$ and a set of unordered pairs called edges $`E`$.
+A **graph** $`G`$ is a set of vertices (also called nodes) $`V`$ and a set of pairs called edges $`E`$. The set of pairs may be ordered or unordered if you're working with directed or undirected graphs, respectively.
 
 ![graph](../images/graph-1.png)
 
@@ -38,8 +38,6 @@ The set of vertices and edges are:
 <summary>Answer</summary>
 C.
 </details>
-
-## Types of Graphs
 
 ### Undirected Graph
 
@@ -72,6 +70,10 @@ A single element in a graph.
 
 A connection between two vertices.
 
+### Degree
+
+The number of edges connected to a vertex. In a directed graph, the terminology is split into **in-degree** and **out-degree**. The in-degree of a vertex is the number of edges pointing to it and the out-degree is the number of edges pointing from it.
+
 ### Weight
 
 A value assigned to an edge. Edges *only* have weights in weighted graphs. The graph below shows integer values associated with each edge. The notion of weights is important in many graph algorithms such as Dijkstra's algorithm for finding the shortest path between two vertices.
@@ -80,9 +82,7 @@ A value assigned to an edge. Edges *only* have weights in weighted graphs. The g
 
 ### Adjancency
 
-Two vertices $`v_1`$ and $`v_2`$ are **adjacent** if there is an edge between them. If there is an edge between vertices in an undirected graph, then they are adjacent. However, in an undirected graph, if there is an edge from $`v_1`$ to $`v_2`$ but not from $`v_2`$ to $`v_1`$, then $`v_1`$ is adjacent to $`v_2`$ but $`v_2`$ is not adjacent to $`v_1`$.
-
-For example, consider the directed graph below. The vertices $`a`$ is adjacent to $`b`$ but $`b`$ is not adjacent to $`a`$. In the directed graph, however, the the vertices $`a`$ and $`b`$ *are* adjacent.
+Two vertices $`v_1`$ and $`v_2`$ are **adjacent** if there is an edge between them. In the directed graph on the right, the vertex $`a`$ is adjacent to $`b`$ but $`b`$ is not adjacent to $`a`$. However, on the right, $`a`$ and $`b`$ are adjacent to each other because an edge in an edge in an undirected graph is a symmetric relation between vertices.
 
 ![undirected-and-directed](../images/undirected-and-directed-1.png)
 
@@ -125,14 +125,54 @@ The vertices $`a`$ and $`b`$ are connected in the graph below because the path $
 
 ![connected](../images/connected-1.png)
 
-### Connected Graph
 
-A graph is **connected** if every pair of vertices is connected.
+## Graph Types
+
+We've already discussed mentioned several graph types: directed, undirected, simple, and connected. We will discuss a few more now that we are familiar with the terminology.
+
+
+### Weighted Graph vs Unweighted Graphs
+
+Each edge in a weighted graph has a value associated with it. The graph below is a weighted graph where each edge has an integer value, but it is not imperative that the value be an integer it may be a float value as well. In this course, we will stick to integer values for simplicity.
+
+![weighted-graph](../images/weighted-1.png)
+
+An unweighted graph, on the other hand, does not have values associated with its edges. The graph below is an example of an unweighted graph.
+
+![unweighted-graph](../images/graph-1.png)
+
+
+### Connected vs Disconnected
+
+A graph is **connected** if *every* pair of vertices is connected.
 
 For example, the graph on the left is connected because there is a path between every pair of vertices. However there exists no path between $`a`$ and $`e`$ in the graph on the right, thus, it is disconnected.
 
 ![connected-graph](../images/connected-disconnected.png)
 
+
+### Acyclic vs Cyclic
+
+A graph is **acyclic** if it does not contain any cycles and is *cyclic* if it contains a cycle.
+
+The graph on the left contains a cycle $`a, b, c, a`$ and is therefore cyclic. The graph on the right does not contain any cycles and is acyclic.
+
+![cyclic-acyclic](../images/cyclic-acyclic.png)
+
+### Dense vs Sparse
+
+The **density** of a graph is the ratio of the number of edges to the number of possible edges, $`|E| / |V|^2`$. A graph is **dense** if its density is near 1 and **sparse** if its density is near 0.
+
+A dense graph implies that most vertices are connected to each other whereas a sparse graph implies that most vertices are not connected to each other. The density of a graph typically dictates the data structure used to represent it.
+
+
+#### Proving the Maximum Number of Edges
+
+Consider a graph $`G`$ with $`n=|V|`$ vertices, the maximum number of edges in $`G`$ occurs when each vertex is adjacent to every other vertex. Each vertices $`v`$ has a degree of $`n-1`$, thus, there are $`n(n-1)`/2$ edges in the graph. We divide by 2 because each edge is counted twice, once for each vertex it is adjacent to.
+
+Note, in the case of a directed graph, the maximum number of edges is $`n(n-1)`$ because each vertex has an in-degree and out-degree of $`n-1`$.
+
+Therefore, the maximum number of edges in a graph is ~$`|V|^2`$.
 
 ## Implementation
 
