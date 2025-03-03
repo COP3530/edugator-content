@@ -3,13 +3,24 @@
 
 1. [Introduction](#introduction)
 2. [Implementation](#implementation)
-3. [Traversals](#traversals)
-4. [Conclusion](#conclusion)
+3. [Terminology](#terminology)
+4. [Traversals](#traversals)
+5. [Conclusion](#conclusion)
 
 
 ## Introduction
 
-Introduce graphs, relate them back to trees (a familiar data structure), and their significance/use cases in theoretical computer science and real-world applications.
+Graphs are a fundamental data structure in computer science with a wide range of theoretical and practical applications. In fact, we've already seen a few examples of graphs in previous lessons. For example, trees — asyclic undirected graphs (we'll get into what that means in the next section).
+
+### Definition
+
+A **graph** `G` is a set of vertices (also called nodes) `V` and a set of unordered pairs called edges `E`.
+
+![graph](../images/graph-1.png)
+
+In the above example, the vertices are `V = {a, b, c, d, e}` and the edges are `E = {{a, b}, {b, c}, {c, d}, {d, e}}`. Note that the edges are unordered pairs, meaning that the edge `{a, b}` is the same as the edge `{b, a}`.
+
+## Terminology
 
 ## Implementation
 
