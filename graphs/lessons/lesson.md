@@ -56,7 +56,7 @@ A graph is **directed** if the edges are a set of *ordered* pairs. Unlike undire
 The set of vertices and edges are:
 
 - $`V = \{a, b, c, d, e\}`$
-- $`e = \{(a, b), (c, b), (c, a), (d, e)\}`$
+- $`E = \{(a, b), (c, b), (c, a), (d, e)\}`$
 
 
 
