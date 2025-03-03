@@ -102,6 +102,35 @@ int main() {
 
 In this example, we use an iterator `it` to traverse the set. We start at the beginning of the set with `s.begin()` and iterate until we reach the end of the set with `s.end()`. We then dereference the iterator with `*it` to access the value at that position.
 
+------
+
+```cpp
+std::set<int> s;
+s.insert(10);
+s.insert(10);
+s.erase(10);
+s.insert(20);
+s.insert(20);
+s.insert(30);
+s.erase(20);
+s.insert(40);
+for (int i : s) std::cout << i << " ";
+```
+
+What is the output of the above code?
+- 30 40
+- 10 30 40
+- 10 20 30 40
+- 10 10 20 20 30 40
+- (runtime error)
+
+<details>
+<summary>Answer</summary>
+30 40
+</details>
+
+------
+
 # Introduction to Maps
 
 A **map** is a collection of key-value pairs.
@@ -126,6 +155,8 @@ map.emplace(2, "two");
 ```
 
 `emplace()` can get a little messy when the constructors for the key and value types use multiple arguments. You can refer to the examples [here](https://en.cppreference.com/w/cpp/container/map/emplace).
+
+If the key already exists in the map, `insert()` and `emplace()` will not insert a new element nor modify the existing entry. If you want to overwrite the value for an existing key, you can use the `[]` operator or the `at()` function.
 
 ## Accessing elements
 
@@ -173,6 +204,52 @@ if (iter != map.end()) {
 map.empty(); // false
 map.size(); // 2
 ```
+
+------
+
+```cpp
+std::map<int, std::string> m;
+m.emplace(1234, "Abby");
+m.emplace(5678, "Bob");
+m.emplace(1234, "Charlie");
+m.emplace(9012, "Bob");
+for (auto p : m) std::cout << p.second << " ";
+```
+
+Based on the above code, whose names will be printed to the console?
+- Abby, Bob, and Charlie
+- Abby and 2 instances of Bob
+- Charlie and 2 instances of Bob
+- Abby, Charlie, and 2 instances of Bob
+- This program will have a runtime error
+
+<details>
+<summary>Answer</summary>
+Abby and 2 instances of Bob
+</details>
+
+------
+
+```cpp
+std::map<char, int> m;
+std::string s = "hello";
+for (char c : s) m[c]++;
+std::cout << m['l'] << " " << m['p'] << "\n";
+```
+
+Describe the output of the above code.
+- The program is deterministic and will output "2 1".
+- The program is deterministic and will output "2 0".
+- The program behavior is undefined, but will likely output "2 0".
+- The program behavior is undefined and the output is not predictable.
+- The program will have a runtime error.
+
+<details>
+<summary>Answer</summary>
+The program is deterministic and will output "2 0".
+</details>
+
+------
 
 # Tree Sets and Tree Maps
 
@@ -281,7 +358,8 @@ Notice how we have to use `decltype` in the template argument and pass the lambd
 
 # Hash Sets and Hash Maps
 
-**Hash sets** and **hash maps**, also known as unordered sets and unordered maps, are implemented using hash tables. This allows for constant-time insertion, deletion, and searching of elements on average.
+**Hash sets** and **hash maps**, also known as unordered sets and unordered maps, are implemented using hash tables. 
+This allows for elements to be inserted, deleted, and searched in O(1) time on average and O(n) time in the worst case.
 
 In C++, `std::unordered_set` and `std::unordered_map` are implemented as hash sets and hash maps, respectively. Elements are stored based on their hash values, which makes the exact order of elements unpredictable to the user.
 
@@ -386,6 +464,22 @@ int main() {
     return 0;
 }
 ```
+
+------
+
+Which of the following statements is FALSE regarding sets and maps?
+- The keys in tree sets and maps must be comparable.
+- The keys in hash sets and maps must be hashable.
+- The keys in sets and maps must be unique.
+- The values in sets and maps must be unique.
+- None of these; all statements are true.
+
+<details>
+<summary>Answer</summary>
+The values in sets and maps must be unique.
+</details>
+
+------
 
 # Multisets and Multimaps
 
