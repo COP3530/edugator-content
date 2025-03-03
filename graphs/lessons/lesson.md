@@ -3,7 +3,7 @@
 
 1. [Introduction](#introduction)
 2. [Terminology](#terminology)
-3. [Types of Graphs](#types-of-graphs)
+3. [Graph Types](#graph-types)
 4. [Implementation](#implementation)
 5. [Traversals](#traversals)
 6. [Conclusion](#conclusion)
