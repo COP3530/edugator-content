@@ -14,11 +14,11 @@ Graphs are a fundamental data structure in computer science with a wide range of
 
 ### Definition
 
-A **graph** `G` is a set of vertices (also called nodes) `V` and a set of unordered pairs called edges `E`.
+A **graph** $`G`$ is a set of vertices (also called nodes) $`V`$ and a set of unordered pairs called edges $`E`$.
 
 ![graph](../images/graph-1.png)
 
-In the above example, the vertices are `V = {a, b, c, d, e}` and the edges are `E = {{a, b}, {b, c}, {c, d}, {d, e}}`. Note that the edges are unordered pairs, meaning that the edge `{a, b}` is the same as the edge `{b, a}`.
+In the above example, the vertices are $`V = \{a, b, c, d, e\}`$ and the edges are $`E = \{\{a, b\}, \{b, c\}, \{c, d\}, \{d, e\}\}`$. Note that the edges are unordered pairs, meaning that the edge $`\{a, b\}`$ is the same as the edge $`\{b, a\}`$.
 
 Consider the tree below:
 
@@ -26,10 +26,10 @@ Consider the tree below:
 
 The set of vertices and edges are:
 
-- `V = {a, b, c, d, e, f, g}, E = {{a, b}, {a, c}, {d, c}}`
-- `V = {a, b, c, d}, E = {{a, b}, {a, c}, {d, c}, {b, c}}`
-- `V = {a, b, c, d}, E = {{a, b}, {c, b}, {c, d}}`
-- `V = {a, b, c, d}, E = {{a, b}, {b, c}}`
+- $`V = \{a, b, c, d, e, f, g\}, E = \{\{a, b\}, \{a, c\}, \{d, c\}\}`$
+- $`V = \{a, b, c, d\}, E = \{\{a, b\}, \{a, c\}, \{d, c\}, \{b, c\}\}`$
+- $`V = \{a, b, c, d\}, E = \{\{a, b\}, \{c, b\}, \{c, d\}\}`$
+- $`V = \{a, b, c, d\}, E = \{\{a, b\}, \{b, c\}\}`$
 
 <details>
 <summary>Answer</summary>
