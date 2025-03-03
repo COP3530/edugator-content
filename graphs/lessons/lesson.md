@@ -26,14 +26,14 @@ Consider the tree below:
 
 The set of vertices and edges are:
 
-- $`V = \{a, b, c, d, e, f, g\}, E = \{\{a, b\}, \{a, c\}, \{d, c\}\}`$
-- $`V = \{a, b, c, d\}, E = \{\{a, b\}, \{a, c\}, \{d, c\}, \{b, c\}\}`$
-- $`V = \{a, b, c, d\}, E = \{\{a, b\}, \{c, b\}, \{c, d\}\}`$
-- $`V = \{a, b, c, d\}, E = \{\{a, b\}, \{b, c\}\}`$
+- A. $`V = \{a, b, c, d, e, f, g\},`$ $`E = \{\{a, b\}, \{a, c\}, \{d, c\}\}`$
+- B. $`V = \{a, b, c, d\},`$ $`E = \{\{a, b\}, \{a, c\}, \{d, c\}, \{b, c\}\}`$
+- C. $`V = \{a, b, c, d\},`$ $`E = \{\{a, b\}, \{c, b\}, \{c, d\}\}`$
+- D. $`V = \{a, b, c, d\},`$ $`E = \{\{a, b\}, \{b, c\}\}`$
 
 <details>
 <summary>Answer</summary>
-V = {a, b, c, d}, E = {{a, b}, {c, b}, {c, d}}
+C.
 </details>
 
 ## Terminology
