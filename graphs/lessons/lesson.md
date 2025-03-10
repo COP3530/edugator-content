@@ -404,6 +404,78 @@ An adjacency list is an *excellent* choice when the graph is **sparse** because 
 
 ### Edge List
 
+An edge list represents a graph as a list of edges. Each edge is a pair of vertices. In the example below, the graph is represented as a list of pairs where each pair represents a directed edge. Note that there is an edge from $`a`$ to $`b`$ and the resulting pair is `(a, b)` but there is no edge in the list representing $`b`$ to $`a`$.
+
+![edge-list](../images/edge-list.png)
+
+```c++
+template <typename T>
+class EdgeList : Graph<T> {
+	vector<pair<T, T>> _edges;
+
+public:
+	EdgeList() {}
+	EdgeList(vector<pair<T, T>> edges) : _edges(edges) {}
+
+	void addVertex(T v) override {
+		// Do nothing
+	}
+
+	bool isAdjacent(T v1, T v2) override {
+		for (auto edge : _edges) {
+			if (edge == pair<T, T>{v1, v2}) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	void addEdge(T v1, T v2) override {
+		_edges.push_back(pair<T, T>{v1, v2});
+	}
+
+	vector<T> getNeighbors(T v) override {
+		vector<T> neighbors;
+		for (auto edge : _edges) {
+			if (edge.first == v) {
+				neighbors.push_back(edge.second);
+			}
+		}
+		return neighbors;
+	}
+
+	void printGraph() override {
+		for (auto edge : _edges) {
+			cout << edge.first << " -> " << edge.second << endl;
+		}
+	}
+};
+```
+
+#### addVertex
+
+Since the edge list only stores edges, this method does nothing.
+
+#### isAdjacent
+
+Time complexity: $`O(E)`$
+
+**E** - number of edges
+
+The method iterates through `_edges` and checks if the given pair exists. Note that the time complexity can be reduced to $`O(1)` if an `unordered_set` is used to store the edges.
+
+#### addEdge
+
+Time complexity: $`O(1)`$
+
+Adds an edge to the end of `_edges`.
+
+#### getNeighbors
+
+Time complexity: $`O(E)`$
+
+Iterates through `_edges` and adds the second element of the pair to a list if the first element matches the given vertex.
+
 
 ## Traversals
 
