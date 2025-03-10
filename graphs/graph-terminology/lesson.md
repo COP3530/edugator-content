@@ -19,13 +19,13 @@ We've already seen a few examples of graphs in previous lessons. For example, tr
 
 A **graph** $`G`$ is a set of vertices (also called nodes) $`V`$ and a set of pairs called edges $`E`$. The set of pairs may be ordered or unordered if you're working with directed or undirected graphs, respectively.
 
-![graph](../images/graph-1.png)
+![graph](./images/graph-1.png)
 
 In the above example, the vertices are $`V = \{a, b, c, d, e\}`$ and the edges are $`E = \{\{a, b\}, \{b, c\}, \{c, d\}, \{d, e\}\}`$. Note that the edges are unordered pairs, meaning that the edge $`\{a, b\}`$ is the same as the edge $`\{b, a\}`$.
 
 Consider the tree below:
 
-![graph](../images/graph-2.png)
+![graph](./images/graph-2.png)
 
 The set of vertices and edges are:
 
@@ -43,13 +43,13 @@ C.
 
 A graph is **undirected** if the edges are a set of *unordered* pairs. This means that if there is an edge between vertices $`a`$ and $`b`$, then there is also an edge between $`b`$ and $`a`$. The edges in an undirected graph are represented visually as lines.
 
-![undirected-graph](../images/undirected-1.png)
+![undirected-graph](./images/undirected-1.png)
 
 ### Directed Graph
 
 A graph is **directed** if the edges are a set of *ordered* pairs. Unlike undirected graphs, an edge is an ordered pair $`(v_1, v_2)`$ meaning that there is an connection from $`v_1`$ to $`v_2`$ but not necessarily from $`v_2`$ to $`v_1`$. The edges in a directed grpah are represented as arrows starting from the source vertex and pointing to the destination vertex.
 
-![directed-graph](../images/directed-1.png)
+![directed-graph](./images/directed-1.png)
 
 The set of vertices and edges are:
 
@@ -78,13 +78,13 @@ The number of edges connected to a vertex. In a directed graph, the terminology 
 
 A value assigned to an edge. Edges *only* have weights in weighted graphs. The graph below shows integer values associated with each edge. The notion of weights is important in many graph algorithms such as Dijkstra's algorithm for finding the shortest path between two vertices.
 
-![weighted-graph](../images/weighted-1.png)
+![weighted-graph](./images/weighted-1.png)
 
 ### Adjancency
 
 Two vertices $`v_1`$ and $`v_2`$ are **adjacent** if there is an edge between them. In the directed graph on the right, the vertex $`a`$ is adjacent to $`b`$ but $`b`$ is not adjacent to $`a`$. However, on the right, $`a`$ and $`b`$ are adjacent to each other because an edge in an edge in an undirected graph is a symmetric relation between vertices.
 
-![undirected-and-directed](../images/undirected-and-directed-1.png)
+![undirected-and-directed](./images/undirected-and-directed-1.png)
 
 ### Neighbor
 
@@ -96,13 +96,13 @@ A **simple graph** is a graph with no self-loops or multiple edges between the s
 
 The graph below is not *simple* because there is a self-loop on vertex $`a`$. and two edges between vertices $`a`$ and $`b`$.
 
-![#not-simple](../images/not-simple-1.png)
+![#not-simple](./images/not-simple-1.png)
 
 ### Path
 
 A **path** is a sequence of vertices in which each vertex is adjacent to the next. The length of a path is the number of edges in the path. Consider the graph below, a path highlighted by the green edges is $`a, b, d, f, b`$. Note that path is allowed to revisit vertices such.
 
-![path](../images/path-1.png)
+![path](./images/path-1.png)
 
 
 ### Simple Path
@@ -111,7 +111,7 @@ A **simple path** is a path where *only* the first and last vertex may be the sa
 
 Consider the graph on the left with the path $`a, b, d, f, b`$. This is *not* a simple path because the vertex $`b`$ appears twice but is not the first vertex. The path on the right, $`a, b, c, a`$ *is* a simple path. Although the vertex $`a`$ appears twice, it is the first and last vertex which is acceptable.
 
-![#simple-path](../images/simple-path-1.png)
+![#simple-path](./images/simple-path-1.png)
 
 ### Cycle
 
@@ -119,7 +119,7 @@ A **cycle** is a simple path where the first and last vertex are the same.
 
 The graph below has a cycle $`a, b, c, a`$.
 
-![#cylcle](../images/cycle-1.png)
+![#cylcle](./images/cycle-1.png)
 
 ### Connected
 
@@ -127,7 +127,7 @@ Two vertices $`v_1`$ and $`v_2`$ are **connected** if there exists a path betwee
 
 The vertices $`a`$ and $`b`$ are connected in the graph below because the path $`a, b`$ exists. However, the vertices $`a`$ and $`e`$ are not connected because there is no path between them.
 
-![connected](../images/connected-1.png)
+![connected](./images/connected-1.png)
 
 
 ## Graph Types
@@ -139,11 +139,11 @@ We've already discussed mentioned several graph types: directed, undirected, sim
 
 Each edge in a weighted graph has a value associated with it. The graph below is a weighted graph where each edge has an integer value, but it is not imperative that the value be an integer it may be a float value as well. In this course, we will stick to integer values for simplicity.
 
-![weighted-graph](../images/weighted-1.png)
+![weighted-graph](./images/weighted-1.png)
 
 An unweighted graph, on the other hand, does not have values associated with its edges. The graph below is an example of an unweighted graph.
 
-![unweighted-graph](../images/graph-1.png)
+![unweighted-graph](./images/graph-1.png)
 
 
 ### Connected vs Disconnected
@@ -152,7 +152,7 @@ A graph is **connected** if *every* pair of vertices is connected.
 
 For example, the graph on the left is connected because there is a path between every pair of vertices. However there exists no path between $`a`$ and $`e`$ in the graph on the right, thus, it is disconnected.
 
-![connected-graph](../images/connected-disconnected.png)
+![connected-graph](./images/connected-disconnected.png)
 
 
 ### Acyclic vs Cyclic
@@ -161,7 +161,7 @@ A graph is **acyclic** if it does not contain any cycles and is *cyclic* if it c
 
 The graph on the left contains a cycle $`a, b, c, a`$ and is therefore cyclic. The graph on the right does not contain any cycles and is acyclic.
 
-![cyclic-acyclic](../images/cyclic-acyclic.png)
+![cyclic-acyclic](./images/cyclic-acyclic.png)
 
 ### Dense vs Sparse
 
@@ -204,13 +204,13 @@ The class is an abstract template class so it can be used with any type of verte
 
 An **adjacency matrix** represents a graph a 2D matrix where the rows and columns represent the vertices of the graph. The value at $`(i, j)`$ is 1 if there is an edge between vertex $`i`$ and vertex $`j`$, and 0 otherwise.
 
-![adjacency-matrix](../images/adjacency-matrix.png)
+![adjacency-matrix](./images/adjacency-matrix.png)
 
-The code for an adjacency matrix may look like the following:
+The code for an undirected graph represented as an adjacency matrix may look like the following:
 
 ```c++
 template <typename T>
-class AdjacencyMatrix : Graph<T> {
+class AdjacencyMatrix : public Graph<T> {
 	unordered_map<T, int> _vertexToIndex;
 	unordered_map<int, T> _indexToVertex;
 	vector<vector<bool>> _adjacencyMatrix;
@@ -219,6 +219,10 @@ public:
 	AdjacencyMatrix() {}
 
 	void addVertex(T v) override {
+		if (_vertexToIndex.find(v) != _vertexToIndex.end()) {
+			return;
+		}
+
 		_vertexToIndex[v] = _adjacencyMatrix.size();
 		_indexToVertex[_vertexToIndex[v]] = v;
 
@@ -230,27 +234,29 @@ public:
 	}
 
 	void addEdge(T v1, T v2) override {
+		this->addVertex(v1);
+		this->addVertex(v2);
+
 		int i = _vertexToIndex.at(v1);
 		int j = _vertexToIndex.at(v2);
 
 		_adjacencyMatrix[i][j] = true;
-		_adjacencyMatrix[j][i] = true;
 	}
 
 	bool isAdjacent(T v1, T v2) override {
 		int i = _vertexToIndex.at(v1);
 		int j = _vertexToIndex.at(v2);
 
-		return _adjacencyMatrix[i][j];
+		return _adjacencyMatrix[j][i];
 	}
 
-	vector<T> getNeighbors(T v) override {
+	vector<T> getNeighbors(T v) const override {
 		int i = _vertexToIndex.at(v);
 		vector<T> neighbors;
 
 		for (int j = 0; j < _adjacencyMatrix.size(); ++j) {
 			if (_adjacencyMatrix[i][j]) {
-				neighbors.push_back(_vertexToIndex[j]);
+				neighbors.push_back(_indexToVertex.at(j));
 			}
 		}
 
@@ -290,7 +296,7 @@ Adds an edge between two vertices by setting the value at $`(i, j)`$ and $`(j, i
 
 Time Complexity - $`O(1)`$
 
-Checks if two vertices are adjacent by checking the value at $`(i, j)`$. The time complexity is $`O(1)`$ because accessing the indices of the vertices from a hash map is constant and checking the value of an element in an array is also constant.
+Checks if `v2` is adjacent to `v1` by checking the value at $`(j, i)`$. The time complexity is $`O(1)`$ because accessing the indices of the vertices from a hash map is constant and checking the value of an element in an array is also constant.
 
 #### getNeighbors
 
@@ -312,11 +318,11 @@ An adjacency matrix is an *excellent* choice when the graph is **dense** because
 
 An **adjacency list** represents a graph as a collection of lists. Each list contains the vertices that are adjacent to a given vertex
 
-![adjacency-list](../images/adjacency-list.png)
+![adjacency-list](./images/adjacency-list.png)
 
 Consider the graph above and the adjacency list located on the left. Each vertex is listed, and each vertex's neighbors are listed in a list.
 
-The implementation of an undirected graph via an adjacency list may look like this:
+The implementation of an *directed* graph using an adjacency list may look like this:
 
 ```c++
 template <typename T>
@@ -379,7 +385,7 @@ Time complexity: $`O(V)`$
 
 **V** - number of vertices
 
-Checks if two vertices are adjacent by searching for one vertex in the other's list of adjacent vertices. The `find` method of a vector is $`O(V)`$ in the worst case where $`V`$ is the number of vertices in the graph because all vertices may be adjacent to `v` and searched through. **Note**: This implementation can be improved by using an `unordered_set` instead of a vector to store the adjacent vertices. This would reduce the time complexity to $`O(1)`$ on average.
+Checks if `v2` is adjacent to `v1` by searching for `v2` vertex in the `v1`'s list of adjacent vertices. The `find` method of a vector is $`O(V)`$ in the worst case where $`V`$ is the number of vertices in the graph because all vertices may be adjacent to `v` and searched through. **Note**: This implementation can be improved by using an `unordered_set` instead of a vector to store the adjacent vertices. This would reduce the time complexity to $`O(1)`$ on average.
 
 #### getNeighbors
 
@@ -406,54 +412,49 @@ An adjacency list is an *excellent* choice when the graph is **sparse** because 
 
 An edge list represents a graph as a list of edges. Each edge is a pair of vertices. In the example below, the graph is represented as a list of pairs where each pair represents a directed edge. Note that there is an edge from $`a`$ to $`b`$ and the resulting pair is `(a, b)` but there is no edge in the list representing $`b`$ to $`a`$.
 
-![edge-list](../images/edge-list.png)
+![edge-list](./images/edge-list.png)
 
 The code for a *directed* graph represented as an edge list may look like this:
 
 ```c++
 template <typename T>
-class EdgeList : Graph<T> {
-	vector<pair<T, T>> _edges;
+class AdjacencyList : public Graph<T> {
+	unordered_map<T, vector<T>> _adjacencyList;
 
 public:
-	EdgeList() {}
-	EdgeList(vector<pair<T, T>> edges) : _edges(edges) {}
+
+	AdjacencyList() {}
 
 	void addVertex(T v) override {
-		// Do nothing
-	}
-
-	bool isAdjacent(T v1, T v2) override {
-		for (auto edge : _edges) {
-			if (edge == pair<T, T>{v1, v2}) {
-				return true;
-			}
-		}
-		return false;
+		_adjacencyList.emplace(make_pair(v, vector<T>()));
 	}
 
 	void addEdge(T v1, T v2) override {
-		_edges.push_back(pair<T, T>{v1, v2});
+		this->addVertex(v1);
+		this->addVertex(v2);
+		_adjacencyList[v1].push_back(v2);
 	}
 
-	vector<T> getNeighbors(T v) override {
-		vector<T> neighbors;
-		for (auto edge : _edges) {
-			if (edge.first == v) {
-				neighbors.push_back(edge.second);
-			}
-		}
-		return neighbors;
+	bool isAdjacent(T v1, T v2) override {
+		return find(_adjacencyList[v1].begin(), _adjacencyList[v1].end(), v2) != _adjacencyList[v1].end();
 	}
 
-	const vector<T>& getEdges() {
-	  return _edges;
+	vector<T> getNeighbors(T v) const override {
+		return _adjacencyList.at(v);
 	}
 
 	void printGraph() override {
-		for (auto edge : _edges) {
-			cout << edge.first << " -> " << edge.second << endl;
+		for (auto& pair : _adjacencyList) {
+			cout << pair.first << ": ";
+			for (auto& neighbor : pair.second) {
+				cout << neighbor << " ";
+			}
+			cout << endl;
 		}
+	}
+
+	const vector<T>& getNeighborsRef(T v) {
+		return _adjacencyList[v];
 	}
 };
 ```
@@ -500,11 +501,11 @@ In a future module, we will discuss more advanced graph algorithms and algorithm
 
 ## Traversals
 
-There are several ways to traverse a graph. The two most common methods are Depth-First Search and Breadth-First Search, both introduced in the trees module. The difference between traversing a tree and a graph is that a graph may contain cycles, so it is important to keep track of visited vertices to avoid infinite loops.
+There are several ways to traverse a graph. The two most common methods are Depth First Search and Breadth First Search, both introduced in the trees module. The difference between traversing a tree and a graph is that a graph may contain cycles, so it is important to keep track of visited vertices to avoid infinite loops.
 
-### Depth First Traversal (DFS)
+### Depth First Search (DFS)
 
-A **Depth First Traversal** (DFS) is a graph traversal algorithm that explores as far as possible along each branch before backtracking. The algorithm starts at a vertex and explores as far as possible along each branch before backtracking. The algorithm is implemented using a stack or recursion.
+A **Depth First Search** (DFS) is a graph traversal algorithm that explores as far as possible along each branch before backtracking. The algorithm starts at a vertex and explores as far as possible along each branch before backtracking. The algorithm is implemented using a stack or recursion.
 
 Here is the code for a depth-first traversal of a graph using recursion:
 
@@ -579,7 +580,7 @@ a b c d f
 
 The following gif demonstrates a depth-first traversal of a graph:
 
-![dfs](../images/dfs.gif)
+![dfs](./images/dfs.gif)
 
 Note that not all vertices will be visited if the graph is not connected.
 
@@ -587,8 +588,56 @@ Note that not all vertices will be visited if the graph is not connected.
 
 The time complexity of a depth-first traversal is $`O(V + E)`$ where $`V`$ is the number of vertices and $`E`$ is the number of edges. The time complexity is $`O(V + E)`$ because the algorithm traverses the entire graph by visiting each vertex and edge *once*.
 
-### Bread First Traversal (BFS)
+### Breadth First Search (BFS)
 
-Discuss the most common graph traversal algorithms: Depth-First Search (DFS) and Breadth-First Search (BFS). Explain how they work, their time and space complexity, and their use cases.
+Breadth First Search (BFS) is a graph traversal algorithm that explores all vertices at the present depth before moving on to the vertices at the next depth. The algorithm starts at a vertex and explores all of its neighbors before moving on to the neighbors of its neighbors.
+
+BFS is often implemented iteratively using a queue. Below is the code for a breadth-first traversal of a graph using a queue:
+
+```c++
+template <typename T>
+vector<T> bfs(const Graph<T>& g, T source) {
+		unordered_set<T> visitedVertices;
+		vector<T> results;
+		queue<T> q;
+
+		visitedVertices.insert(source);
+		q.push(source);
+
+		while (!q.empty()) {
+			T current = q.front();
+			q.pop();
+			results.push_back(current);
+
+			for (const T& neighbor : g.getNeighbors(current)) {
+				if (visitedVertices.find(neighbor) == visitedVertices.end()) {
+					visitedVertices.insert(neighbor);
+					q.push(neighbor);
+				}
+			}
+		}
+
+		return results;
+}
+```
+
+The above code is a generic iterative implementation of a breadth-first traversal with our abstract class `Graph`, so this code should work on any graph implementation we discussed earlier. The bfs implementation is similar to the bfs implementation for trees except we check if a vertex has already been visited before adding it to the queue to revisiting vertices and infinite cycles.
+
+A BFS finds the shortest path in terms of edges visited from a source vertex to a destination vertex. Note that the shortest path found with a BFS may not be the shortest *weighted* path in a weighted graph, we must make use of more advanced algorithms such as Dijkstra's algorithm for that (we will explore this more in a future module).
+
+The following gif demonstrates a depth-first traversal of a graph:
+
+![dfs]./images/dfs.gif)
+
+
+#### Time Complexity
+
+The time complexity of a breadth-first traversal is $`O(V + E)`$ where $`V`$ is the number of vertices and $`E`$ is the number of edges. The time complexity is $`O(V + E)`$ because, similar to dfs, the algorithm traverses the entire graph by visiting each vertex and edge *once*. The operations of adding/removing from a queue and hash map are constant time and don't affect the time complexity.
 
 ## Conclusion
+
+Graphs are a fundamental data structure in computer science with a wide range of theoretical and practical applications. We've discussed the definition of a graph, common terminology, and different types of graphs. We've also discussed different ways to implement a graph and common operations on graphs such as traversals.
+
+We've only scratched the surface of graph theory and there are many more advanced algorithms and topics to explore which we will go over in a future module.
+
+If you'd like to play around with the code provided in this lesson, it has been attached to this lesson as `trees.cpp`. Feel free to modify the code and test it out with different graphs!
