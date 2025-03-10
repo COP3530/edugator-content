@@ -322,62 +322,19 @@ An **adjacency list** represents a graph as a collection of lists. Each list con
 
 Consider the graph above and the adjacency list located on the left. Each vertex is listed, and each vertex's neighbors are listed in a list.
 
-The implementation of an *directed* graph using an adjacency list may look like this:
-
-```c++
-template <typename T>
-class AdjacencyList : public Graph<T> {
-	unordered_map<T, vector<T>> _adjacencyList;
-
-public:
-
-	AdjacencyList() {}
-
-	void addVertex(T v) override {
-		_adjacencyList.emplace(make_pair(v, vector<T>()));
-	}
-
-	void addEdge(T v1, T v2) override {
-		this->addVertex(v1);
-		this->addVertex(v2);
-		_adjacencyList[v1].push_back(v2);
-	}
-
-	bool isAdjacent(T v1, T v2) override {
-		return find(_adjacencyList[v1].begin(), _adjacencyList[v1].end(), v2) != _adjacencyList[v1].end();
-	}
-
-	vector<T> getNeighbors(T v) const override {
-		return _adjacencyList.at(v);
-	}
-
-	void printGraph() override {
-		for (auto& pair : _adjacencyList) {
-			cout << pair.first << ": ";
-			for (auto& neighbor : pair.second) {
-				cout << neighbor << " ";
-			}
-			cout << endl;
-		}
-	}
-
-	const vector<T>& getNeighborsRef(T v) {
-		return _adjacencyList[v];
-	}
-};
-```
+The code for an adjacency list will not be released as it will be used for project 2.
 
 #### addVertex
 
 Time complexity: $`O(1)`$
 
-Adds a vertex to the graph via the `unordered_map`'s `emplace` method, thus, if the vertex `v` does not exist in the graph, it is added with an empty vector of adjacent vertices. Searching for a vertex in an `unordered_map` is $`O(1)`$ on average and constructing an empty vector is also $`O(1)`$. Therefore, the total time complexity is $`O(1)`$.
+Add (`v`, `vector<T>()`) pair to the hash map if `key` does not exist in the hash map.
 
 #### addEdge
 
 Time complexity: $`O(1)`$
 
-Adds an edge between two vertices by adding each vertex to the other's list of adjacent vertices. The brackets operator searches for the given vertex (if it doesn't exist, it constructs an empty vector for the vertex) and inserts the other vertex in the list. Searching in an `unordered_map` and, if necessary, constructing an empty vector are both $`O(1)`$. The `push_back` method of a vector is also $`O(1)`$ on average, thus, the total time complexity is $`O(1)`$.
+Adds an edge between `v1` and `v2` by adding `v2` to `v1`'s list of neighbors and vice-versa. Since a hash map of keys to vectors is often used, accessing an list and adding a new element to a vector is $`O(1)`$ on average.
 
 #### isAdjacent
 
@@ -385,19 +342,15 @@ Time complexity: $`O(V)`$
 
 **V** - number of vertices
 
-Checks if `v2` is adjacent to `v1` by searching for `v2` vertex in the `v1`'s list of adjacent vertices. The `find` method of a vector is $`O(V)`$ in the worst case where $`V`$ is the number of vertices in the graph because all vertices may be adjacent to `v` and searched through. **Note**: This implementation can be improved by using an `unordered_set` instead of a vector to store the adjacent vertices. This would reduce the time complexity to $`O(1)`$ on average.
+Checks if two vertices are adjacent to each other. Accesses the list of adjacent vertices for `v1` and searches for `v2`. If a vector is used, the time complexity for searching is $`O(V)`$ in the worst case where $`V`$ is the number of vertices in the graph.
 
 #### getNeighbors
 
 Time complexity: $`O(V)`$
 
-Returns the list of adjacent vertices for a given vertex. The brackets operator searches for the given vertex in the `unordered_map` and returns a *copy* of the original vector of adjacent vertices. Searching in an `unordered_map` is $`O(1)`$ on average but copying the graph is $`O(V)`$ in the worst case where $`V`$ is the number of vertices in the graph.
+**V** - number of vertices
 
-#### getNeighborsRef
-
-Time complexity: $`O(1)`$
-
-Returns a constant reference to the list of adjacent vertices for a given vertex. An improvement over `getNeighbors` because it returns a reference instead of a copy. Note that the reference is constant so the client cannot modify the list of adjacent vertices.
+Returns a copied list of adjacent vertices for a given vertex.
 
 #### Space Complexity
 
@@ -418,43 +371,44 @@ The code for a *directed* graph represented as an edge list may look like this:
 
 ```c++
 template <typename T>
-class AdjacencyList : public Graph<T> {
-	unordered_map<T, vector<T>> _adjacencyList;
+class EdgeList : public Graph<T> {
+	vector<pair<T, T>> _edges;
 
 public:
-
-	AdjacencyList() {}
+	EdgeList() {}
+	EdgeList(vector<pair<T, T>> edges) : _edges(edges) {}
 
 	void addVertex(T v) override {
-		_adjacencyList.emplace(make_pair(v, vector<T>()));
-	}
-
-	void addEdge(T v1, T v2) override {
-		this->addVertex(v1);
-		this->addVertex(v2);
-		_adjacencyList[v1].push_back(v2);
+		// Do nothing
 	}
 
 	bool isAdjacent(T v1, T v2) override {
-		return find(_adjacencyList[v1].begin(), _adjacencyList[v1].end(), v2) != _adjacencyList[v1].end();
+		for (auto edge : _edges) {
+			if (edge == pair<T, T>{v1, v2}) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	void addEdge(T v1, T v2) override {
+		_edges.push_back(pair<T, T>{v1, v2});
 	}
 
 	vector<T> getNeighbors(T v) const override {
-		return _adjacencyList.at(v);
+		vector<T> neighbors;
+		for (auto edge : _edges) {
+			if (edge.first == v) {
+				neighbors.push_back(edge.second);
+			}
+		}
+		return neighbors;
 	}
 
 	void printGraph() override {
-		for (auto& pair : _adjacencyList) {
-			cout << pair.first << ": ";
-			for (auto& neighbor : pair.second) {
-				cout << neighbor << " ";
-			}
-			cout << endl;
+		for (auto edge : _edges) {
+			cout << edge.first << " -> " << edge.second << endl;
 		}
-	}
-
-	const vector<T>& getNeighborsRef(T v) {
-		return _adjacencyList[v];
 	}
 };
 ```
@@ -542,7 +496,7 @@ Representing the graph as an edge list, the code is tested with the following co
 
 ```c++
 int main() {
-	AdjacencyList<char> graph;
+	AdjacencyMatrix<char> graph;
 
 	graph.addEdge('a', 'b');
 	graph.addEdge('b', 'c');
@@ -625,9 +579,8 @@ The above code is a generic iterative implementation of a breadth-first traversa
 
 A BFS finds the shortest path in terms of edges visited from a source vertex to a destination vertex. Note that the shortest path found with a BFS may not be the shortest *weighted* path in a weighted graph, we must make use of more advanced algorithms such as Dijkstra's algorithm for that (we will explore this more in a future module).
 
-The following gif demonstrates a depth-first traversal of a graph:
+The following gif demonstrates a breadth-first traversal of a graph:
 
-![dfs]./images/dfs.gif)
 
 
 #### Time Complexity

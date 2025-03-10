@@ -57,47 +57,6 @@ public:
 };
 
 template <typename T>
-class AdjacencyList : public Graph<T> {
-	unordered_map<T, vector<T>> _adjacencyList;
-
-public:
-
-	AdjacencyList() {}
-
-	void addVertex(T v) override {
-		_adjacencyList.emplace(make_pair(v, vector<T>()));
-	}
-
-	void addEdge(T v1, T v2) override {
-		this->addVertex(v1);
-		this->addVertex(v2);
-		_adjacencyList[v1].push_back(v2);
-	}
-
-	bool isAdjacent(T v1, T v2) override {
-		return find(_adjacencyList[v1].begin(), _adjacencyList[v1].end(), v2) != _adjacencyList[v1].end();
-	}
-
-	vector<T> getNeighbors(T v) const override {
-		return _adjacencyList.at(v);
-	}
-
-	void printGraph() override {
-		for (auto& pair : _adjacencyList) {
-			cout << pair.first << ": ";
-			for (auto& neighbor : pair.second) {
-				cout << neighbor << " ";
-			}
-			cout << endl;
-		}
-	}
-
-	const vector<T>& getNeighborsRef(T v) {
-		return _adjacencyList[v];
-	}
-};
-
-template <typename T>
 class AdjacencyMatrix : public Graph<T> {
 	unordered_map<T, int> _vertexToIndex;
 	unordered_map<int, T> _indexToVertex;
@@ -214,7 +173,6 @@ vector<T> bfs(const Graph<T>& g, T source) {
 
 int main() {
 	AdjacencyMatrix<char> adjMatrix;
-	AdjacencyList<char> adjList;
 	EdgeList<char> edgeList;
 
 	// go crazy!
