@@ -86,6 +86,10 @@ Two vertices $`v_1`$ and $`v_2`$ are **adjacent** if there is an edge between th
 
 ![undirected-and-directed](../images/undirected-and-directed-1.png)
 
+### Neighbor
+
+A vertex $`v_2`$ is a **neighbor** of $`v_1`$ if $`v_1`$ is adjacent to $`v_2`$.
+
 ### Simple Graph
 
 A **simple graph** is a graph with no self-loops or multiple edges between the same pair of vertices. In other words, there is at most one edge between any two vertices and no edge from a vertex to itself.
@@ -176,7 +180,29 @@ Therefore, the maximum number of edges in a graph is ~$`|V|^2`$.
 
 ## Implementation
 
-Talk about the most popular implementations of graphs: adjancency lists, adjacency matrices, and edge lists. Discuss the pros and cons of each.
+There are many ways to represent a graph, each with its own advantages and disadvantages. We will discuss 3 common implementations:
+
+- Adjacency List
+- Adjacency Matrix
+- Edge List
+
+There are several operations typically tested with graphs as well:
+
+- connectedness
+- adjacency
+
+### Adjacency List
+
+An **adjaceny list** associates a vertex $`v`$ with a list of its neighbors. Typically, the list is implemented as a map with the key being the vertex and the value being a list of vertices.
+
+![adjacency-list](../images/adjacency-list.png)
+
+
+### Adjacency Matrix
+
+
+### Edge List
+
 
 ## Traversals
 
