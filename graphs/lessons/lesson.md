@@ -270,7 +270,7 @@ public:
 };
 ```
 
-#### `addVertex`
+#### addVertex
 
 Time Complexity - $`O(V)`$
 
@@ -279,19 +279,19 @@ Time Complexity - $`O(V)`$
 Adds a vertex to the graph by adding a new row and column to the adjacency matrix. Adding a new column requires appending a new element to each row and adding a new row requires creating a new row with $`V+1`$ elements. Therefore, the time complexity is $`O(V)`$.
 
 
-#### `addEdge`
+#### addEdge
 
 Time Complexity - $`O(1)`$
 
 Adds an edge between two vertices by setting the value at $`(i, j)`$ and $`(j, i)`$ to true. The time complexity is $`O(1)`$ because accessing the indices of the vertices from a hash map is constant and setting values of elements in an array is also constant.
 
-#### `isAdjacent`
+#### isAdjacent
 
 Time Complexity - $`O(1)`$
 
 Checks if two vertices are adjacent by checking the value at $`(i, j)`$. The time complexity is $`O(1)`$ because accessing the indices of the vertices from a hash map is constant and checking the value of an element in an array is also constant.
 
-#### `getNeighbors`
+#### getNeighbors
 
 Time Complexity - $`O(V)`$
 
@@ -359,8 +359,6 @@ public:
 };
 ```
 
-#### Operations
-
 #### addVertex
 
 Time complexity: $`O(1)`$
@@ -407,6 +405,8 @@ An adjacency list is an *excellent* choice when the graph is **sparse** because 
 An edge list represents a graph as a list of edges. Each edge is a pair of vertices. In the example below, the graph is represented as a list of pairs where each pair represents a directed edge. Note that there is an edge from $`a`$ to $`b`$ and the resulting pair is `(a, b)` but there is no edge in the list representing $`b`$ to $`a`$.
 
 ![edge-list](../images/edge-list.png)
+
+The code for a *directed* graph represented as an edge list may look like this:
 
 ```c++
 template <typename T>
@@ -475,7 +475,6 @@ Adds an edge to the end of `_edges`.
 Time complexity: $`O(E)`$
 
 Iterates through `_edges` and adds the second element of the pair to a list if the first element matches the given vertex.
-
 
 ## Traversals
 
