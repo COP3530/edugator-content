@@ -216,17 +216,6 @@ class AdjacencyMatrix : Graph<T> {
 
 public:
 	AdjacencyMatrix() {}
-	AdjacencyMatrix(const vector<T>& vertices) {
-		int sz = vertices.size();
-
- 		// initialize matrix
-		_adjacencyMatrix = vector<vector<bool>>(sz, vector<bool>(sz, false));
-
-		// initialize map
-		for (int i = 0; i < sz; ++i) {
-			_vertexToIndex[vertices[i]] = i;
-		}
-	}
 
 	void addVertex(T v) override {
 		_vertexToIndex[v] = _adjacencyMatrix.size();
@@ -280,6 +269,43 @@ public:
 	}
 };
 ```
+
+#### `addVertex`
+
+Time Complexity - $`O(V)`$
+
+**V** - number of vertices
+
+Adds a vertex to the graph by adding a new row and column to the adjacency matrix. Adding a new column requires appending a new element to each row and adding a new row requires creating a new row with $`V+1`$ elements. Therefore, the time complexity is $`O(V)`$.
+
+
+#### `addEdge`
+
+Time Complexity - $`O(1)`$
+
+Adds an edge between two vertices by setting the value at $`(i, j)`$ and $`(j, i)`$ to true. The time complexity is $`O(1)`$ because accessing the indices of the vertices from a hash map is constant and setting values of elements in an array is also constant.
+
+#### `isAdjacent`
+
+Time Complexity - $`O(1)`$
+
+Checks if two vertices are adjacent by checking the value at $`(i, j)`$. The time complexity is $`O(1)`$ because accessing the indices of the vertices from a hash map is constant and checking the value of an element in an array is also constant.
+
+#### `getNeighbors`
+
+Time Complexity - $`O(V)`$
+
+**V** - number of vertices
+
+Iterates through the row of the vertex in the adjacency matrix and adds the neighbors to a list. The time complexity is $`O(V)`$ because the number of neighbors is proportional to the number of vertices in the graph.
+
+#### Space Complexity
+
+The space complexity of an adjacency matrix is $`O(V^2)`$ where $`V`$ is the number of vertices. The adjacency matrix stores all possible connections between vertices, thus, the space complexity is $`O(V^2)`$.
+
+#### When to use
+
+An adjacency matrix is an *excellent* choice when the graph is **dense** because it stores all possible connections between vertices. This makes checking for adjacency between two vertices $`v_1`$ and $`v_2`$ very efficient because it is a constant time operation. However, if the graph is **sparse**, an adjacency matrix may be inefficient because it stores all possible connections between vertices even if they do not exist.
 
 ### Adjacency List
 
@@ -335,15 +361,37 @@ public:
 
 #### Operations
 
-**addVertex** - Time complexity: $`O(1)`$. Adds a vertex to the graph via the `unordered_map`'s `emplace` method, thus, if the vertex `v` does not exist in the graph, it is added with an empty vector of adjacent vertices. Searching for a vertex in an `unordered_map` is $`O(1)`$ on average and constructing an empty vector is also $`O(1)`$. Therefore, the total time complexity is $`O(1)`$.
+#### addVertex
 
-**addEdge** - Time complexity: $`O(1)`$. Adds an edge between two vertices by adding each vertex to the other's list of adjacent vertices. The brackets operator searches for the given vertex (if it doesn't exist, it constructs an empty vector for the vertex) and inserts the other vertex in the list. Searching in an `unordered_map` and, if necessary, constructing an empty vector are both $`O(1)`$. The `push_back` method of a vector is also $`O(1)`$ on average, thus, the total time complexity is $`O(1)`$.
+Time complexity: $`O(1)`$
 
-**isAdjacent** - Time complexity: $`O(V)`$. Checks if two vertices are adjacent by searching for one vertex in the other's list of adjacent vertices. The `find` method of a vector is $`O(V)`$ in the worst case where $`V`$ is the number of vertices in the graph because all vertices may be adjacent to `v` and searched through. **Note**: This implementation can be improved by using an `unordered_set` instead of a vector to store the adjacent vertices. This would reduce the time complexity to $`O(1)`$ on average.
+Adds a vertex to the graph via the `unordered_map`'s `emplace` method, thus, if the vertex `v` does not exist in the graph, it is added with an empty vector of adjacent vertices. Searching for a vertex in an `unordered_map` is $`O(1)`$ on average and constructing an empty vector is also $`O(1)`$. Therefore, the total time complexity is $`O(1)`$.
 
-**getNeighbors** - Time complexity: $`O(V)`$. Returns the list of adjacent vertices for a given vertex. The brackets operator searches for the given vertex in the `unordered_map` and returns a *copy* of the original vector of adjacent vertices. Searching in an `unordered_map` is $`O(1)`$ on average but copying the graph is $`O(V)`$ in the worst case where $`V`$ is the number of vertices in the graph.
+#### addEdge
 
-**getNeighborsRef** - Time complexity: $`O(1)`$. Returns a constant reference to the list of adjacent vertices for a given vertex. An improvement over `getNeighbors` because it returns a reference instead of a copy. Note that the reference is constant so the client cannot modify the list of adjacent vertices.
+Time complexity: $`O(1)`$
+
+Adds an edge between two vertices by adding each vertex to the other's list of adjacent vertices. The brackets operator searches for the given vertex (if it doesn't exist, it constructs an empty vector for the vertex) and inserts the other vertex in the list. Searching in an `unordered_map` and, if necessary, constructing an empty vector are both $`O(1)`$. The `push_back` method of a vector is also $`O(1)`$ on average, thus, the total time complexity is $`O(1)`$.
+
+#### isAdjacent
+
+Time complexity: $`O(V)`$
+
+**V** - number of vertices
+
+Checks if two vertices are adjacent by searching for one vertex in the other's list of adjacent vertices. The `find` method of a vector is $`O(V)`$ in the worst case where $`V`$ is the number of vertices in the graph because all vertices may be adjacent to `v` and searched through. **Note**: This implementation can be improved by using an `unordered_set` instead of a vector to store the adjacent vertices. This would reduce the time complexity to $`O(1)`$ on average.
+
+#### getNeighbors
+
+Time complexity: $`O(V)`$
+
+Returns the list of adjacent vertices for a given vertex. The brackets operator searches for the given vertex in the `unordered_map` and returns a *copy* of the original vector of adjacent vertices. Searching in an `unordered_map` is $`O(1)`$ on average but copying the graph is $`O(V)`$ in the worst case where $`V`$ is the number of vertices in the graph.
+
+#### getNeighborsRef
+
+Time complexity: $`O(1)`$
+
+Returns a constant reference to the list of adjacent vertices for a given vertex. An improvement over `getNeighbors` because it returns a reference instead of a copy. Note that the reference is constant so the client cannot modify the list of adjacent vertices.
 
 #### Space Complexity
 
