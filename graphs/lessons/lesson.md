@@ -191,7 +191,8 @@ public:
 	virtual void addVertex(T v) = 0;
 	virtual bool isAdjacent(T v1, T v2) = 0;
 	virtual void addEdge(T v1, T v2) = 0;
-	virtual vector<T> getNeighbors(T v) = 0;
+	virtual vector<T> getNeighbors(T v) const = 0;
+	virtual void printGraph() = 0;
 };
 ```
 
@@ -319,7 +320,7 @@ The implementation of an undirected graph via an adjacency list may look like th
 
 ```c++
 template <typename T>
-class AdjacencyList : Graph<T> {
+class AdjacencyList : public Graph<T> {
 	unordered_map<T, vector<T>> _adjacencyList;
 
 public:
@@ -331,16 +332,17 @@ public:
 	}
 
 	void addEdge(T v1, T v2) override {
+		this->addVertex(v1);
+		this->addVertex(v2);
 		_adjacencyList[v1].push_back(v2);
-		_adjacencyList[v2].push_back(v1);
 	}
 
 	bool isAdjacent(T v1, T v2) override {
 		return find(_adjacencyList[v1].begin(), _adjacencyList[v1].end(), v2) != _adjacencyList[v1].end();
 	}
 
-	vector<T> getNeighbors(T v) override {
-		return _adjacencyList[v];
+	vector<T> getNeighbors(T v) const override {
+		return _adjacencyList.at(v);
 	}
 
 	void printGraph() override {
@@ -497,6 +499,95 @@ An edge list is an *excellent* choice when the graph is **sparse** because it on
 In a future module, we will discuss more advanced graph algorithms and algorithms such as Bellman-Ford and Kruskal's algorithm which are typically implemented using an edge list since they iterating through the edges is a core part of those algorithms.
 
 ## Traversals
+
+There are several ways to traverse a graph. The two most common methods are Depth-First Search and Breadth-First Search, both introduced in the trees module. The difference between traversing a tree and a graph is that a graph may contain cycles, so it is important to keep track of visited vertices to avoid infinite loops.
+
+### Depth First Traversal (DFS)
+
+A **Depth First Traversal** (DFS) is a graph traversal algorithm that explores as far as possible along each branch before backtracking. The algorithm starts at a vertex and explores as far as possible along each branch before backtracking. The algorithm is implemented using a stack or recursion.
+
+Here is the code for a depth-first traversal of a graph using recursion:
+
+```c++
+template <typename T>
+void _dfs(const Graph<T>& g, const T& source, unordered_set<T>& visitedVertices, vector<T>& results) {
+	visitedVertices.insert(source);
+	results.push_back(source);
+
+	vector<T> neighbors = g.getNeighbors(source);
+	for (T neighbor : neighbors) {
+		if (visitedVertices.find(neighbor) == visitedVertices.end()) {
+			_dfs(g, neighbor, visitedVertices, results);
+		}
+	}
+}
+
+template <typename T>
+vector<T> dfs(const Graph<T>& g, T source) {
+	unordered_set<T> visitedVertices;
+	vector<T> results;
+	_dfs(g, source, visitedVertices, results);
+	return results;
+}
+```
+
+The above code is a generic recursive implementation of a depth-first traversal with our abstract class `Graph`, so this code should work on any graph implementation we discussed earlier.
+
+The main `dfs` function accepts a graph and a source vertex to begin the dfs from. It initializes a set of visited vertices and a vector to store the results. The helper function `_dfs` is called with the graph, source vertex, visited vertices, and results.
+
+The recursion begins with the `_dfs` function which inserts the source vertex into `visitedVertices` and to `results`. The neighbors of the source vertex are retrieved and iterated through. If the neighbor has not been visited, the `_dfs` function is called recursively with the neighbor as the source vertex.
+
+Representing the graph as an edge list, the code is tested with the following code:
+
+```c++
+int main() {
+	AdjacencyList<char> graph;
+
+	graph.addEdge('a', 'b');
+	graph.addEdge('b', 'c');
+	graph.addEdge('c', 'a');
+	graph.addEdge('f', 'b');
+	graph.addEdge('c', 'd');
+	graph.addEdge('d', 'f');
+	graph.addEdge('e', 'd');
+
+	graph.printGraph();
+	vector<char> result = dfs(graph, 'a');
+
+	cout << "\nDFS: \n";
+	for (char c : result) {
+		cout << c << " ";
+	}
+
+	return 0;
+}
+```
+
+and has the following output:
+
+```text
+e: d
+d: f
+c: a d
+b: c
+f: b
+a: b
+
+DFS:
+a b c d f
+```
+
+The following gif demonstrates a depth-first traversal of a graph:
+
+![dfs](../images/dfs.gif)
+
+Note that not all vertices will be visited if the graph is not connected.
+
+#### Time Complexity
+
+The time complexity of a depth-first traversal is $`O(V + E)`$ where $`V`$ is the number of vertices and $`E`$ is the number of edges. The time complexity is $`O(V + E)`$ because the algorithm traverses the entire graph by visiting each vertex and edge *once*.
+
+### Bread First Traversal (BFS)
 
 Discuss the most common graph traversal algorithms: Depth-First Search (DFS) and Breadth-First Search (BFS). Explain how they work, their time and space complexity, and their use cases.
 
