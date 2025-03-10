@@ -444,6 +444,10 @@ public:
 		return neighbors;
 	}
 
+	const vector<T>& getEdges() {
+	  return _edges;
+	}
+
 	void printGraph() override {
 		for (auto edge : _edges) {
 			cout << edge.first << " -> " << edge.second << endl;
@@ -475,6 +479,22 @@ Adds an edge to the end of `_edges`.
 Time complexity: $`O(E)`$
 
 Iterates through `_edges` and adds the second element of the pair to a list if the first element matches the given vertex.
+
+#### getEdges
+
+Time complexity: $`O(1)`$
+
+Returns a reference to `_edges`.
+
+#### Space Complexity
+
+The space complexity of an edge list is $`O(E)`$ where $`E`$ is the number of edges. The edge list stores all of the edges in the graph.
+
+#### When to use
+
+An edge list is an *excellent* choice when the graph is **sparse** because it only stores the edges that exist. However, an edge list is not as efficient as an adjacency list because it does not store the vertices and their neighbors. The time complexity of `isAdjacent` and `getNeighbors` is $`O(E)`$ where $`E`$ is the number of edges in the graph. Therefore, an edge list is not as efficient as an adjacency list for these operations.
+
+In a future module, we will discuss more advanced graph algorithms and algorithms such as Bellman-Ford and Kruskal's algorithm which are typically implemented using an edge list since they iterating through the edges is a core part of those algorithms.
 
 ## Traversals
 
