@@ -191,7 +191,7 @@ public:
 	virtual void addVertex(T v) = 0;
 	virtual bool isAdjacent(T v1, T v2) = 0;
 	virtual void addEdge(T v1, T v2) = 0;
-	virtual vector<T> getAdjacentVertices(T v) = 0;
+	virtual vector<T> getNeighbors(T v) = 0;
 };
 ```
 
@@ -201,9 +201,89 @@ The class is an abstract template class so it can be used with any type of verte
 
 ### Adjacency Matrix
 
+An **adjacency matrix** represents a graph a 2D matrix where the rows and columns represent the vertices of the graph. The value at $`(i, j)`$ is 1 if there is an edge between vertex $`i`$ and vertex $`j`$, and 0 otherwise.
+
+![adjacency-matrix](../images/adjacency-matrix.png)
+
+The code for an adjacency matrix may look like the following:
+
+```c++
+template <typename T>
+class AdjacencyMatrix : Graph<T> {
+	unordered_map<T, int> _vertexToIndex;
+	unordered_map<int, T> _indexToVertex;
+	vector<vector<bool>> _adjacencyMatrix;
+
+public:
+	AdjacencyMatrix() {}
+	AdjacencyMatrix(const vector<T>& vertices) {
+		int sz = vertices.size();
+
+ 		// initialize matrix
+		_adjacencyMatrix = vector<vector<bool>>(sz, vector<bool>(sz, false));
+
+		// initialize map
+		for (int i = 0; i < sz; ++i) {
+			_vertexToIndex[vertices[i]] = i;
+		}
+	}
+
+	void addVertex(T v) override {
+		_vertexToIndex[v] = _adjacencyMatrix.size();
+		_indexToVertex[_vertexToIndex[v]] = v;
+
+		// add new row and column for the new vertex
+		for (auto& row : _adjacencyMatrix) {
+			row.push_back(false);
+		}
+		_adjacencyMatrix.push_back(vector<bool>(_adjacencyMatrix.size() + 1, false));
+	}
+
+	void addEdge(T v1, T v2) override {
+		int i = _vertexToIndex.at(v1);
+		int j = _vertexToIndex.at(v2);
+
+		_adjacencyMatrix[i][j] = true;
+		_adjacencyMatrix[j][i] = true;
+	}
+
+	bool isAdjacent(T v1, T v2) override {
+		int i = _vertexToIndex.at(v1);
+		int j = _vertexToIndex.at(v2);
+
+		return _adjacencyMatrix[i][j];
+	}
+
+	vector<T> getNeighbors(T v) override {
+		int i = _vertexToIndex.at(v);
+		vector<T> neighbors;
+
+		for (int j = 0; j < _adjacencyMatrix.size(); ++j) {
+			if (_adjacencyMatrix[i][j]) {
+				neighbors.push_back(_vertexToIndex[j]);
+			}
+		}
+
+		return neighbors;
+	}
+
+	void printGraph() override {
+		for (int i = 0; i < _adjacencyMatrix.size(); ++i) {
+			cout << _indexToVertex[i] << ": ";
+			for (int j = 0; j < _adjacencyMatrix.size(); ++j) {
+				if (_adjacencyMatrix[i][j]) {
+					cout << _indexToVertex[j] << " ";
+				}
+			}
+			cout << endl;
+		}
+	}
+};
+```
+
 ### Adjacency List
 
-An **adjacency list** is a data structure that represents a graph as a collection of lists. Each list contains the vertices that are adjacent to a given vertex
+An **adjacency list** represents a graph as a collection of lists. Each list contains the vertices that are adjacent to a given vertex
 
 ![adjacency-list](../images/adjacency-list.png)
 
@@ -233,11 +313,21 @@ public:
 		return find(_adjacencyList[v1].begin(), _adjacencyList[v1].end(), v2) != _adjacencyList[v1].end();
 	}
 
-	vector<T> getAdjacentVertices(T v) override {
+	vector<T> getNeighbors(T v) override {
 		return _adjacencyList[v];
 	}
 
-	const vector<T>& getAdjacentVerticesRef(T v) {
+	void printGraph() override {
+		for (auto& pair : _adjacencyList) {
+			cout << pair.first << ": ";
+			for (auto& neighbor : pair.second) {
+				cout << neighbor << " ";
+			}
+			cout << endl;
+		}
+	}
+
+	const vector<T>& getNeighborsRef(T v) {
 		return _adjacencyList[v];
 	}
 };
@@ -251,9 +341,9 @@ public:
 
 **isAdjacent** - Time complexity: $`O(V)`$. Checks if two vertices are adjacent by searching for one vertex in the other's list of adjacent vertices. The `find` method of a vector is $`O(V)`$ in the worst case where $`V`$ is the number of vertices in the graph because all vertices may be adjacent to `v` and searched through. **Note**: This implementation can be improved by using an `unordered_set` instead of a vector to store the adjacent vertices. This would reduce the time complexity to $`O(1)`$ on average.
 
-**getAdjacentVertices** - Time complexity: $`O(V)`$. Returns the list of adjacent vertices for a given vertex. The brackets operator searches for the given vertex in the `unordered_map` and returns a *copy* of the original vector of adjacent vertices. Searching in an `unordered_map` is $`O(1)`$ on average but copying the graph is $`O(V)`$ in the worst case where $`V`$ is the number of vertices in the graph.
+**getNeighbors** - Time complexity: $`O(V)`$. Returns the list of adjacent vertices for a given vertex. The brackets operator searches for the given vertex in the `unordered_map` and returns a *copy* of the original vector of adjacent vertices. Searching in an `unordered_map` is $`O(1)`$ on average but copying the graph is $`O(V)`$ in the worst case where $`V`$ is the number of vertices in the graph.
 
-**getAdjacentVerticesRef** - Time complexity: $`O(1)`$. Returns a constant reference to the list of adjacent vertices for a given vertex. An improvement over `getAdjacentVertices` because it returns a reference instead of a copy. Note that the reference is constant so the client cannot modify the list of adjacent vertices.
+**getNeighborsRef** - Time complexity: $`O(1)`$. Returns a constant reference to the list of adjacent vertices for a given vertex. An improvement over `getNeighbors` because it returns a reference instead of a copy. Note that the reference is constant so the client cannot modify the list of adjacent vertices.
 
 #### Space Complexity
 
