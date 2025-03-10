@@ -180,25 +180,88 @@ Therefore, the maximum number of edges in a graph is ~$`|V|^2`$.
 
 ## Implementation
 
-There are many ways to represent a graph, each with its own advantages and disadvantages. We will discuss 3 common implementations:
+When implementing a graph, we must consider the density of the graph and the efficiency of common operations such as adding and removing vertices and edges, checking for adjacency, and traversing the graph.
 
-- Adjacency List
-- Adjacency Matrix
-- Edge List
+First consider a base class for the following graph implementations:
 
-There are several operations typically tested with graphs as well:
+```c++
+template <typename T>
+class Graph {
+public:
+	virtual void addVertex(T v) = 0;
+	virtual bool isAdjacent(T v1, T v2) = 0;
+	virtual void addEdge(T v1, T v2) = 0;
+	virtual vector<T> getAdjacentVertices(T v) = 0;
+};
+```
 
-- connectedness
-- adjacency
+The class is an abstract template class so it can be used with any type of vertex and will be overridden by the implementations we talk about.
+
+**Note**: When implementing a graph, it is not necessary to implement a base class. This is just for demonstration purposes to display common operations on common implementations.
+
+### Adjacency Matrix
 
 ### Adjacency List
 
-An **adjaceny list** associates a vertex $`v`$ with a list of its neighbors. Typically, the list is implemented as a map with the key being the vertex and the value being a list of vertices.
+An **adjacency list** is a data structure that represents a graph as a collection of lists. Each list contains the vertices that are adjacent to a given vertex
 
 ![adjacency-list](../images/adjacency-list.png)
 
+Consider the graph above and the adjacency list located on the left. Each vertex is listed, and each vertex's neighbors are listed in a list.
 
-### Adjacency Matrix
+The implementation of an undirected graph via an adjacency list may look like this:
+
+```c++
+template <typename T>
+class AdjacencyList : Graph<T> {
+	unordered_map<T, vector<T>> _adjacencyList;
+
+public:
+
+	AdjacencyList() {}
+
+	void addVertex(T v) override {
+		_adjacencyList.emplace(make_pair(v, vector<T>()));
+	}
+
+	void addEdge(T v1, T v2) override {
+		_adjacencyList[v1].push_back(v2);
+		_adjacencyList[v2].push_back(v1);
+	}
+
+	bool isAdjacent(T v1, T v2) override {
+		return find(_adjacencyList[v1].begin(), _adjacencyList[v1].end(), v2) != _adjacencyList[v1].end();
+	}
+
+	vector<T> getAdjacentVertices(T v) override {
+		return _adjacencyList[v];
+	}
+
+	const vector<T>& getAdjacentVerticesRef(T v) {
+		return _adjacencyList[v];
+	}
+};
+```
+
+#### Operations
+
+**addVertex** - Time complexity: $`O(1)`$. Adds a vertex to the graph via the `unordered_map`'s `emplace` method, thus, if the vertex `v` does not exist in the graph, it is added with an empty vector of adjacent vertices. Searching for a vertex in an `unordered_map` is $`O(1)`$ on average and constructing an empty vector is also $`O(1)`$. Therefore, the total time complexity is $`O(1)`$.
+
+**addEdge** - Time complexity: $`O(1)`$. Adds an edge between two vertices by adding each vertex to the other's list of adjacent vertices. The brackets operator searches for the given vertex (if it doesn't exist, it constructs an empty vector for the vertex) and inserts the other vertex in the list. Searching in an `unordered_map` and, if necessary, constructing an empty vector are both $`O(1)`$. The `push_back` method of a vector is also $`O(1)`$ on average, thus, the total time complexity is $`O(1)`$.
+
+**isAdjacent** - Time complexity: $`O(V)`$. Checks if two vertices are adjacent by searching for one vertex in the other's list of adjacent vertices. The `find` method of a vector is $`O(V)`$ in the worst case where $`V`$ is the number of vertices in the graph because all vertices may be adjacent to `v` and searched through. **Note**: This implementation can be improved by using an `unordered_set` instead of a vector to store the adjacent vertices. This would reduce the time complexity to $`O(1)`$ on average.
+
+**getAdjacentVertices** - Time complexity: $`O(V)`$. Returns the list of adjacent vertices for a given vertex. The brackets operator searches for the given vertex in the `unordered_map` and returns a *copy* of the original vector of adjacent vertices. Searching in an `unordered_map` is $`O(1)`$ on average but copying the graph is $`O(V)`$ in the worst case where $`V`$ is the number of vertices in the graph.
+
+**getAdjacentVerticesRef** - Time complexity: $`O(1)`$. Returns a constant reference to the list of adjacent vertices for a given vertex. An improvement over `getAdjacentVertices` because it returns a reference instead of a copy. Note that the reference is constant so the client cannot modify the list of adjacent vertices.
+
+#### Space Complexity
+
+The space complexity of an adjacency list is $`O(V + E)`$ where $`V`$ is the number of vertices and $`E`$ is the number of edges. The adjacency list stores all of the vertices (V) as well as a list of adjacent vertices. Each adjacent vertex represents an edge, thus, the total space complexity is $`O(V + E)`$.
+
+#### When to use
+
+An adjacency list is an *excellent* choice when the graph is **sparse** because it only stores the edges that exist. Unlike an adjacency matrix which stores all possible connections, an adjacency list only stores those that exist. Note that if the graph is dense, an adjacency list with optimizations on `isAdjacent` may perform similar (if not *slightly* worse) to an adjacency matrix due to the overhead of hashing, but this may only become apparent in very large graphs.
 
 
 ### Edge List
