@@ -492,7 +492,7 @@ The main `dfs` function accepts a graph and a source vertex to begin the dfs fro
 
 The recursion begins with the `_dfs` function which inserts the source vertex into `visitedVertices` and to `results`. The neighbors of the source vertex are retrieved and iterated through. If the neighbor has not been visited, the `_dfs` function is called recursively with the neighbor as the source vertex.
 
-Representing the graph as an edge list, the code is tested with the following code:
+Representing the graph as an adjacency amtrix, the code is tested with the following code:
 
 ```c++
 int main() {
@@ -551,27 +551,27 @@ BFS is often implemented iteratively using a queue. Below is the code for a brea
 ```c++
 template <typename T>
 vector<T> bfs(const Graph<T>& g, T source) {
-		unordered_set<T> visitedVertices;
-		vector<T> results;
-		queue<T> q;
+	unordered_set<T> visitedVertices;
+	vector<T> results;
+	queue<T> q;
 
-		visitedVertices.insert(source);
-		q.push(source);
+	visitedVertices.insert(source);
+	q.push(source);
 
-		while (!q.empty()) {
-			T current = q.front();
-			q.pop();
-			results.push_back(current);
+	while (!q.empty()) {
+		T current = q.front();
+		q.pop();
+		results.push_back(current);
 
-			for (const T& neighbor : g.getNeighbors(current)) {
-				if (visitedVertices.find(neighbor) == visitedVertices.end()) {
-					visitedVertices.insert(neighbor);
-					q.push(neighbor);
-				}
+		for (const T& neighbor : g.getNeighbors(current)) {
+			if (visitedVertices.find(neighbor) == visitedVertices.end()) {
+				visitedVertices.insert(neighbor);
+				q.push(neighbor);
 			}
 		}
+	}
 
-		return results;
+	return results;
 }
 ```
 
@@ -582,6 +582,50 @@ A BFS finds the shortest path in terms of edges visited from a source vertex to 
 The following gif demonstrates a breadth-first traversal of a graph:
 
 ![bfs](./images/bfs.gif)
+
+Representing the graph as adjacency matrix, the code is tested with the following code:
+
+```c++
+int main() {
+	AdjacencyMatrix<char> graph;
+
+	graph.addEdge('a', 'b');
+	graph.addEdge('a', 'c');
+	graph.addEdge('a', 'd');
+	graph.addEdge('d', 'g');
+	graph.addEdge('g', 'c');
+	graph.addEdge('b', 'c');
+	graph.addEdge('b', 'f');
+	graph.addEdge('f', 'h');
+	graph.addEdge('h', 'b');
+	graph.addEdge('h', 'g');
+
+	graph.printGraph();
+	vector<char> result = bfs(graph, 'a');
+
+	cout << "\nBFS: \n";
+	for (char c : result) {
+		cout << c << " ";
+	}
+
+	return 0;
+}
+```
+
+and has the following output:
+
+```text
+a: b c d
+b: c f
+c:
+d: g
+g: c
+f: h
+h: b g
+
+BFS:
+a b c d f g h
+```
 
 #### Time Complexity
 
