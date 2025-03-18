@@ -1,0 +1,50 @@
+# General
+Thumbs.db
+*.log
+*.swp
+*.swo
+*.bak
+*.tmp
+*.lock
+*.cache
+
+# Compiled files
+*.o
+*.so
+*.dll
+*.dylib
+*.exe
+*.out
+*.class
+*.pyc
+*.pyo
+*.pyd
+
+# C, C++, Go
+*.a
+*.la
+*.lo
+*.mod
+*.sum
+*.exe
+bin/
+obj/
+
+# IDEs
+.vscode/
+.idea/
+*.ipr
+*.iws
+*.iml
+out/
+.vscode/
+*.code-workspace
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+*.swp
+*.swo
