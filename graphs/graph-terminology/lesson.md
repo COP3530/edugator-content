@@ -581,7 +581,7 @@ A BFS finds the shortest path in terms of edges visited from a source vertex to 
 
 The following gif demonstrates a breadth-first traversal of a graph:
 
-
+![bfs](./images/bfs.gif)
 
 #### Time Complexity
 
@@ -594,3 +594,7 @@ Graphs are a fundamental data structure in computer science with a wide range of
 We've only scratched the surface of graph theory and there are many more advanced algorithms and topics to explore which we will go over in a future module.
 
 If you'd like to play around with the code provided in this lesson, it has been attached to this lesson as `trees.cpp`. Feel free to modify the code and test it out with different graphs!
+
+Lesson content written with AI assistance.
+
+Find a mistake? Open an issue on [GitHub](https://github.com/COP3530/edugator-content/issues)!
