@@ -220,6 +220,48 @@ Thus, the worst case time complexity is O(VE).
 The algorithm may be optimized by skipping over vertices whose distances have not changed in the previous iteration.
 This variation of the algorithmw was introduced by Edward F. Moore in 1959 and is referred to as the *Bellman-Ford-Moore algorithm*.
 
+------
+
+![Directed, weighted graph with edge list: (s, a, 9), (s, b, 2), (s, d, 1), (a, d, 4), (b, c, 3), (b, e, 5), (c, e, 2), (d, c, 3), (d, e, 6), (e, a, 4)](image-4.png)
+
+Using Dijkstra's algorithm, calculate the shortest distances from 's' to all other nodes and each node's predecessor.
+Which of the following shows the correct output?
+- a: (9, s), b: (2, s), c: (5, b), d: (1, s), e: (7, b)
+- a: (2, e), b: (2, s), c: (3, d), d: (1, s), e: (6, d)
+- a: (8, e), b: (2, s), c: (5, b), d: (1, s), e: (6, d)
+- a: (9, s), b: (2, s), c: (4, d), d: (1, s), e: (7, d)
+- a: (8, e), b: (2, s), c: (4, d), d: (1, s), e: (6, c)
+
+<details>
+<summary>Answer</summary>
+a: (8, e), b: (2, s), c: (4, d), d: (1, s), e: (6, c)
+</details>
+
+------
+
+```
+s: 0, None
+u: 14, w
+v: 16, u
+w: 6, s
+x: 8, w
+```
+
+Consider the above possible output of Dijkstra's algorithm.
+What is the weight of the edge from 'w' to 'u' in the graph?
+- 6
+- 8
+- 14
+- 16
+- This cannot be determined from the given information.
+
+<details>
+<summary>Answer</summary>
+8
+</details>
+
+------
+
 # Minimum Spanning Tree Algorithms
 
 For a connected, undirected graph, a **spanning tree** is a subset of the edges that connects all vertices without forming any cycles.
@@ -351,6 +393,41 @@ Sorting the edges takes O(E log E) time.
 Each edge is processed once, taking O(E) time.
 The time complexities of union and find are O(log E) and O(1), respectively, so the total time complexity is O(E log E).
 
+------
+
+![Undirected, weighted graph with edge list: (a, b, 10), (a, e, 7), (a, f, 1), (b, c, 3), (b, f, 6), (c, d, 2), (c, f, 4), (d, e, 8), (d, f, 5), (e, f, 9)](image-5.png)
+
+Using Prim's algorithm, calculate the minimum spanning tree of the above graph starting from vertex 'd'.
+Which of the following shows the correct order of vertices visited?
+- d, c, b, f, a, e
+- d, c, b, f, e, a
+- d, c, b, a, f, e
+- d, c, f, e, a, b
+- d, c, b, e, f, a
+
+<details>
+<summary>Answer</summary>
+d, c, b, f, a, e
+</details>
+
+------
+
+![Undirected, weighted graph with edge list: (a, b, 10), (a, e, 7), (a, f, 1), (b, c, 3), (b, f, 6), (c, d, 2), (c, f, 4), (d, e, 8), (d, f, 5), (e, f, 9)](image-5.png)
+
+Using Kruskal's algorithm, determine the order in which the edges are added to the minimum spanning tree.
+- (a, f), (c, d), (b, c), (c, f), (d, f)
+- (a, f), (c, d), (b, c), (c, f), (a, e)
+- (a, f), (c, d), (b, c), (c, f), (e, f)
+- (a, f), (c, f), (c, d), (c, b), (a, e)
+- (a, f), (c, f), (b, c), (d, f), (a, e)
+
+<details>
+<summary>Answer</summary>
+(a, f), (c, d), (b, c), (c, f), (a, e)
+</details>
+
+------
+
 # Topological Sorting
 
 Our last topic is topological sorting.
@@ -414,6 +491,25 @@ The time complexity of topological sorting is O(V + E), where V is the number of
 Counting the in-degrees takes O(E) time.
 Each vertex is added to the queue once (when its in-degree is 0), so this takes O(V) time.
 
+------
+
+![Directed, unweighted graph with edge list: (a, f), (b, a), (b, e), (c, b), (c, f), (c, h), (e, g), (f, d), (f, e), (h, g)](image-6.png)
+
+Which of the following is NOT a valid topological sort of the above graph?
+- c, b, f, h, a, e, d, g
+- c, b, a, f, e, h, d, g
+- c, h, b, a, f, e, g, d
+- c, h, b, a, f, d, e, g
+- All of these are valid topological sorts.
+- None of these are valid topological sorts.
+
+<details>
+<summary>Answer</summary>
+c, b, f, h, a, e, d, g
+</details>
+
+------
+
 # Conclusion
 
 In this lesson, we have discussed three useful categories of graph algorithms: shortest path algorithms, minimum spanning tree algorithms, and topological sorting.
@@ -432,5 +528,6 @@ Graphics by Brian Magnuson.
 
 Lesson content written with AI assistance.
 
-Find a mistake? Open an issue on [GitHub](https://github.com/COP3530/edugator-content/issues)!
+This work by Brian Magnuson is licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 
+Find a mistake? Open an issue on [GitHub](https://github.com/COP3530/edugator-content/issues)!
