@@ -639,6 +639,14 @@ We've only scratched the surface of graph theory and there are many more advance
 
 If you'd like to play around with the code provided in this lesson, it has been attached to this lesson as `trees.cpp`. Feel free to modify the code and test it out with different graphs!
 
+## References
+
+- [COP3530 Instructional Content](https://github.com/COP3530/Instructional-Content)
+
+Graphics by Matthew DeGuzman.
+
 Lesson content written with AI assistance.
+
+This work by Matthew DeGuzman is licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 
 Find a mistake? Open an issue on [GitHub](https://github.com/COP3530/edugator-content/issues)!
