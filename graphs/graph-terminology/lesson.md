@@ -47,7 +47,7 @@ A graph is **undirected** if the edges are a set of *unordered* pairs. This mean
 
 ### Directed Graph
 
-A graph is **directed** if the edges are a set of *ordered* pairs. Unlike undirected graphs, an edge is an ordered pair $`(v_1, v_2)`$ meaning that there is an connection from $`v_1`$ to $`v_2`$ but not necessarily from $`v_2`$ to $`v_1`$. The edges in a directed grpah are represented as arrows starting from the source vertex and pointing to the destination vertex.
+A graph is **directed** if the edges are a set of *ordered* pairs. Unlike undirected graphs, an edge is an ordered pair $`(v_1, v_2)`$ meaning that there is an connection from $`v_1`$ to $`v_2`$ but not necessarily from $`v_2`$ to $`v_1`$. The edges in a directed graph are represented as arrows starting from the source vertex and pointing to the destination vertex.
 
 ![directed-graph](./images/directed-1.png)
 
@@ -80,7 +80,7 @@ A value assigned to an edge. Edges *only* have weights in weighted graphs. The g
 
 ![weighted-graph](./images/weighted-1.png)
 
-### Adjancency
+### Adjaency
 
 Two vertices $`v_1`$ and $`v_2`$ are **adjacent** if there is an edge between them. In the directed graph on the right, the vertex $`a`$ is adjacent to $`b`$ but $`b`$ is not adjacent to $`a`$. However, on the right, $`a`$ and $`b`$ are adjacent to each other because an edge in an edge in an undirected graph is a symmetric relation between vertices.
 
@@ -94,7 +94,7 @@ A vertex $`v_2`$ is a **neighbor** of $`v_1`$ if $`v_1`$ is adjacent to $`v_2`$.
 
 A **simple graph** is a graph with no self-loops or multiple edges between the same pair of vertices. In other words, there is at most one edge between any two vertices and no edge from a vertex to itself.
 
-The graph below is not *simple* because there is a self-loop on vertex $`a`$. and two edges between vertices $`a`$ and $`b`$.
+The graph below is not *simple* because there is a self-loop on vertex $`a`$ and two edges between vertices $`a`$ and $`b`$.
 
 ![#not-simple](./images/not-simple-1.png)
 
@@ -119,7 +119,7 @@ A **cycle** is a simple path where the first and last vertex are the same.
 
 The graph below has a cycle $`a, b, c, a`$.
 
-![#cylcle](./images/cycle-1.png)
+![#cycle](./images/cycle-1.png)
 
 ### Connected
 
@@ -492,7 +492,7 @@ The main `dfs` function accepts a graph and a source vertex to begin the dfs fro
 
 The recursion begins with the `_dfs` function which inserts the source vertex into `visitedVertices` and to `results`. The neighbors of the source vertex are retrieved and iterated through. If the neighbor has not been visited, the `_dfs` function is called recursively with the neighbor as the source vertex.
 
-Representing the graph as an adjacency amtrix, the code is tested with the following code:
+Representing the graph as an adjacency matrix, the code is tested with the following code:
 
 ```c++
 int main() {
