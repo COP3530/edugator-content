@@ -164,3 +164,142 @@ When we order the activities by their end time, we get the following list:
 When we use this approach, we end up selecting A, D, F, and E, which gives us a total of 4 activities. This is the optimal solution!
 
 Indeed, the earliest end approach is the correct greedy strategy for solving the activity selection problem. By always selecting the activity that ends the earliest, we leave as much room as possible for future activities, allowing us to maximize the total number of activities selected.
+
+# Huffman Coding
+
+Next, we will explore Huffman coding, a useful application of greedy algorithms in data compression.
+
+Consider how text data is normally stored. Each character is typically represented by a fixed-length binary code. 
+For example, the letter "a" might be represented by the binary code `01100001`.
+
+If we want to encode the string "a man can plan", we would need to store bits for 14 characters, which would take up 14 * 8 = 112 bits. This isn't very efficient, considering that we only have 7 unique characters in the string (including spaces).
+
+**Huffman coding** is a method of compressing data by using variable-length codes for different characters. The idea is to assign shorter codes to more frequently occurring characters and longer codes to less frequently occurring characters.
+
+First, start by counting the frequency of each character in the string. Then, create a min-heap where each element is a node containing a character and its frequency.
+
+![Characters from the string "a man can plan" being arranged in a priority queue. The priority queue contains 7 nodes: '1:c', '1:l', '1:m', '1:p', '3:n', '3:space', and '4:a'.](image-11.png)
+
+Next, take the two nodes with the lowest frequencies, and assign them as the left and right children of a new node. The new node's frequency is the sum of the two nodes' frequencies.
+
+![The first two characters, 'c' and 'l' are combined into a small binary tree. The root of the binary tree is '2' and its children are '1:c' and '1:l'.](image-12.png)
+
+Next, take the new node and insert it back into the min-heap. 
+
+![The small binary tree is reinserted into the min-heap. Its priority is based on the root node, which is 2.](image-13.png)
+
+Repeat this process until there is only one node left in the min-heap. This node will be the root of the Huffman tree.
+
+![An animation showing the process of combining nodes into a binary tree.](images-ppt-2.gif)
+
+We use a greedy strategy to build the Huffman tree. At each step, we take the two nodes with the lowest frequencies and combine them into a new node.
+
+The result is the following Huffman tree:
+
+![A Huffman tree. A binary tree with root '16'. '16' has left child '6' and right child '10'. '6' has two children, both '2'. The left '2' has left child '1:c' and right child '1:l'. The right '2' has left child '1:m' and right child '1:p'. '10' has left child '4:a' and '6'. '6' has left child '3:n' and right child '3:space'.](image-14.png)
+
+Huffman trees have a few important properties:
+- Every node representing a character is a leaf node.
+- Characters with a higher frequence (like 'a') are closer to the root of the tree.
+
+Every character in a Huffman tree can be assigned a unique binary code based on the path from the root to the leaf node.
+Each time we traverse left, we add a `0` to the code, and each time we traverse right, we add a `1` to the code.
+For example:
+- The path to 'a' is right, left: `10`
+- The path to 'm' is left, right, left: `010`
+- The path to 'n' is right, right, left: `110`
+- The path to 'c' is left, left, left: `000`
+- The path to 'p' is left, right, right: `011`
+- The path to 'l' is left, left, right: `001`
+- The path to 'space' is right, right, right: `111`
+
+![Table listing the above codes.](image-15.png)
+
+Now that we have our codes, we can encode a different string. For example, "a panama canal" would be encoded as:
+
+`10 111 011 10 110 10 010 10 111 000 10 110 10 001` 
+
+If we had used regular ASCII encoding, it would have required 112 bits. However, using Huffman coding, we only need 36 bits!
+
+# Bin Packing Problem
+
+For our last example, we will explore the bin packing problem.
+The problem can be written as follows:
+- Given a set of items, each with a positive volume, and a maximum capacity for a bin, find the minimum number of bins needed to pack all the items. Items cannot be split between bins, and there are no items too large for a single bin.
+
+Let's use the following example:
+- Items: 5, 7, 2, 3, 2, 6, 2, 3
+- Bin capacity: 10
+
+![A set of 8 items with volumes 5, 7, 2, 3, 2, 6, 2, and 3, and a bin with a max capacity of 10.](image-16.png)
+
+Similar to our activity selection problem from earlier, there are different greedy approaches to solving this problem. We'll explore two of them.
+- First fit: At each iteration, place the item in the first bin that has enough capacity to hold it.
+- Best fit: At each iteration, place the item in the bin that has the least amount of remaining capacity after placing the item.
+
+**First Fit Approach**
+
+Let's walk through the first fit approach step by step:
+1. 5 will be placed in the 1st bin. Bin 1: 5/10
+2. 7 will be placed in the 2nd bin. Bin 1: 5/10, Bin 2: 7/10
+3. 2 will be placed in the 1st bin. Bin 1: 7/10, Bin 2: 7/10
+4. 3 will be placed in the 1st bin. Bin 1: 10/10, Bin 2: 7/10
+5. 2 will be placed in the 2nd bin. Bin 1: 10/10, Bin 2: 9/10
+6. 6 will be placed in the 3rd bin. Bin 1: 10/10, Bin 2: 9/10, Bin 3: 6/10
+7. 2 will be placed in the 3rd bin. Bin 1: 10/10, Bin 2: 9/10, Bin 3: 8/10
+8. 3 will be placed in the 4th bin. Bin 1: 10/10, Bin 2: 9/10, Bin 3: 8/10, Bin 4: 3/10
+
+![An animation showing the above steps.](images-ppt-3.gif)
+
+4 bins are used in this case. This is a pretty good solution, but we ended up with a few bins that are not completely full and a bin that is nearly empty. Let's see if we can do better.
+
+**Best Fit Approach**
+
+Let's walk through the best fit approach step by step:
+1. 5 will be placed in the 1st bin. Bin 1: 5/10
+2. 7 will be placed in the 2nd bin. Bin 1: 5/10, Bin 2: 7/10
+3. 2 fits best in the 2nd bin. Bin 1: 5/10, Bin 2: 9/10
+4. 3 fits best in the 1st bin. Bin 1: 8/10, Bin 2: 9/10
+5. 2 fits best in the 1st bin. Bin 1: 10/10, Bin 2: 9/10
+6. 6 will be placed in the 3rd bin. Bin 1: 10/10, Bin 2: 9/10, Bin 3: 6/10
+7. 2 fits best in the 3rd bin. Bin 1: 10/10, Bin 2: 9/10, Bin 3: 8/10
+8. 3 will be placed in the 4th bin. Bin 1: 10/10, Bin 2: 9/10, Bin 3: 8/10, Bin 4: 3/10
+
+![An animation showing the above steps.](images-ppt-4.gif)
+
+In this case, we still ended up with 4 bins. Although we inserted the items in different order, we got a similar result. From the looks of things, we need a minimum of 4 bins to pack all the items.
+
+However, there is a more optimal solution that uses only 3 bins:
+- Bin 1: 5, 2, 3
+- Bin 2: 7, 3
+- Bin 3: 6, 2, 2
+
+![The optimal solution to the bin packing example.](image-17.png)
+
+Unlike activity selection, the bin packing problem does not have a known greedy solution that is guaranteed to yield the optimal solution.
+
+Bin packing has been proven to be NP-hard, meaning that there is no known polynomial-time algorithm that can solve it optimally. You can read more about the problem [here](https://en.wikipedia.org/wiki/Bin_packing_problem).
+
+# Conclusion
+
+In this lesson, we explored the concept of greedy algorithms and how they can be used to solve various problems. We discussed the characteristics of greedy algorithms and how they do not always yield the optimal solution.
+
+Greedy algorithms are only one of several algorithmic paradigms. In future lessons, you will learn about other paradigms, like dynamic programming, which can be used to solve problems more optimally.
+
+# References
+
+- [COP 3530 Instructional Content](https://github.com/COP3530/Instructional-Content)
+- [Geeks for Geeks: Greedy Algorithms](https://www.geeksforgeeks.org/greedy-algorithms/)
+- [Wikipedia: Greedy Algorithm](https://en.wikipedia.org/wiki/Greedy_algorithm)
+- [Wikipedia: Change Making Problem](https://en.wikipedia.org/wiki/Change-making_problem)
+- [Wikipedia: Activity Selection Problem](https://en.wikipedia.org/wiki/Activity_selection_problem)
+- [Wikipedia: Huffman Coding](https://en.wikipedia.org/wiki/Huffman_coding)
+- [Wikipedia: Bin Packing Problem](https://en.wikipedia.org/wiki/Bin_packing_problem)
+
+Graphics by Brian Magnuson.
+
+Lesson content written with AI assistance.
+
+This work by Brian Magnuson is licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+
+Find a mistake? Open an issue on [GitHub](https://github.com/COP3530/edugator-content/issues)!
