@@ -200,7 +200,7 @@ The result is the following Huffman tree:
 
 Huffman trees have a few important properties:
 - Every node representing a character is a leaf node.
-- Characters with a higher frequence (like 'a') are closer to the root of the tree.
+- Characters with a higher frequencies (like 'a') are closer to the root of the tree.
 
 Every character in a Huffman tree can be assigned a unique binary code based on the path from the root to the leaf node.
 Each time we traverse left, we add a `0` to the code, and each time we traverse right, we add a `1` to the code.
