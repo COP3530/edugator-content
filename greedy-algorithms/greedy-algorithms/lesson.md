@@ -275,7 +275,11 @@ Now that we have our codes, we can encode a different string. For example, "a pa
 
 `10 111 011 10 110 10 010 10 111 000 10 110 10 001` 
 
-If we had used regular ASCII encoding, it would have required 112 bits. However, using Huffman coding, we only need 36 bits!
+ASCII encoding uses 8 bits per character (only 7 are needed for all 128 ASCII characters, but 8 is used for proper byte alignment).
+If we had used regular ASCII encoding, it would have required 112 bits.
+However, using Huffman coding, we only need 36 bits!
+
+The **compression ratio** is the ratio of the compressed size to the uncompressed size (though some people use the inverse). In this case, the compression ratio is 36/112, which is approximately 0.321, or 32.1%.
 
 ------
 
@@ -291,6 +295,19 @@ Use the above Huffman tree to encode the string "BADCAFE".
 <details>
 <summary>Answer</summary>
 010000111100011110
+</details>
+
+------
+
+Using the answer from the previous question, determine the compression ratio of the string "BADCAFE" using Huffman coding.
+- 0.285
+- 0.321
+- 0.357
+- 1.000
+
+<details>
+<summary>Answer</summary>
+0.321
 </details>
 
 ------
