@@ -86,6 +86,36 @@ However, the optimal solution is to take 2 coins: two 7-cent coins. This shows t
 
 The set of coins is not canonical, because there are target amounts for which the greedy algorithm does not yield the optimal solution.
 
+------
+
+Given the coin denominations [1, 5, 10, 20, 50], find the minimum number of coins needed to make 132.
+- 5 coins
+- 6 coins
+- 7 coins
+- 8 coins
+- 9 coins
+
+<details>
+<summary>Answer</summary>
+6 coins 
+</details>
+
+------
+
+Given the coin denominations [1, 5, 25, 40], use the greedy approach to find the number of coins needed to make 75.
+- 3 coins
+- 4 coins
+- 5 coins
+- 6 coins
+- 7 coins
+
+<details>
+<summary>Answer</summary>
+4 coins
+</details>
+
+------
+
 # Activity Selection Problem
 
 In this next problem, we'll see how a greedy algorithm can lead to an optimal solution, but the algorithm may not be obvious at first glance.
@@ -165,6 +195,32 @@ When we use this approach, we end up selecting A, D, F, and E, which gives us a 
 
 Indeed, the earliest end approach is the correct greedy strategy for solving the activity selection problem. By always selecting the activity that ends the earliest, we leave as much room as possible for future activities, allowing us to maximize the total number of activities selected.
 
+------
+
+```
+A: (0, 4)
+B: (1, 3)
+C: (2, 4)
+D: (3, 6)
+E: (4, 8)
+F: (5, 8)
+G: (6, 9)
+```
+
+Consider the above set of activities. Select the maximum number of activities that do not overlap.
+- C and E
+- A and D
+- B, D, E, and F
+- A, D, and G
+- B, D, and G
+
+<details>
+<summary>Answer</summary>
+B, D, and G
+</details>
+
+------
+
 # Huffman Coding
 
 Next, we will explore Huffman coding, a useful application of greedy algorithms in data compression.
@@ -220,6 +276,43 @@ Now that we have our codes, we can encode a different string. For example, "a pa
 `10 111 011 10 110 10 010 10 111 000 10 110 10 001` 
 
 If we had used regular ASCII encoding, it would have required 112 bits. However, using Huffman coding, we only need 36 bits!
+
+------
+
+![Huffman tree. 'A' is left-left. 'B' is left-right-left. 'D' is left-right-right. 'E' is right-left. 'C' is right-right-left. 'F' is right-right-right. ](image-18.png)
+
+Use the above Huffman tree to encode the string "BADCAFE".
+- 0001101101000011
+- 010000110101010111
+- 010000111100011110
+- 010100110111000011
+- 11000111100100001010
+
+<details>
+<summary>Answer</summary>
+010000111100011110
+</details>
+
+------
+
+Consider the following rules for building a Huffman tree:
+- Nodes in the priority queue are sorted by frequency with the lower frequency having higher priority.
+- If two nodes containing characters have the same frequency, then the node with the lower ASCII value has higher priority.
+- If two nodes have the same frequency, but one or both nodes do not have a character, then the node with the smaller height has higher priority.
+
+Use these rules to build a Huffman tree from the following string: "CATCHACAP", then use the tree to decode the bitset `011100011010`
+- PATCH
+- CHAT
+- HATCH
+- PACT
+- PATHAT
+
+<details>
+<summary>Answer</summary>
+PATCH
+</details>
+
+------
 
 # Bin Packing Problem
 
@@ -279,6 +372,34 @@ However, there is a more optimal solution that uses only 3 bins:
 Unlike activity selection, the bin packing problem does not have a known greedy solution that is guaranteed to yield the optimal solution.
 
 Bin packing has been proven to be NP-hard, meaning that there is no known polynomial-time algorithm that can solve it optimally. You can read more about the problem [here](https://en.wikipedia.org/wiki/Bin_packing_problem).
+
+------
+
+Given the following list of items: 4, 2, 3, 2, 5, and a bin capacity of 8, which of the following shows the arrangement of items in the bins using the first fit approach? Add the items in the order they are listed.
+- 1: [4, 2], 2: [3, 2], 3: [5]
+- 1: [4, 2, 3], 2: [2, 5]
+- 1: [4, 2], 2: [3], 3: [2, 5]
+- 1: [4], 2: [2, 3], 3: [2], 4: [5]
+
+<details>
+<summary>Answer</summary>
+1: [4, 2], 2: [3], 3: [2, 5]
+</details>
+
+------
+
+Given the following list of items: 4, 2, 3, 2, 5, and a bin capacity of 8, which of the following shows the arrangement of items in the bins using the best fit approach? Add the items in the order they are listed.
+- 1: [4, 2], 2: [3, 2], 3: [5]
+- 1: [4, 3], 2: [2, 5], 3: [2]
+- 1: [4, 2, 2], 2: [3, 5]
+- 1: [4], 2: [2, 3], 3: [2], 4: [5]
+
+<details>
+<summary>Answer</summary>
+1: [4, 2, 2], 2: [3, 5]
+</details>
+
+------
 
 # Conclusion
 
