@@ -27,8 +27,9 @@ Thumbs.db
 *.mod
 *.sum
 *.exe
-bin/
+**/bin/*
 obj/
+!**/bin/.gitkeep
 
 # IDEs
 .vscode/

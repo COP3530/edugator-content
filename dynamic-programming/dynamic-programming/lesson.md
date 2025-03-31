@@ -56,30 +56,36 @@ Although we're only calculating the 40th fibonacci number, this results in over 
 
 The runtime can better be quantified through its time complexity of $O(1.618^n)$ where $n$ is the $n$-th fibonacci number. That is an *exponential* time complexity! Many of the brute force algorithms previously covered in this course covered have been polynomial.
 
-As mentioned, we won't be solving this with dynamic programming. However, if you'd like to solve a similar problem, [70. Climbing Stairs](https://leetcode.com/problems/climbing-stairs/) on LeetCode is a good question.
+As mentioned, we won't be working on the fibonacci sequence in this lesson. However, using dynamic programming we can reduce the time complexity from $O(1.618^n)$ to $O(n)$ because we cache the sub-problems. That is the power of dynamic programming, it is often used to reduce the time complexity of slow solutions.
+
+If you'd like to solve a similar problem, [70. Climbing Stairs](https://leetcode.com/problems/climbing-stairs/) on LeetCode is a good question.
 
 ### Dynamic Programming Approaches
 
 Since dynamic programming involves expressing the problem as a recursive formulation, there are 2 ways to approach these problems:
 
-#### Top Down
+#### Top Down (Memoization)
 
-Top down dynamic programming is a direct result of the recursive formulation. A general outline is listed below:
+Top down dynamic programming (memoization) is a direct result of the recursive formulation. A general outline is listed below:
 
 1. Begin at a problem
 2. Break it into sub-problems
 3. If sub-problem has been solved (use memoized value)
 4. Otherwise, solve sub-problem (go back to step 1) and store result in cache
 
-#### Bottom Up
+#### Bottom Up (Tabulation)
 
-A bottom up solution typically follows the outline:
+Bottom up dynamic programming (tabulation) typically follows the outline:
 
 1. Begin at a sub-problem (usually base case)
 2. Solve the sub-problem and store result
 3. Solve larger problem and use sub-problem result to solve
 
-Both approaches are commonly used and will be discussed in the next sections.
+#### Top Down vs Bottom Up
+
+Top down is typically more straight-forward to implement than bottom up since it is a direct implementation of the recursive formula. You begin at the overall problem, and solve the sub-problems necessary for the overall problem. However, since top down is generally recursive, the space allocated for stack space may be too much.
+
+Bottom up can be less efficient at times since you may iterate solve sub-problems not necessary for solving the larger problem. It may also be more difficult to implement because you have to figure out the order to solve the sub-problems.
 
 ### Dynamic Programming Problems
 
@@ -122,7 +128,7 @@ Explanation: You will start at index 0.
 The total cost is 6.
 ```
 
-### General Solution
+### 1D General Solution
 
 To break this into a dynamic programming problem, we first need to break it into an optimal substructure that contains overlapping sub-problems. Let `dp(i)` be a function that returns the minimum cost to climb the staircase starting at step `i`. Observe that at step `i`, we must go to either `i+1` or `i+2`. We can come up with a simple recursive formula
 
@@ -138,13 +144,15 @@ with 0 being returned as the base case if we have reached the end of the stairca
 The recursive formula also has overlapping sub-problems. If we consider steps `i` and `i+1` such that $i>=0$ and $i+1 < \text{cost.length}$, we see
 
 $$
-\text{dp}(i)=\text{cost}[i]+\min(\text{dp}(i+1),\text{dp}(i+2)) \\
+\text{dp}(i)=\text{cost}[i]+\min(\text{dp}(i+1),\text{dp}(i+2))
+$$
+$$
 \text{dp}(i+1)=\text{cost}[i+1]+\min(\text{dp}(i+2),\text{dp}(i+3)).
 $$
 
 The problems are different but have the same sub-problem of $\text{dp}(i+2)$. Thus, this is a perfect candidate for dynamic programming!
 
-### Top Down Solution
+### 1D Top Down Solution
 
 Top down is usually a straightforward application of the recursive formula. We begin implementing the solution with the main function `minCostClimbingStairs`. We begin by constructing our memo which will be the size of `cost` and hold and previously calculated results. We fill it with `-1` to denote that a solution has not been previously calculated. We then call our `dp` function and return the minimum cost of beginning at step 0 or 1.
 
@@ -171,15 +179,15 @@ int dp(vector<int>& cost, vector<int>& memo, int index) {
 }
 ```
 
-#### Time Complexity
+#### 1D Time Complexity
 
 The solution has a time complexity of $O(n)$ where n is the size of `cost`. The function `dp` begins with two $O(1)$ condition checks and return statements. Observe that each index `i` is visited *at most* twice. Once from with the index `j=i-1` via the call `dp(cost, memo, j+1)` and another with the index `k=i-2` via the call `dp(cost, memo, k+2)`. Next, note that we visit every sub-problem beginning at index `i=0` to `i=n` and solve each one. When we visit `dp` again, we do a constant amount of work. Therefore, the total time complexity is $O(n + 2\cdot n) = O(n)$.
 
-#### Space Complexity
+#### 1D Space Complexity
 
 The space complexity is $O(n)$ because we allocate a vector `memo` to be of size `n`. The cost of the recursive calls is also $O(n)$ because the `dp` begins at `index=0` and ends at `index=n` before unwinding.
 
-### Bottom Up Solution
+### 1D Bottom Up Solution
 
 We can formulate a bottom up solution by noting a base case `index >= n` should return a cost of 0. From there, we can calculate the case of `dp(n-1)` trivially, by adding 0 to `cost[n-1]`, storing the result, and repeating the process for `dp(n-2)`. The code for such a solution is given below
 
@@ -195,11 +203,11 @@ int minCostClimbingStairs(vector<int>& cost) {
 
 We begin by allocating `memo`, this time with a size of `n+2` and fill the array with 0. Therefore, when the base case of `n+1` and `n+2` are hit, 0 will be returned. The for loop begins at `n-1` and uses the base cases to build its solution. This solution works because when we are at an index `i`, we have already solved the problems `i+1,...,n-1` so we can easily calculate the optimal solution.
 
-#### Time Complexity
+#### 1D Bottom Up Time Complexity
 
 The time complexity is more straightforward to calculate in this case. We first allocate a vector of size `n+2` which has a time complexity of $O(n)$. Next, we loop through all elements of `cost` and note that the statement in the for loop is constant time, thus, the loop has $O(n)$ time complexity. Lastly, we compare two elements in an array which is $O(1)$. Therefore, this function has a time complexity of $O(n+n) = O(n)$.
 
-#### Space Complexity
+#### 1D Bottom Up Space Complexity
 
 The only extra space taken is with `memo` which has a size of `n+2`. Thus, the space complexity is $O(n)$.
 
@@ -235,7 +243,7 @@ Explanation: From the top-left corner, there are a total of 3 ways to reach the 
 3. Down -> Right -> Down
 ```
 
-### General Solution
+### 2D General Solution
 
 We will begin again by representing the problem recursively, with overlapping sub-problems. Let $\text{dp}(i, j)$ denote the number of paths starting from indexes `i` and `j`. We want to solve $\text{dp}(0, 0)$. We can identify two base cases:
 
@@ -250,53 +258,53 @@ The recursive formula can be expressed as such:
 
 $$
 \text{dp}(i, j) = \begin{cases}
-    1 & i = m-1,\, j=n-1 \\
+    1 & i = m-1, j=n-1 \\
     0 & i \geq m \text{ or } j \geq n \\
-    \text{dp}(i+1,\, j) + \text{dp}(i,\, j+1) & \text{otherwise}
+    \text{dp}(i+1, j) + \text{dp}(i, j+1) & \text{otherwise}
 \end{cases}
 $$
 
-### Bottom Up Solution
+### 2D Top Down Solution
 
 We can express a bottom up solution by first considering the overall problem. We begin at `i=0`, `j=0`. Similar to the previous problem, this is a straightforward implementation of the recursive formula and we can implement the solution as
 
 ```c++
-int bottomUpHelper(int i, int j, int m, int n, vector<vector<int>>& memo) {
+int topDownHelper(int i, int j, int m, int n, vector<vector<int>>& memo) {
     if (i == m-1 && j == n-1) return 1;
     if (i >= m || j >= n) return 0;
     if (memo[i][j] != -1) return memo[i][j];
 
     return memo[i][j] = (
-        bottomUpHelper(i+1, j, m, n, memo) +
-        bottomUpHelper(i, j+1, m, n, memo)
+        topDownHelper(i+1, j, m, n, memo) +
+        topDownHelper(i, j+1, m, n, memo)
     );
 }
 ```
 
-The function `bottomUpHelper` accepts the current indexes, the bounds, and our memo table. We check the first two base cases, then check if the problem has already been solved. Next, we solve the sub-problems, then store and return the result.
+The function `topDownHelper` accepts the current indexes, the bounds, and our memo table. We check the first two base cases, then check if the problem has already been solved. Next, we solve the sub-problems, then store and return the result.
 
 Our main function would look like such
 
 ```c++
 int uniquePaths(int m, int n) {
     vector<vector<int>> memo(m, vector<int>(n, -1));
-    return bottomUpHelper(0, 0, m, n, memo);
+    return topDownHelper(0, 0, m, n, memo);
 }
 ```
 
 We create our memo and fill it with -1 to denote unsolved problems, then call our helper.
 
-#### Time Complexity
+#### 2D Top Down Time Complexity
 
 The time complexity of this solution is $O(m\cdot n)$ where $m$ and $n$ are their respective parameters from the problem. The first statement in main allocates space for the memo which is $O(m\cdot n)$ because we make an $m \times n$ grid.
 
-Next, we call our top down recursive function. The same logic as the 1-dimensional top down solution applies here, the time complexities of the first two if statements are $O(1)$. For the next section of code, it is important to note that we only visit a position `grid[i][j]` *at most twice*. Once when we go down from `grid[i-1][j]` and another when we go right from `grid[i][j-1]`. The first call will not return a memoized value, instead the sub-problems will be solved and the result will be memoized. The second call, will return the memoized value. Therefore, each position `grid[i][j]` is visited twice and the statement `return topDownHelper(0, 0, m, n, memo);` in the main function is $O(2\cdot m\cdot n)=$O(m\cdot n)$. Therefore, the problem has a time complexity of $O(m\cdot n)$.
+Next, we call our top down recursive function. The same logic as the 1-dimensional top down solution applies here, the time complexities of the first two if statements are $O(1)$. For the next section of code, it is important to note that we only visit a position `grid[i][j]` *at most twice*. Once when we go down from `grid[i-1][j]` and another when we go right from `grid[i][j-1]`. The first call will not return a memoized value, instead the sub-problems will be solved and the result will be memoized. The second call, will return the memoized value. Therefore, each position `grid[i][j]` is visited twice and the statement `return topDownHelper(0, 0, m, n, memo);` in the main function is $O(2\cdot m\cdot n)=O(m\cdot n)$. Therefore, the problem has a time complexity of $O(m\cdot n)$.
 
-#### Space Complexity
+#### 2D Top Down Space Complexity
 
-The space complexity of this solution is $O(m\cdot n) because we allocate memo to be the size of the grid. Note that the recursive calls do *not* add up to $m\cdot n$. Since we are traversing paths from `grid[0][0]` to `grid[m-1][n-1]`, that results in $O(m+n-1) = O(m+n)$ recursive calls.
+The space complexity of this solution is $O(m\cdot n)$ because we allocate memo to be the size of the grid. Note that the recursive calls do *not* add up to $m\cdot n$. Since we are traversing paths from `grid[0][0]` to `grid[m-1][n-1]`, that results in $O(m+n-1) = O(m+n)$ recursive calls.
 
-### Top Down Solution
+### 2D Bottom Up Solution
 
 Out top down solution should begin from the base case `i=m-1` and `j=n-1` and looks as such
 
@@ -315,11 +323,11 @@ int uniquePaths(int m, int n) {
 
 Again, we begin by declaring our memo table with size `m+1` and `n+1` filling it with 0s so when we visit an out of bounds index, we can receive 0. Next, we set `memo[m-1][n-1] = 1` so when we reference the finish (another base case) we can receive the correct value. Finally, we iterate through the grid starting at the finish (base case) and ending at the start position (overall problem). With each iteration, we add the result of all paths going down and to the right from the current position to the memo table `memo[i][j]` and return the overall problem `memo[0][0]`.
 
-#### Time Complexity
+#### 2D Bottom Up Time Complexity
 
 The time complexity is also $O(m\cdot n)$. We begin by allocating a vector of size $(m+1) \times (n+1)$ which has a time complexity of $O(m\cdot n)$. Next, we iterate through the grid and do constant work for calculating `memo[i][j]` before returning `memo[0][0]`. Iterating through the grid requires $O(m\cdot n)$ iterations. Therefore, the time complexity is $O(m\cdot n)$.
 
-#### Space Complexity
+#### 2D Bottom Up Space Complexity
 
 The only space allocated is with `memo` which is an $(m+1) \times (n+1)$ grid. Therefore, the space complexity is $O(m\cdot n)$.
 

@@ -13,7 +13,7 @@
 
 using namespace std;
 
-int bottomUpHelper(int i, int j, int m, int n, vector<vector<int>> &memo)
+int topDownHelper(int i, int j, int m, int n, vector<vector<int>> &memo)
 {
     if (i == m - 1 && j == n - 1)
         return 1;
@@ -22,14 +22,14 @@ int bottomUpHelper(int i, int j, int m, int n, vector<vector<int>> &memo)
     if (memo[i][j] != -1)
         return memo[i][j];
 
-    return memo[i][j] = (bottomUpHelper(i + 1, j, m, n, memo) +
-                         bottomUpHelper(i, j + 1, m, n, memo));
+    return memo[i][j] = (topDownHelper(i + 1, j, m, n, memo) +
+                         topDownHelper(i, j + 1, m, n, memo));
 }
 
 int uniquePaths(int m, int n)
 {
     vector<vector<int>> memo(m, vector<int>(n, -1));
-    return bottomUpHelper(0, 0, m, n, memo);
+    return topDownHelper(0, 0, m, n, memo);
 }
 
 int main()
