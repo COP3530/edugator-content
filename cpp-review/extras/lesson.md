@@ -12,6 +12,8 @@ In this lesson, we will cover the following topics:
 - Function pointers, functors, and lambdas
 - File I/O
 
+You can read these sections in order, or you can skip to the sections that interest you.
+
 # Strings
 
 C++ has two main types of strings: C-style strings and `std::string` (part of the C++ standard library). We will first discuss C-style strings.
