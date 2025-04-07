@@ -285,3 +285,35 @@ We can use capturing groups to extract parts of a string. This can make it usefu
 
 # Templates
 
+Templates are a powerful feature of C++ that allow you to write generic code. 
+This means that you can write a function or class that works with any type, rather than being limited to a specific type.
+
+You've likely already seen template classes in the C++ standard library, such as `std::vector` and `std::map`.
+These classes are defined using templates, which allow them to work with any type.
+```cpp
+std::vector<int> vec; // A vector of integers
+std::vector<std::string> str_vec; // A vector of strings
+std::vector<MyClass> my_class_vec; // A vector of MyClass objects
+```
+
+To define a template function, you use the `template` keyword followed by the template parameter(s) in angle brackets.
+Template parameters begin with either `typename` or `class`, but they are interchangeable.
+The name of the parameter is usually a single uppercase letter, often `T`, but any valid identifier can be used.
+```cpp
+template <typename T>
+void swap(T& a, T& b) {
+    T temp = a;
+    a = b;
+    b = temp;
+}
+```
+
+To invoke this function, you can pass in any type:
+```cpp
+int a = 5;
+int b = 10;
+swap<int>(a, b); // Swaps two integers
+swap(a, b); // More concise: the compiler deduces the type
+```
+
+Sometimes, it is not necessary to specify the type explicitly. The compiler can deduce the type from the arguments passed to the function.
