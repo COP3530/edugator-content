@@ -392,19 +392,6 @@ Bin packing has been proven to be NP-hard, meaning that there is no known polyno
 
 ------
 
-Given the following list of items: 4, 2, 3, 2, 5, and a bin capacity of 8, which of the following shows the arrangement of items in the bins using the first fit approach? Add the items in the order they are listed.
-- 1: [4, 2], 2: [3, 2], 3: [5]
-- 1: [4, 2, 3], 2: [2, 5]
-- 1: [4, 2], 2: [3], 3: [2, 5]
-- 1: [4], 2: [2, 3], 3: [2], 4: [5]
-
-<details>
-<summary>Answer</summary>
-1: [4, 2], 2: [3], 3: [2, 5]
-</details>
-
-------
-
 Given the following list of items: 4, 2, 3, 2, 5, and a bin capacity of 8, which of the following shows the arrangement of items in the bins using the best fit approach? Add the items in the order they are listed.
 - 1: [4, 2], 2: [3, 2], 3: [5]
 - 1: [4, 3], 2: [2, 5], 3: [2]
