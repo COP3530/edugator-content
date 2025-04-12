@@ -267,7 +267,7 @@ int main() {
     std::regex regex("(\\d{3})-(\\d{3})-(\\d{4})");
     std::smatch match;
 
-    if (std::regex_search(str, match, regex)) {
+    if (std::regex_match(str, match, regex)) {
         std::cout << "Match found: " << match.str() << std::endl;
         // match[0] is the entire match
         std::cout << "Group 1: " << match[1] << std::endl;
@@ -282,6 +282,10 @@ int main() {
 ```
 
 We can use capturing groups to extract parts of a string. This can make it useful for tasks such as parsing a command or data format.
+
+In the above example, we use `std::regex_match`.
+- `std::regex_search` is used to check if *any part* of the string matches the regex pattern.
+- `std::regex_match` is used to check if the *entire string* matches the regex pattern.
 
 # Templates
 
@@ -308,7 +312,18 @@ void swap(T& a, T& b) {
 }
 ```
 
-To invoke this function, you can pass in any type:
+This next part is *important* so pay attention!:
+Templates are called templates because they do not directly translate to machine code. Rather, the compiler generates code for each type that is used with the template.
+
+For example, if you end up using the following function calls:
+- `swap<int>(a, b);`
+- `swap<double>(x, y);`
+
+The compiler will generate code for two separate instances of the `swap` function: one for `int` and one for `double`.
+
+For the compiler to accomplish this, it *must* see the definition of the template function before it is used. If it does not, you may get a linker error. To avoid this, you should *always* place the definition of the template function in the same file where it is declared.
+
+To invoke the swap function, you can pass in any type:
 ```cpp
 int a = 5;
 int b = 10;
@@ -317,3 +332,54 @@ swap(a, b); // More concise: the compiler deduces the type
 ```
 
 Sometimes, it is not necessary to specify the type explicitly. The compiler can deduce the type from the arguments passed to the function.
+
+On occasion, you may want a function to behave differently for a specific type. You can use **template specialization** to achieve this.
+
+```cpp
+template <>
+void swap<int>(int& a, int& b) {
+    a ^= b; // Fancy XOR trick for swapping integers
+    b ^= a;
+    a ^= b;
+}
+```
+
+Here, we use template specialization to define a specific implementation of the `swap` function for `int` types. When the `swap` function is called with `int` arguments, this specialized version will be used instead of the generic version.
+
+To define a template class, you use the same `template` keyword followed by the template parameter(s) in angle brackets:
+```cpp
+template <typename T>
+class MyClass {
+public:
+    MyClass(T value) : value(value) {}
+    T getValue() const { return value; }
+private:
+    T value;
+};
+```
+
+If you want to define the functions outside of the class definition, you can do so like this:
+```cpp
+template <typename T>
+MyClass<T>::MyClass(T value) : value(value) {}
+
+template <typename T>
+T MyClass<T>::getValue() const {
+    return value;
+}
+```
+
+Again, template functions and classes must be defined in the same file where they are declared to avoid linker errors.
+
+# Exceptions
+
+One common way to handle errors in C++ is through exceptions. **Exceptions** are a way to signal that an error has occurred and to transfer control to a special error-handling code.
+
+An **exception object** is created using the `throw` keyword.
+```cpp
+void throws_exception() {
+    throw "I'm an exception!";
+}
+```
+
+You can technically throw any object as long as the object's type can be instantiated and copied.
