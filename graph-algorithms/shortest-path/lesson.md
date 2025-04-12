@@ -266,7 +266,7 @@ What is the weight of the edge from 'w' to 'u' in the graph?
 
 # Conclusion
 
-In this lesson, we covered three shortest path algoritms, their applications, and their time complexities.
+In this lesson, we covered three shortest path algorithms, their applications, and their time complexities.
 In the next lesson, we will explore minimum spanning tree algorithms.
 
 # References
