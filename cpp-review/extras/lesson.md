@@ -382,4 +382,106 @@ void throws_exception() {
 }
 ```
 
-You can technically throw any object as long as the object's type can be instantiated and copied.
+You can technically throw any object as long as the object's type can be instantiated and copied. However, it is generally recommended to throw objects of type `std::exception` or derived types.
+```cpp
+#include <exception>
+#include <stdexcept>
+
+void throws_exception() {
+    throw std::exception("I'm an exception!"); // From <exception>
+}
+
+void throws_runtime_error() {
+    throw std::runtime_error("Runtime error occurred!"); // From <stdexcept>
+}
+```
+
+When an exception object is thrown, the function will end without returning a value. The stack will unwind until the exception is caught by a `try` block. Details of the exception can be accessed using the `catch` block.
+```cpp
+#include <iostream>
+#include <stdexcept>
+
+void my_function(int a) {
+    if (a < 0) {
+        throw std::invalid_argument("Negative value not allowed");
+    }
+    std::cout << "Value is: " << a << std::endl;
+}
+
+int main() {
+    int a;
+    std::cout << "Enter a number: ";
+    std::cin >> a;
+    try {
+        my_function(a);
+    }
+    catch (const std::invalid_argument& e) {
+        std::cout << "Invalid argument! " << e.what() << std::endl;
+    }
+
+    return 0;
+}
+```
+
+In this example, if the user enters a negative number, the `my_function` will throw an `std::invalid_argument` exception. The `catch` block will then handle the exception and print an error message.
+
+If the exception is not caught, then the stack will continue to unwind until it reaches another `catch` block. If that doesn't happen, the program will terminate and (usually) print an error message. Many IDEs with debuggers will stop execution at the point where the exception was thrown, making it easier to debug.
+
+You can also have multiple `catch` blocks to handle different types of exceptions:
+```cpp
+try {
+    my_function(a);
+}
+catch (const std::invalid_argument& e) {
+    std::cout << "Invalid argument! " << e.what() << std::endl;
+}
+catch (const std::runtime_error& e) {
+    std::cout << "Runtime error! " << e.what() << std::endl;
+}
+catch (std::exception& e) {
+    std::cout << "Exception occurred! " << e.what() << std::endl;
+}
+catch (...) {
+    std::cout << "Unknown error occurred!" << std::endl;
+}
+```
+
+The last `catch` block with the ellipsis (`...`) is a catch-all for any exception that does not match the previous `catch` blocks. This can be useful for handling unexpected exceptions.
+
+Other programming languages that use exceptions also have a "finally" block, which executes regardless of whether an exception is thrown; as of this writing, C++ does not have this feature.
+
+If you know a function will never throw an exception, you can use the `noexcept` specifier to indicate this:
+```cpp
+void my_function() noexcept {
+    // This function is guaranteed not to throw exceptions
+}
+```
+
+This can be useful for both performance optimization and for documenting the function's behavior.
+
+If you know a function will never return normally (i.e. it will always throw an exception), you can use the `[[noreturn]]` attribute:
+```cpp
+[[noreturn]] int my_function() {
+    throw std::runtime_error("This function will not return");
+}
+```
+
+Other reasons a function might never return include calls to `std::exit`, `std::abort`, `std::terminate`, or infinite loops. Specifying `[[noreturn]]` can prevent potential warnings from the compiler about missing return statements.
+
+## Alternatives to Exceptions
+
+While exceptions are a common way to handle errors in many modern programming languages, they do have a few drawbacks:
+- When a function throws an exception, all of its callers must be examined to ensure the exception is eventually caught and handled properly.
+- Exceptions make it difficult to reason about the control flow of a program; a function may end abruptly when you don't expect it to.
+- Exceptions can introduce performance overhead, especially if they are used frequently.
+
+Some modern programming languages, such as Go and Rust, do not use exceptions at all. Instead, they use other mechanisms to handle errors, such as returning error codes or using special types to represent success or failure. This pattern *forces* the programmer to handle errors explicitly, which can lead to more robust code.
+
+For C++, there are a few alternatives to exceptions that you can consider:
+- `std::pair` or `std::tuple` can allow you to return multiple values from a function, including an error code or status, which you would check before accessing the main return value.
+- C++17 provides `std::optional`, which allows you to return `std::nullopt` to indicate that a value is not present, which can be used to represent failure.
+- C++17 also provides `std::variant`, which allows you to return one of several types, including an error type.
+- C++23 introduces `std::expected`, which is a type that can represent either a successful value or an error value, similar to the `Result` type in Rust.
+
+# Function Pointers, Functors, and Lambdas
+
