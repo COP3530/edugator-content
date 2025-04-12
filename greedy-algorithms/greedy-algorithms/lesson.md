@@ -392,15 +392,30 @@ Bin packing has been proven to be NP-hard, meaning that there is no known polyno
 
 ------
 
-Given the following list of items: 4, 2, 3, 2, 5, and a bin capacity of 8, which of the following shows the arrangement of items in the bins using the best fit approach? Add the items in the order they are listed.
-- 1: [4, 2], 2: [3, 2], 3: [5]
-- 1: [4, 3], 2: [2, 5], 3: [2]
-- 1: [4, 2, 2], 2: [3, 5]
-- 1: [4], 2: [2, 3], 3: [2], 4: [5]
+Given the following list of items: 10, 11, 4, 6, 5, 12, and a bin capacity of 16, which of the following shows the arrangement of items in the bins using the *first fit* approach? Add the items in the order they are listed.
+- 1: [10, 5], 2: [11, 4], 3: [6], 4: [12]
+- 1: [10, 6], 2: [11, 4], 3: [5, 12]
+- 1: [10], 2: [11, 4], 3: [6, 5], 4: [12]
+- 1: [10, 4], 2: [11, 5], 3: [6], 4: [12]
+- 1: [10, 6], 2: [11, 4], 3: [5], 4: [12]
 
 <details>
 <summary>Answer</summary>
-1: [4, 2, 2], 2: [3, 5]
+1: [10, 4], 2: [11, 5], 3: [6], 4: [12]
+</details>
+
+------
+
+Given the following list of items: 10, 11, 4, 6, 5, 12, and a bin capacity of 16, which of the following shows the arrangement of items in the bins using the *best fit* approach? Add the items in the order they are listed.
+- 1: [10, 5], 2: [11, 4], 3: [6], 4: [12]
+- 1: [10, 6], 2: [11, 4], 3: [5, 12]
+- 1: [10], 2: [11, 4], 3: [6, 5], 4: [12]
+- 1: [10, 4], 2: [11, 5], 3: [6], 4: [12]
+- 1: [10, 6], 2: [11, 4], 3: [5], 4: [12]
+
+<details>
+<summary>Answer</summary>
+1: [10, 6], 2: [11, 4], 3: [5], 4: [12]
 </details>
 
 ------
