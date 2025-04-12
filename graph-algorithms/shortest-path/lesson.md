@@ -220,7 +220,7 @@ The last iteration takes an additional O(E) time.
 Thus, the worst case time complexity is O(VE).
 
 The algorithm may be optimized by skipping over vertices whose distances have not changed in the previous iteration.
-This variation of the algorithmw was introduced by Edward F. Moore in 1959 and is referred to as the *Bellman-Ford-Moore algorithm*.
+This variation of the algorithm was introduced by Edward F. Moore in 1959 and is referred to as the *Bellman-Ford-Moore algorithm*.
 
 ------
 
