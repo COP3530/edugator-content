@@ -9,7 +9,7 @@ In this lesson, we will cover the following topics:
 - Regular expressions
 - Templates
 - Exceptions
-- Function pointers, functors, and lambdas
+- Function pointers, function objects, and lambdas
 - File I/O
 
 You can read these sections in order, or you can skip to the sections that interest you.
@@ -483,5 +483,185 @@ For C++, there are a few alternatives to exceptions that you can consider:
 - C++17 also provides `std::variant`, which allows you to return one of several types, including an error type.
 - C++23 introduces `std::expected`, which is a type that can represent either a successful value or an error value, similar to the `Result` type in Rust.
 
-# Function Pointers, Functors, and Lambdas
+# Function Pointers, Function Objects, and Lambdas
 
+In C++, there are a few ways to store functions in variables or pass functions to other functions as arguments.
+
+## Function Pointers
+
+A **function pointer** is a variable that stores the address of a function. In C++, you can use a function's identifier as a pointer to that function.
+```cpp
+#include <iostream>
+int my_function(double x, bool flag) {
+    if (flag) {
+        return static_cast<int>(x);
+    }
+    return 0;
+}
+
+int main() {
+    // Declare a function pointer
+    int (*func_ptr)(double, bool) = my_function;
+
+    // Call the function using the pointer
+    int result = func_ptr(3.14, true);
+    std::cout << "Result: " << result << std::endl; // Prints "Result: 3"
+    
+    return 0;
+}
+```
+
+Functions are stored in text memory (or code memory). Text memory, like static memory, lives for the entire duration of the program. It is also immutable, so you cannot change the contents of a function.
+
+The syntax for declaring a function pointer is a bit tricky:
+```cpp
+int (*func_ptr)(double, bool) = &my_function;
+int (*func_ptr)(double, bool) = my_function; // Equivalent
+```
+This declares a pointer `func_ptr` that points to a function taking a `double` and a `bool` as arguments and returning an `int`.
+
+Here are a few more examples of function pointers declarations:
+```cpp
+void (*func_ptr1)(int); // Pointer to a function taking an int and returning void
+double (*func_ptr2)(); // Pointer to a function taking no arguments and returning a double
+int (*func_ptr3)(const char*, int); // Pointer to a function taking a const char* and an int, returning an int
+int (*func_ptr4[10])(double); // Array of 10 function pointers, each taking a double and returning an int
+```
+
+A slightly easier way to write function pointer types is to use `using`:
+```cpp
+using FuncPtr = int (*)(double, bool);
+FuncPtr func_ptr = my_function;
+
+using Func = int (double, bool);
+Func* func_ptr = my_function;
+```
+
+Function pointers do not need to be dereferenced to call them, though you are free to do so:
+```cpp
+int result1 = func_ptr(3.14, true); // Valid
+int result2 = (*func_ptr)(3.14, true); // Also valid
+int result3 = (*****func_ptr)(3.14, true); // Yes, this is valid too!
+```
+
+## Function Objects
+
+A **function object** or **functor** is an object that can be called as if it were a function. This is possible by creating a class with an overloaded `operator()`.
+```cpp
+#include <iostream>
+class MyFunction {
+public:
+    int operator()(double x, bool flag) {
+        if (flag) {
+            return static_cast<int>(x);
+        }
+        return 0;
+    }
+};
+int main() {
+    MyFunction my_func;
+    int result = my_func(3.14, true);
+    std::cout << "Result: " << result << std::endl; // Prints "Result: 3"
+    
+    return 0;
+}
+```
+
+Function objects have a bit more flexibility than function pointers. For one, their class can be passed where a template argument is expected.
+```cpp
+#include <iostream>
+#include <vector>
+
+template <typename T, typename Func>
+T reduce(std::vector<T>& vec, Func func, T init) {
+    T result = init;
+    for (const auto& item : vec) {
+        result = func(result, item);
+    }
+    return result;
+}
+
+class Add {
+public:
+    int operator()(int a, int b) {
+        return a + b;
+    }
+};
+
+int main() {
+    std::vector<int> vec = {1, 2, 3, 4, 5};
+    Add add; // Create an instance of Add
+    int result = reduce<int, Add>(vec, add, 0); // Pass the Add instance to reduce
+    std::cout << "Result: " << result << std::endl; // Prints "Result: 15"
+    return 0;
+}
+```
+
+In the above example, we create a `reduce` function that takes a vector and a function object to reduce the vector's elements to a single value. The `Add` class is a function object that adds two integers together.
+
+Some C++ functions and classes actually depend on function objects. For example, the `std::sort` function in the C++ standard library can take a function object as a comparison function:
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+class Compare {
+public:
+    bool operator()(int a, int b) {
+        return a > b; // Sort in descending order
+    }
+};
+
+int main() {
+    std::vector<int> vec = {5, 2, 8, 1, 4};
+    std::sort(vec.begin(), vec.end(), Compare());
+    
+    for (const auto& item : vec) {
+        std::cout << item << " "; // Prints "8 5 4 2 1"
+    }
+    std::cout << std::endl;
+    
+    return 0;
+}
+```
+In this example, we create a `Compare` class that is a function object for comparing two integers. We then use it to sort a vector in descending order.
+
+The `<functional>` header provides a special type, `std::function`, which can store any callable object.
+```cpp
+std::function<int(double, bool)> func = my_function;
+```
+
+
+## Lambdas
+
+A C++ **lambda expression** is a way to define an anonymous function object. Think of it as a way to create a function object "on the fly" without needing to define a separate class.
+```cpp
+#include <iostream>
+int main() {
+    auto my_lambda = [](double x, bool flag) {
+        if (flag) {
+            return static_cast<int>(x);
+        }
+        return 0;
+    };
+    
+    int result = my_lambda(3.14, true);
+    std::cout << "Result: " << result << std::endl; // Prints "Result: 3"
+    
+    return 0;
+}
+```
+
+C++ lambdas are sometimes called closures. A **closure** is a function that captures variables from its surrounding scope.
+```cpp
+int x = 5;
+auto my_closure1 = [x](double val) { // Capture x by value
+    return x + static_cast<int>(val);
+};
+auto my_closure2 = [&x](double val) { // Capture x by reference
+    return x + static_cast<int>(val);
+};
+```
+In the first lambda, `x` is captured by value, meaning that the lambda has its own copy of `x`. In the second lambda, `x` is captured by reference, meaning that the lambda can modify the original `x` variable.
+
+This capturing ability allows lambdas to remain valid, even if the variables they capture go out of scope.
