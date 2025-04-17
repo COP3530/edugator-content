@@ -28,8 +28,8 @@ Thumbs.db
 *.sum
 *.exe
 **/bin/*
+!**/bin/.keep
 obj/
-!**/bin/.gitkeep
 
 # IDEs
 .vscode/

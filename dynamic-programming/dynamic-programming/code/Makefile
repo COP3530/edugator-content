@@ -1,19 +1,27 @@
-.PHONY: fibonacci 1d-bottom-up 1d-top-down 2d-bottom-up 2d-top-down clean
+.PHONY: fibonacci unique-paths min-cost-climbing-stairs clean help
+
+all: help
 
 fibonacci: fibonacci.cpp
-	g++ -std=c++14 -o bin/fibonacci fibonacci.cpp
+	@echo "🔢 Building fibonacci..."
+	@g++ -std=c++14 -o bin/fibonacci fibonacci.cpp
 
-1d-bottom-up: 1d-bottom-up.cpp
-	g++ -std=c++14 -o bin/1d-bottom-up 1d-bottom-up.cpp
+unique-paths: unique-paths.cpp
+	@echo "🧭 Building unique-paths..."
+	@g++ -std=c++14 -o bin/unique-paths unique-paths.cpp
 
-1d-top-down: 1d-top-down.cpp
-	g++ -std=c++14 -o bin/1d-top-down 1d-top-down.cpp
-
-2d-bottom-up: 2d-bottom-up.cpp
-	g++ -std=c++14 -o bin/2d-bottom-up 2d-bottom-up.cpp
-
-2d-top-down: 2d-top-down.cpp
-	g++ -std=c++14 -o bin/2d-top-down 2d-top-down.cpp
+min-cost-climbing-stairs: min-cost-climbing-stairs.cpp
+	@echo "⛰️  Building min-cost-climbing-stairs..."
+	@g++ -std=c++14 -o bin/min-cost-climbing-stairs min-cost-climbing-stairs.cpp
 
 clean:
-	rm bin/*
+	@echo "🧹 Cleaning build artifacts..."
+	@rm -f bin/*
+
+help:
+	@echo "✨ Available targets:"
+	@echo "   make fibonacci                  Build the fibonacci executable"
+	@echo "   make unique-paths               Build the unique-paths executable"
+	@echo "   make min-cost-climbing-stairs   Build the min-cost-climbing-stairs executable"
+	@echo "   make clean                      Remove all files in bin/"
+	@echo "   make help                       Show this help message"
