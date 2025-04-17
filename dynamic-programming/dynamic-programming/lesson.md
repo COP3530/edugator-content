@@ -179,6 +179,11 @@ int dp(vector<int>& cost, vector<int>& memo, int index) {
 }
 ```
 
+Below is a visualization of our solution on the example where stairs are `[1, 100, 1, 100, 1, 1]`,
+
+![stairs](./images/stairs.gif)
+
+
 #### 1D Time Complexity
 
 The solution has a time complexity of $O(n)$ where n is the size of `cost`. The function `dp` begins with two $O(1)$ condition checks and return statements. Observe that each index `i` is visited *at most* twice. Once from with the index `j=i-1` via the call `dp(cost, memo, j+1)` and another with the index `k=i-2` via the call `dp(cost, memo, k+2)`. Next, note that we visit every sub-problem beginning at index `i=0` to `i=n` and solve each one. When we visit `dp` again, we do a constant amount of work. Therefore, the total time complexity is $O(n + 2\cdot n) = O(n)$.
