@@ -31,7 +31,7 @@ The set of vertices and edges are:
 
 - A. $`V = \{a, b, c, d, e, f, g\},`$ $`E = \{\{a, b\}, \{a, c\}, \{d, c\}\}`$
 - B. $`V = \{a, b, c, d\},`$ $`E = \{\{a, b\}, \{a, c\}, \{d, c\}, \{b, c\}\}`$
-- C. $`V = \{a, b, c, d\},`$ $`E = \{\{a, b\}, \{c, a\}, \{c, d\}\}`$
+- C. $`V = \{a, b, c, d\},`$ $`E = \{\{a, b\}, \{c, b\}, \{c, d\}\}`$
 - D. $`V = \{a, b, c, d\},`$ $`E = \{\{a, b\}, \{b, c\}\}`$
 
 <details>
