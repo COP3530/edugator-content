@@ -297,7 +297,10 @@ int uniquePaths(int m, int n) {
 }
 ```
 
-We create our memo and fill it with -1 to denote unsolved problems, then call our helper.
+We create our memo and fill it with -1 to denote unsolved problems, then call our helper. Below is a gif of the solution in action:
+
+![unique-paths](./images/unique-paths.gif)
+
 
 #### 2D Top Down Time Complexity
 
