@@ -252,7 +252,7 @@ We use a greedy strategy to build the Huffman tree. At each step, we take the tw
 
 The result is the following Huffman tree:
 
-![A Huffman tree. A binary tree with root '16'. '16' has left child '6' and right child '10'. '6' has two children, both '2'. The left '2' has left child '1:c' and right child '1:l'. The right '2' has left child '1:m' and right child '1:p'. '10' has left child '4:a' and '6'. '6' has left child '3:n' and right child '3:space'.](image-14.png)
+![A Huffman tree. A binary tree with root '14'. '14' has left child '6' and right child '8'. '6' has left child '3:n' and right child '3:space'. '8' has left child '4:a' and '4'. '4' has two children, both '2'. The left '2' has left child '1:c' and right child '1:l'. The right '2' has left child '1:m' and right child '1:p'.](image-14.png)
 
 Huffman trees have a few important properties:
 - Every node representing a character is a leaf node.
@@ -262,24 +262,24 @@ Every character in a Huffman tree can be assigned a unique binary code based on 
 Each time we traverse left, we add a `0` to the code, and each time we traverse right, we add a `1` to the code.
 For example:
 - The path to 'a' is right, left: `10`
-- The path to 'm' is left, right, left: `010`
-- The path to 'n' is right, right, left: `110`
-- The path to 'c' is left, left, left: `000`
-- The path to 'p' is left, right, right: `011`
-- The path to 'l' is left, left, right: `001`
-- The path to 'space' is right, right, right: `111`
+- The path to 'm' is right, right, right, left: `1110`
+- The path to 'n' is left, left: `00`
+- The path to 'c' is right, right, left, left: `1100`
+- The path to 'p' is right, right, right, right: `1111`
+- The path to 'l' is right, right, left, right: `1101`
+- The path to 'space' is left, right: `01`
 
 ![Table listing the above codes.](image-15.png)
 
 Now that we have our codes, we can encode a different string. For example, "a panama canal" would be encoded as:
 
-`10 111 011 10 110 10 010 10 111 000 10 110 10 001` 
+`10 1111 10 00 10 1110 10 01 1100 10 00 10 1101` 
 
 ASCII encoding uses 8 bits per character (only 7 are needed for all 128 ASCII characters, but 8 is used for proper byte alignment).
 If we had used regular ASCII encoding, it would have required 112 bits.
-However, using Huffman coding, we only need 36 bits!
+However, using Huffman coding, we only need 34 bits!
 
-The **compression ratio** is the ratio of the compressed size to the uncompressed size (though some people use the inverse). In this case, the compression ratio is 36/112, which is approximately 0.321, or 32.1%.
+The **compression ratio** is the ratio of the compressed size to the uncompressed size (though some people use the inverse). In this case, the compression ratio is 34/112, which is approximately 0.304 or 30.4%.
 
 ------
 
