@@ -27,7 +27,8 @@ Thumbs.db
 *.mod
 *.sum
 *.exe
-bin/
+**/bin/*
+!**/bin/.keep
 obj/
 
 # IDEs
