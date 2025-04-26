@@ -190,6 +190,54 @@ There are more things we can do with binary search trees such as inserting nodes
 
 # Tree Representation
 
+There are several ways to represent trees in programming languages. The most common way is to use a **node** class or struct that contains a value and a list of child nodes.
+```cpp
+class Node {
+    int value; // The value stored in the node
+    vector<Node*> children; // The list of child nodes
+
+    Node(int value) {
+        this->value = value;
+    }
+};
+```
+
+![Diagram of node objects containing arrays with pointers.](image-17.png)
+
+This representation is simple and easy to understand. It is especially useful for:
+- Trees with an arbitrary number of children or trees where the number of children is not known in advance.
+- Sparse trees where most nodes have few children.
+- Trees where upward traversal is not needed.
+
+The main drawback of this representation is that it requires extra memory to store the pointers to child nodes. Additionally, upward traversal is more difficult.
+
+An alternative way to represent trees is to use an array. There is a simple technique to map every node to an index in the array:
+- The root node is at index 0.
+- For any node at index i, its jth child (starting at 1) is at index i * n + j, where n is the number of children per node.
+  - In the case of binary trees, the left child is at index 2 * i + 1 and the right child is at index 2 * i + 2.
+
+This technique also ensures that every node's parent is at index floor((i - 1) / n).
+
+![Example of a tree and its array representation.](image-18.png)
+
+In the above example, we use a binary tree with 'A' at index 0. The nodes in level 1, 'B' and 'C', are at indices 1 and 2. The nodes in level 2, 'D', 'E', 'F', and 'G', are at indices 3, 4, 5, and 6.
+
+'C' is at index 2, so its children are at indices 2 * 2 + 1 = 5 and 2 * 2 + 2 = 6, which are 'F' and 'G'. If we take the index of 'F', which is 5, we can find the index of its parent, 'C', at index floor((5 - 1) / 2) = 2.
+
+This representation is especially useful for:
+- Trees with a fixed number of children per node.
+- Trees where the number of children is known in advance.
+- Trees that are complete or nearly complete.
+- Trees where upward traversal is needed.
+
+Array representations are only more memory efficient when the tree is complete or nearly complete. If the tree is sparse, the array representation can waste a lot of memory. Binary heaps, which are always complete binary trees, are commonly represented using arrays. You will learn more about heaps in a later lesson.
+
+# Tree Search and Traversal
+
+In this last section, we will discuss ways to search and traverse trees. Searching a tree is the process of finding a node with a specific value. Traversing a tree is the process of visiting each node in the tree in a specific order. Both searching and traversing use similar algorithms, which is why we we cover them together.
+
+...
+
 # References
 
 - [Cppreference](https://en.cppreference.com/)
