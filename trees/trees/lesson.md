@@ -127,6 +127,7 @@ Some n-ary trees are known by other names:
 Binary trees are especially important in computer science. They are used in many algorithms and data structures.
 
 Here is an example of a binary tree:
+
 ![An example of a binary tree.](image-9.png)
 
 In binary trees, a node's children are commonly referred to as its **left child** and **right child**.
@@ -137,6 +138,7 @@ Next, we'll cover some special types of binary trees. However, the terms we use 
 A **full binary tree** is a binary tree where every non-leaf node has exactly two children. This can also be defined as a tree where every node has either 0 or 2 children.
 
 Here are two examples of full binary trees:
+
 ![Two full binary trees. The left tree is more evenly balanced while the right tree is more right-heavy.](image-10.png)
 
 In the left tree, 'A', 'B', 'C', 'E', and 'G' are all internal nodes, and all have two children. 'D', 'H', 'I', 'J', and 'K' are all leaf nodes and have no children.
