@@ -48,6 +48,12 @@ Trees can also be used for:
 
 ## Node Relationships
 
+Nodes that have no children are called **leaf nodes**. Nodes that are not leaf nodes are called **internal nodes**.
+
+![A tree. 'A' is the root with children 'B' and 'C'. 'B' has children 'D' and 'E'. 'C' has child 'F'.](image-11.png)
+
+In the above example, 'A', 'B', and 'C' are internal nodes, while 'D', 'E', and 'F' are leaf nodes. A root node can be either an internal node or a leaf node depending on whether it has children or not.
+
 The relationships among nodes in a tree can be described using terminology similar to family relationships. In the following diagram, we'll focus on node 'E' and its relationship with other nodes:
 
 ![Diagram showing the different relationships among nodes in a tree.](image-3.png)
@@ -101,11 +107,88 @@ func height(node):
 
 # Tree Types
 
+An **n-ary tree**, also called an **m-ary tree** or **k-ary tree**, is a tree where each node can have at most n children, where n is some non-negative integer. For example, a 2-ary tree is a tree where each node can have at most 2 children. A 3-ary tree is a tree where each node can have at most 3 children.
+
+Here is an example of a 4-ary tree:
+![Tree some nodes have 1, 2, 3, or 4 children, but not 5 or more children.](image-8.png)
+
+In this tree, some nodes have 1, 2, 3, or 4 children, but not 5 or more children.
+
+The definition of n-ary trees comes with some weird quirks. You won't need to worry about them in this course, but it's good to know about them:
+- n can be 0, which means the tree either has 1 root node or is empty.
+- n can be 1, which means the tree behaves like a linked list. As a tree, it is not very useful, but it is a valid tree.
+- An n-ary tree is a valid m-ary tree for *any* m >= n. For example, a 2-ary tree is also a valid 3-ary tree, and a 3-ary tree is also a valid 4-ary tree.
+
+Some n-ary trees are known by other names:
+- A 2-ary tree is also called a **binary tree**.
+- A 3-ary tree is also called a **ternary tree**.
+- A 4-ary tree is also called a **quaternary tree**.
+
+Binary trees are especially important in computer science. They are used in many algorithms and data structures.
+
+Here is an example of a binary tree:
+![An example of a binary tree.](image-9.png)
+
+In binary trees, a node's children are commonly referred to as its **left child** and **right child**.
+In the above example 'A' is the root node with left child 'B' and right child 'C'. 'b' has left child 'D' and right child 'E'. 'C' has no left child and right child 'F'. 'D', 'E', and 'F' are leaf nodes.
+
+Next, we'll cover some special types of binary trees. However, the terms we use here may be generalized to other n-ary trees. In this course, we will only focus on these terms in the context of binary trees.
+
+A **full binary tree** is a binary tree where every non-leaf node has exactly two children. This can also be defined as a tree where every node has either 0 or 2 children.
+
+Here are two examples of full binary trees:
+![Two full binary trees. The left tree is more evenly balanced while the right tree is more right-heavy.](image-10.png)
+
+In the left tree, 'A', 'B', 'C', 'E', and 'G' are all internal nodes, and all have two children. 'D', 'H', 'I', 'J', and 'K' are all leaf nodes and have no children.
+
+In the right tree, 'A', 'C', 'E', and 'G' are all internal nodes, and all have two children. 'B', 'D', 'F', 'H', and 'I' are all leaf nodes and have no children.
+
+A **complete binary tree** is a binary tree where every level is completely filled except possibly for the last level, which is filled from left to right.
+
+![An example of a complete binary tree](image-12.png)
+
+In the above example, level 0 has 1 node, level 1 has 2 nodes, and level 2 has 4 nodes; these levels are completely filled. The last level is level 3, which only has 3 nodes. All of the nodes in level 3 are filled from left to right, so this is a complete binary tree.
+
+Note that the above tree is not a full binary tree because 'E' has only one child.
+
+A **perfect binary tree** is a binary tree where every internal node has exactly two children and all leaf nodes are at the same level.
+
+![An example of a perfect binary tree. 'A' is the root node with two children 'B' and 'C'. 'B' has two children 'D' and 'E'. 'C' has two children 'F' and 'G'. All leaf nodes are at the same level.](image-13.png)
+
+Here, 'A', 'B', and 'C' are all internal nodes, and all have two children. 'D', 'E', 'F', and 'G' are all leaf nodes and have no children. All leaf nodes are at the same level.
+
+Perfect binary trees have the following properties:
+- It has exactly 2^h - 1 nodes, where h is the 0-based height of the tree.
+- It is also a full binary tree.
+- It is also a complete binary tree.
+
+Binary trees that are perfect are also complete and full. However, the converse is not true. That is, a tree that is both complete and full is not necessarily perfect. For example, the tree below is both complete and full, but not perfect.
+
+![A full and complete tree. 'A' is the root and has children 'B' and 'C'. 'B' has children 'D' and 'E'.](image-14.png)
+
+A **binary search tree (BST)** is a binary tree that satisfies the following property:
+- For any node, all nodes in its left subtree have keys less than the node's key, and all nodes in its right subtree have keys greater than the node's key.
+
+We use the term "key" to refer to the value stored in a node. The keys of a BST are comparable in some way. Keys are generally unique, but some BST implementations allow duplicate keys. For simplicity, we will assume that all keys are unique.
+
+![An example of a binary search tree with integers. '32' is the root. '32' has left child '16' and right child '48'. '16' has left child '8' and right child '24'. '24' has left child '20' and right child '28'. '48' has left child '40' and right child '56'.](image-15.png)
+
+Binary search trees, as the name implies, allow for efficient searching of keys.
+In the above example, if our target is less than 32, then we can search the left subtree since all the keys less than 32 are in the left subtree. If our target is greater than 32, then we can search the right subtree since all the keys greater than 32 are in the right subtree.
+
+![Animation showing how to find '20' in the above binary search tree.](images-ppt.gif)
+
+This strategy is similar to binary search, which is a searching algorithm that works on sorted arrays.
+
+One thing to be careful about BSTs is that it is NOT sufficient to only check the left and right children of a node when checking if a tree is a BST. Consider the following example:
+
+![A binary tree. '3' is the root. '3' has left child '2' and right child '6'. '2' has left child '1' and right child '4'. '6' has left child '5' and right child '7'.](image-16.png)
+
+At first glance, this tree looks like a binary search tree. However, '4' is in the left subtree of '3' despite being greater than '3'. This means that this tree is not a binary search tree.
+
+There are more things we can do with binary search trees such as inserting nodes, deleting nodes, and balancing the tree. We will cover these topics in later lessons.
+
 # Tree Representation
-
-# Tree Traversals
-
-# Binary Search Trees (BSTs)
 
 # References
 
