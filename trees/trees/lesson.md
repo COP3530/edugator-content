@@ -46,6 +46,59 @@ Trees can also be used for:
 
 # Tree Terminology
 
+## Node Relationships
+
+The relationships among nodes in a tree can be described using terminology similar to family relationships. In the following diagram, we'll focus on node 'E' and its relationship with other nodes:
+
+![Diagram showing the different relationships among nodes in a tree.](image-3.png)
+
+A node is said to be an **ancestor** of another node if it is on the path from the root to that node. It can also be defined as all the nodes reachable by traversing upwards from the node. In the above example, 'A' and 'C' are ancestors of 'E'.
+
+The direct predecessor of a node is called its **parent**. 'C' is the parent of 'E'. The parent of a node's parent is that node's **grandparent**. 'A' is the grandparent of 'E'.
+
+The nodes that share a parent with a node are that node's **siblings**. 'D' and 'E' are siblings.
+
+A node is a **descendant** of another node if it is on the path from that node to a leaf. It can also be defined as all the nodes reachable by traversing downwards from the node. In the above example, 'F', 'G', 'H', and 'I' are descendants of 'E'.
+
+The direct successor of a node is called its **child**. 'F' and 'G' are children of 'E'. The child of a node's child is that node's **grandchild**. 'H' and 'I' are grandchildren of 'E'.
+
+The set of a single node and all of its descendants is a **subtree**.
+
+![Diagram showing a tree with root 'A' and two subtrees below 'A'.](image-5.png)
+
+In the above example, 'A' has two children, 'B' and 'C'. 'B' and all of its descendants form one subtree where 'B' is the root. 'C' and all of its descendants form another subtree where 'C' is the root.
+
+## Depth and Height
+
+The **depth** or **level** of a node is the number of edges from the root to that node. The root node is considered to have a depth of 0.
+
+![Diagram showing the different levels in a tree.](image-4.png)
+
+The **height** of a node describes its distance from its deepest leaf. Height can also be used to describe trees and subtrees; the height of a tree is the height of its root node.
+
+![Diagram showing the 0-based height of nodes in a tree.](image-6.png)
+
+Unlike depth, siblings do not necessarily have the same height. As shown in the diagram, 'B' and 'C' are siblings, but 'B' has a height of 1 while 'C' has a height of 0.
+
+In the above example, we specifically use the **0-based** definition of height, which is the number of edges from the node to its deepest leaf. Leaf nodes have a height of 0. In this case, 'A' has a height of 3, 'B' has a height of 1, and 'C' has a height of 0. Null nodes and empty trees are considered to have a height of -1.
+
+There is also a **1-based** definition of height. 
+It is the number of nodes from the node to its deepest leaf, counting the node itself. Leaf nodes have a height of 1. Null nodes and empty trees are considered to have a height of 0.
+A node's *1-based height* is equivalent to its *0-based height* plus 1.
+
+![Diagram showing the 1-based height of nodes in a tree.](image-7.png)
+
+In your projects, you can choose which definition of height to use as long as you are consistent.
+
+The height of a node can also be defined recursively. The height of a node is the maximum height of its children plus one. The height of a null node is -1 when using the 0-based definition, and 0 when using the 1-based definition.
+```
+func height(node):
+    if node is null:
+        return -1  # or 0 for 1-based height
+    else:
+        return 1 + max(height(node.children[0]), height(node.children[1]), ...)
+```
+
 # Tree Types
 
 # Tree Representation
