@@ -189,6 +189,53 @@ At first glance, this tree looks like a binary search tree. However, '4' is in t
 
 There are more things we can do with binary search trees such as inserting nodes, deleting nodes, and balancing the tree. We will cover these topics in later lessons.
 
+------
+
+![Binary tree: 'A' is the root. 'A' has left child 'B' and right child 'C'. 'B' has left child 'D' and right child 'E'. 'C' has right child 'F'. 'D', 'E', and 'F' are leaf nodes.](image-21.png)
+
+Which of the following best describes the above tree?
+- It is a full binary tree, but not a complete binary tree.
+- It is a complete binary tree, but not a full binary tree.
+- It is both full and complete, but not perfect.
+- It is a perfect binary tree.
+- None of these.
+
+<details>
+<summary>Answer</summary>
+None of these.
+</details>
+
+------
+
+![Binary tree: 'A' is the root. 'A' has left child 'B' and right child 'C'. 'B' has left child 'D' and right child 'E'. 'C' has left child 'F' and right child 'G'. 'D' has left child 'H' and right child 'I'. 'E', 'F', 'G', 'H', and 'I' are leaf nodes.](image-22.png)
+
+Which of the following best describes the above tree?
+- It is a full binary tree, but not a complete binary tree.
+- It is a complete binary tree, but not a full binary tree.
+- It is both full and complete, but not perfect.
+- It is a perfect binary tree.
+- None of these.
+
+<details>
+<summary>Answer</summary>
+It is both full and complete, but not perfect.
+</details>
+
+------
+
+![Binary tree: '463' is root. '463' has left child '140' and right child '511'. '140' has left child '122' and right child '317'. '317' has left child '180' and right child '415'. '511' has left child '426' and right child '620'. '620' has left child '591' and right child '978'. '122', '180', '415', '426', '591', and '978' are leaf nodes.](image-23.png)
+
+Is the above tree a binary search tree?
+- Yes, it is a binary search tree.
+- No, it is not a binary search tree.
+
+<details>
+<summary>Answer</summary>
+- No, it is not a binary search tree.
+</details>
+
+------
+
 # Tree Representation
 
 There are several ways to represent trees in programming languages. The most common way is to use a **node** class or struct that contains a value and a list of child nodes.
@@ -377,6 +424,79 @@ Binary search trees have a special property regarding in-order traversals:
 - If an in-order traversal of a binary tree yields a sorted list of unique keys, then the binary tree is a binary search tree.
 
 This property is useful for checking if a binary tree is a binary search tree.
+
+------
+
+Which data structure is commonly used to implement breadth-first searches and traversals?
+- A linked list
+- A stack
+- A queue
+- A heap
+
+<details>
+<summary>Answer</summary>
+A queue
+</details>
+
+------
+
+Which data structure is commonly used to implement depth-first searches and traversals?
+- A linked list
+- A stack
+- A queue
+- A heap
+
+<details>
+<summary>Answer</summary>
+A stack
+</details>
+
+------
+
+Use the following tree to answer the next 3 questions:
+
+![Binary tree: '21' is the root. '21' has left child '68' and right child '71'. '68' has left child '49' and right child '38'. '71' has left child '15'. '15' has left child '30' and right child '62'. '49', '38', '30', and '62' are leaf nodes.](image-24.png)
+
+Which of the following is NOT a valid breadth-first traversal of the above tree?
+- 21, 68, 71, 49, 38, 15, 30, 62
+- 21, 71, 68, 15, 49, 38, 62, 30
+- 21, 68, 71, 38, 49, 15, 62, 30
+- 21, 71, 68, 15, 30, 62, 49, 38
+
+<details>
+<summary>Answer</summary>
+21, 71, 68, 15, 30, 62, 49, 38
+</details>
+
+------
+
+Which of the following is NOT a valid depth-first traversal of the above tree?
+- 21, 71, 15, 68, 38, 49, 30, 62
+- 21, 68, 49, 38, 71, 15, 30, 62
+- 21, 68, 38, 49, 71, 15, 62, 30
+- 21, 71, 15, 30, 62, 68, 49, 38
+- 21, 71, 15, 62, 30, 68, 38, 49
+
+<details>
+<summary>Answer</summary>
+21, 71, 15, 68, 38, 49, 30, 62
+</details>
+
+------
+
+Which of the following is the in-order traversal of the above tree?
+- 21, 68, 71, 49, 38, 15, 30, 62
+- 15, 21, 30, 38, 49, 62, 68, 71
+- 21, 68, 49, 38, 71, 15, 30, 62
+- 49, 38, 68, 30, 62, 15, 71, 21
+- 49, 68, 38, 21, 30, 15, 62, 71
+
+<details>
+<summary>Answer</summary>
+49, 68, 38, 21, 30, 15, 62, 71
+</details>
+
+------
 
 # Conclusion
 
