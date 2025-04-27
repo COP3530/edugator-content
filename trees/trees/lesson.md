@@ -109,6 +109,7 @@ func height(node):
 An **n-ary tree**, also called an **m-ary tree** or **k-ary tree**, is a tree where each node can have at most n children, where n is some non-negative integer. For example, a 2-ary tree is a tree where each node can have at most 2 children. A 3-ary tree is a tree where each node can have at most 3 children.
 
 Here is an example of a 4-ary tree:
+
 ![Tree some nodes have 1, 2, 3, or 4 children, but not 5 or more children.](image-8.png)
 
 In this tree, some nodes have 1, 2, 3, or 4 children, but not 5 or more children.
