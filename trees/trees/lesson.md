@@ -9,8 +9,7 @@ We will cover the following topics:
 - Tree Terminology
 - Tree Types
 - Tree Representation
-- Tree Traversals
-- Binary Search Trees (BSTs)
+- Tree Search and Traversal
 
 # Introduction to Trees
 
@@ -238,11 +237,158 @@ Array representations are only more memory efficient when the tree is complete o
 
 In this last section, we will discuss ways to search and traverse trees. Searching a tree is the process of finding a node with a specific value. Traversing a tree is the process of visiting each node in the tree in a specific order. Both searching and traversing use similar algorithms, which is why we we cover them together.
 
-...
+## Breadth-First Search and Traversal
+
+In a **breadth-first search (BFS) or traversal**, nodes are visited level by level, starting from the root node. This means that all nodes at depth 0 are visited first, then all nodes at depth 1, and so on. A breadth-first traversal is also called a **level-order traversal**.
+
+![Diagram with arrows zig-zagging through a tree.](image-19.png)
+
+Breadth-first searches and traversals are commonly implemented using a queue. The algorithm works as follows:
+1. Create an empty queue and add the root node to it.
+2. Remove the first node from the queue and visit it.
+3. Add all of the node's children to the end of the queue.
+4. Repeat steps 2 and 3 until the queue is empty.
+
+```
+func bfs(root):
+    queue = new Queue()
+    queue.enqueue(root)
+
+    while not queue.empty():
+        node = queue.dequeue()
+        visit(node)  # Visit the node
+
+        for child in node.children:
+            queue.enqueue(child)  # Add the child to the queue
+```
+
+Here is an animation of a breadth-first traversal:
+
+![Animation of a breadth-first traversal.](images-ppt-2.gif)
+
+In the above example, we start by enqueuing the root node 'A'. We then dequeue 'A' and visit it. Next, we enqueue 'B' and 'C', which are the children of 'A'. We then dequeue 'B' and visit it, and enqueue its children 'D' and 'E'. We repeat this process until all nodes have been visited.
+
+## Depth-First Search and Traversal
+
+In a **depth-first search (DFS) or traversal**, nodes are visited as deep as possible before backtracking. This means that all nodes in a subtree are visited before moving on to the next sibling node.
+
+![Diagram showing part of a depth-first search.](image-20.png)
+
+In the above example, we start by visiting 'A'. We then visit 'B' and all of its descendants before moving on to 'C'. This is a depth-first traversal.
+
+Depth-first searches and traversals are commonly implemented using a stack. The algorithm works as follows:
+1. Create an empty stack and add the root node to it.
+2. Remove the first node from the stack and visit it.
+3. Add all of the node's children to the top of the stack.
+4. Repeat steps 2 and 3 until the stack is empty.
+
+Notice how this algorithm is almost identical to the breadth-first search algorithm. The only difference is that we use a stack instead of a queue. 
+```
+func dfs(root):
+    stack = new Stack()
+    stack.push(root)
+
+    while not stack.empty():
+        node = stack.pop()
+        visit(node)  # Visit the node
+
+        for child in node.children:
+            stack.push(child)  # Add the child to the stack
+```
+
+Here is an animation of a depth-first traversal:
+
+![Animation of a depth-first traversal.](images-ppt-3.gif)
+
+In the above example, we start by pushing the root node 'A' onto the stack. We then pop 'A' and visit it. Next, we push 'B' and 'C'. To make sure we visit nodes left-to-right, we actually push the children in reverse order, pushing 'C' first and then 'B'. We then pop 'B' and visit it, and push its children 'D' and 'E'. We repeat this process until all nodes have been visited.
+
+Although we visited nodes left-to-right, we could also visit them right-to-left. Either way is valid. What matters is that we visit all the nodes in one subtree before moving on to the next sibling node. In the above example, if we visit 'B' first, then we must visit 'D' and 'E' in some order before moving on to 'C'.
+
+## Recursive Depth-First Traversals
+
+There is another way to implement depth-first traversals that is more elegant and perhaps easier to understand: using recursion. The algorithm can be written like this:
+
+```
+func dfs(node):
+    if node is null:
+        return
+
+    visit(node)  # Visit the node
+
+    for child in node.children:
+        dfs(child)  # Visit the child
+```
+
+This recursive algorithm takes advantage of the idea that every node can be considered the root of a smaller tree (a subtree).
+
+You can think of it as a version of the previous algorithm that leverages the *call stack* instead of an explicit stack. When we call `dfs(child)`, we are pushing the child node onto the call stack. When the function returns, we pop the child node off the call stack and continue with the next sibling node.
+
+The recursive version of the algorithm allows us to do something the iterative version cannot (at least not easily): we can visit a node *after* visiting its children.
+
+In all of the previous examples, we "visit" a node as soon as we reach it. This is called a **pre-order traversal**. In a pre-order traversal, we visit the node before visiting its children. When we "visit" a node, we can do anything we want with it. For example, we can print its value, add it to a list, or perform some other operation. However, we can also save that operation until *after* we visit the node's children.
+
+With binary trees, there are three ways to traverse a tree:
+- **Pre-order traversal**: Visit the node, then visit the left and right subtrees.
+- **In-order traversal**: Visit the left subtree, then visit the node, then visit the right subtree.
+- **Post-order traversal**: Visit the left and right subtrees, then visit the node.
+
+The pseudocode for these traversals is as follows:
+```
+func pre_order(node):
+    if node is null: 
+        return
+    visit(node)
+    pre_order(node.left)
+    pre_order(node.right)
+
+func in_order(node):
+    if node is null: 
+        return
+    in_order(node.left)
+    visit(node)
+    in_order(node.right)
+
+func post_order(node):
+    if node is null: 
+        return
+    post_order(node.left) 
+    post_order(node.right
+    visit(node)
+```
+
+Notice how the order of the `visit` function changes in each traversal.
+
+There is an easy technique to visualize each traversal: draw tightly-bound line around the tree starting from the root node. For pre-order, each time the line passes the left side of a node, we visit it.
+
+![Animation of a pre-order traversal.](ppt-preorder.gif)
+
+For in-order, we visit the node when the line passes the bottom side of the node.
+
+![Animation of an in-order traversal.](ppt-inorder.gif)
+
+And for post-order, we visit the node when the line passes the right side of the node.
+
+![Animation of a post-order traversal.](ppt-postorder.gif)
+
+Notice how each kind of traversal yields a different order of nodes.
+
+Binary search trees have a special property regarding in-order traversals:
+- If a binary tree is a binary search tree, then its in-order traversal will yield a sorted list of keys.
+- If an in-order traversal of a binary tree yields a sorted list of unique keys, then the binary tree is a binary search tree.
+
+This property is useful for checking if a binary tree is a binary search tree.
+
+# Conclusion
+
+In this lesson, we discussed tree data structures and tree terminology. We discussed the different types of trees, different ways to represent trees, and different ways to search and traverse trees.
+
+In the next lesson, we will explore binary search trees in more detail as they are very important in implementing efficient data structures.
 
 # References
 
 - [Cppreference](https://en.cppreference.com/)
+- [Wikipedia: Tree (abstract data type)](https://en.wikipedia.org/wiki/Tree_(abstract_data_type))
+- [Wikipedia: Tree Traversal](https://en.wikipedia.org/wiki/Tree_traversal)
 - [COP 3530 Instructional Content](https://github.com/COP3530/Instructional-Content)
 
 Graphics by Brian Magnuson.
