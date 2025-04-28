@@ -208,6 +208,58 @@ In the last block, we handle the case where the key is equal to the current node
 
 The number of operations in BST deletion, like search and insertion, is proportional to the height of the tree. In the worst case, the height of the tree is O(n), making the worst-case time complexity of the insertion algorithm O(n).
 
+------
+
+Insert the following numbers into a BST in the order given:
+14, 6, 8, 20, 2, 4, 12, 10, 16, 18
+
+What is the left-to-right level-order traversal of the tree?
+- 14, 6, 20, 2, 8, 12, 16, 4, 10, 18
+- 14, 6, 8, 20, 2, 4, 12, 10, 16, 18
+- 14, 6, 20, 2, 4, 8, 12, 10, 16, 18
+- 14, 6, 20, 2, 8, 16, 4, 12, 18, 10
+- 14, 6, 20, 2, 8, 12, 4, 10, 16, 18
+
+<details>
+<summary>Answer</summary>
+14, 6, 20, 2, 8, 16, 4, 12, 18, 10
+</details>
+
+------
+
+![Binary tree: Root is '40'. '40' has left child '10' and right child '70'. '10' has right child '30'. '30' has left child '20'. '70' has left child '50'. '50' has right child '60'.](image-9.png)
+
+Consider the above binary search tree. Which of the following correctly lists both the in-order predecessor and in-order successor of the root node?
+- 10, 50
+- 30, 50
+- 30, 70
+- 10, 70
+- 20, 60
+- These nodes do not exist since this is not a binary search tree.
+
+<details>
+<summary>Answer</summary>
+30, 50
+</details>
+
+------
+
+![Binary search tree: Root is '35'. '35' has left child '25' and right child '45'. '25' has left child '20' and right child '30'. '45' has left child '40' and right child '50'.](image-10.png)
+
+Consider the above binary search tree. Delete the root node, then delete the root node again. Use the in-order predecessor each time to replace the deleted node. What is the left-to-right level-order traversal of the tree after both deletions?
+- 20, 25, 45, 40, 50
+- 25, 20, 45, 40, 50
+- 30, 25, 45, 20, 50
+- 40, 25, 45, 20, 50
+- 45, 25, 50, 20, 30
+
+<details>
+<summary>Answer</summary>
+25, 20, 45, 40, 50
+</details>
+
+------
+
 # Deleting the Entire BST
 
 There may be times when we want to delete the entire binary search tree. For example, if we are managing memory manually, we may want to free the memory used by the tree.
@@ -320,6 +372,10 @@ If the tree is *balanced*, the height of the tree is proportional to log(n), whe
 ![A balanced tree. The root is '3'. '3' has left child '2' and right child '5'. '2' has left child '1'. '5' has left child '4' and right child '6'.](image-7.png)
 
 A tree is considered balanced if, for every node, the heights of the left and right subtrees differ by at most 1. You'll learn more about this when we discuss balanced trees.
+
+Complete binary trees are examples of balanced trees. A complete binary tree is a binary tree in which every level is completely filled, except possibly the last level. Since all perfect binary trees are complete, perfect trees, by transitive property, are also balanced.
+
+Full trees are not necessarily balanced.
 
 If the tree is *unbalanced*, the height of the tree may potentially be as large as n, where n is the number of nodes in the tree. This can happen if we insert keys in sorted order, for example.
 
