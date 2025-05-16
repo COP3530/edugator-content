@@ -390,3 +390,11 @@ That's all for this lesson. We've covered the memory model, pointers, arrays, an
 
 - [C++ Reference](https://en.cppreference.com/w/cpp)
 - [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html)
+
+Graphics by Brian Magnuson.
+
+Lesson content written with AI assistance.
+
+This work by Brian Magnuson is licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+
+Find a mistake? Open an issue on [GitHub](https://github.com/COP3530/edugator-content/issues)!

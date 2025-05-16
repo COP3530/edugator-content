@@ -208,3 +208,15 @@ Here are a few tips to keep in mind when working with AVL trees:
 - When checking the shape of the tree, you might be tempted to perform an in-order traversal. However, recall that AVL trees are BSTs, so the in-order traversal will be the same (in sorted order), regardless of whether the tree is balanced.
 - Calculating the height of a node can be a costly operation. Consider storing height information in each node to avoid recalculating the height of the same subtree multiple times.
 - Additionally, fix the height property of a node after relevant rotations.
+
+# References
+
+- [COP 3530 Instructional Content](https://github.com/COP3530/Instructional-Content)
+
+Graphics by Brian Magnuson.
+
+Lesson content written with AI assistance.
+
+This work by Brian Magnuson is licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+
+Find a mistake? Open an issue on [GitHub](https://github.com/COP3530/edugator-content/issues)!
