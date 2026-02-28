@@ -390,4 +390,6 @@ Graphics by Brian Magnuson.
 
 Lesson content written with AI assistance.
 
+This work by Brian Magnuson is licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+
 Find a mistake? Open an issue on [GitHub](https://github.com/COP3530/edugator-content/issues)!
